@@ -92,7 +92,7 @@ public class TileManager {
                 if (line == null) break;
                 
                 String[] nums = line.split(" ");
-                for (int i = 0; i <GamePanel.maxWorldCol; i++) 
+                for (int i = 0; i < GamePanel.maxWorldCol; i++) 
                     mapNums[row][i] = Integer.parseInt(nums[i]);
 
                 row++;
@@ -101,6 +101,13 @@ public class TileManager {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        for (int i = 0; i < 50; i ++) {
+            for (int j = 0; j < 50; j++) {
+                System.out.print(mapNums[i][j] + " ");
+            }
+            System.out.println();
         }
     }
 
