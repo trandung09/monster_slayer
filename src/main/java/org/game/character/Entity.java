@@ -41,6 +41,7 @@ public class Entity {
     // FOR EVENT CHECK
     protected EventHandler eventH;
 
+    public int damage = 1;
     public int speed;          // Tốc độ của thực thể
     public int worldX, worldY; // Vị trí của thực thể
     public Rectangle solidArea;// Vùng đặc để kiểm tra va chạm
@@ -70,10 +71,10 @@ public class Entity {
         // Override by subclass
     }
 
-    /* Cập nhật hoạt động của thực thể sau khi nhận các sự kiện từ bàn phím,
-    * sự kiện từ hoạt động trong game. Cập nhật hướng di chuyển, vị trí và va 
-    * chạm hiện tại của thực thể với các thực thể khác trong game. 
-    */
+    
+    // Cập nhật hoạt động của thực thể sau khi nhận các sự kiện từ bàn phím,
+    // sự kiện từ hoạt động trong game. Cập nhật hướng di chuyển, vị trí và va 
+    // chạm hiện tại của thực thể với các thực thể khác trong game.
     public void update() {
 
         setAction();

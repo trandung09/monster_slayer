@@ -3,12 +3,14 @@ package org.game.control;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
+import java.io.File;
 import java.net.URL;
 
 public class Sound {
 
     public Clip clip;
-    public URL[] soundURL = new URL[30];
+    public URL[] soundURL = new URL[30]; // or file path
 
     public Sound() {
 
@@ -27,6 +29,7 @@ public class Sound {
 
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[index]);
+            
             clip = AudioSystem.getClip();
             clip.open(ais);
 

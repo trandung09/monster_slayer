@@ -70,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         setNpcs();
         startGameThread();
-        playMusic(0);
+        // playMusic(0);
     }
 
     // Khởi tạo gameThread của game 

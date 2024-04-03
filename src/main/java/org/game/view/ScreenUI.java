@@ -5,10 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 import org.game.enums.CommandNum;
 import org.game.frame.GamePanel;
@@ -200,7 +197,7 @@ public class ScreenUI extends Interaction {
         textY += lineHeight / 2;
 
         g2D.drawImage(gp.player.selectedWeapon ? gp.player.currentWeaponSword : gp.player.currentWeaponAxe, 
-                      tailX - GamePanel.tileSize / 2 - 5, textY, 40, 38, null);
+                    tailX - GamePanel.tileSize / 2 - 5, textY, 40, 38, null);
 
         // Item image
         lineHeight += 10;
@@ -238,16 +235,6 @@ public class ScreenUI extends Interaction {
 
     private void drawWaitScreen() {
 
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/background.png"));
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-
-        g2D.drawImage(image, 0, 0, GamePanel.screenWidth, GamePanel.screenHeight, null);
-
         g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 76));
         g2D.setColor(Color.GRAY);
 
@@ -258,7 +245,7 @@ public class ScreenUI extends Interaction {
 
         g2D.drawString(text, X + 3, Y - 3);
 
-        g2D.setColor(Color.BLACK);
+        g2D.setColor(Color.WHITE);
         g2D.drawString(text, X, Y);
 
         // Draw image.gif (player image) in panel
@@ -328,17 +315,47 @@ public class ScreenUI extends Interaction {
                     message.remove(i);
                     messageCounter.remove(i);
                 }   
-                
             }
         }
     }
 
     private void drawPauseScreen() {
 
+        // drawSubWindow(100, 100, 400, 200);
+   
+        // g2D.setColor(Color.GRAY);
+        // g2D.setFont(g2D.getFont().deriveFont(Font.BOLD,76f));
+        // String text = "PAUSE";
+        // int drawX = getXForCenterText(text);
+        // int drawY = GamePanel.tileSize * 2;
+        
+        // g2D.drawString(text, drawX, drawY);
+
+        // g2D.setColor(Color.WHITE);
+        // g2D.drawString(text, drawX - 5, drawY + 5);
+        // //Continew,Quit
+        // text = "CONTINEW";
+        // drawX = getXForCenterText(text);
+        // drawY = drawY + (GamePanel.tileSize * 3) / 2;
+
+        // if (gp.waitstate == CommandNum.) {
+        //     g2D.drawString(">", drawX - GamePanel.tileSize, drawY);
+        // }
+        // g2D.drawString(text, drawX, drawY);
+
+        // text = "QUIT";
+        // drawX = getXForCenterText(text);
+        // drawY = drawY + (GamePanel.tileSize * 3) / 2;
+
+        // if (gp.waitstate == CommandNum.QUIT) {
+        //     g2D.drawString(">", drawX - GamePanel.tileSize, drawY);
+        // }
+        // g2D.drawString(text, drawX, drawY);
 
     }
 
     private void drawEndScreen() {
         
+
     }
 }

@@ -13,13 +13,13 @@ public class SuperObject {
     protected UtilityTool uTool;
     public BufferedImage image;
     
-    public int attackValue;
-    public String name;
-    public Rectangle solidArea;
-    public int solidAreaDefaultX;
-    public int solidAreaDefaultY;
+    public int attackValue;  //
+    public String name;             // tên object
+    public Rectangle solidArea;     // vùng check va chạm 
+    public int solidAreaDefaultX;  
+    public int solidAreaDefaultY;   
     public int worldX, worldY;
-    public boolean collison;
+    public boolean collison;        
 
     public SuperObject(GamePanel gp) {
 

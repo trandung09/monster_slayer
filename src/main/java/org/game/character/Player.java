@@ -19,17 +19,16 @@ public class Player extends Entity {
     private InputHandler keyH;          // KeyEvent
     private int playerCounter = 0;      // Biến đếm để cập nhật biến playerNum
     private boolean playerNum = false;  // Biến kiểm tra chọn hình ảnh của nhân vật khi trong trạng thái tấn công
-    public boolean attacking = false;   // enter -> attacking = true
+    public boolean attacking = false;   // trạng thái tấn công của nhân vật: kiểm tra nhân vật có ở trong trạng thái tấn công hay không
     public boolean selectedWeapon = true; // true = kiếm, false = rìu
 
     // PLAYER ATTRIBUTES
-    public int damage = 1;
     public int level = 1;
     public int strengly = 0; // the more strengly he has, the more damage he gives
     public int dexterity = 0; // the more dexterity he has, the less damage he recicives 
-    public int attack; // the total attack value is decided by strengly and dexterity
+    public int attack; // the total attack value is decided by strengly and dexterity == damage
     public int exp = 0; // Kinh nghiệm nhân vật
-    public int nextLevelExp;
+    public int nextLevelExp; // Lượng kinh nghiệm cần thiết để nâng cấp
     public int coin = 0; // Sô tiền nhân vật hiện có
     public int keys = 0;  // Số chìa khóa hiện có
     public int manas = 0; // Số năng lượng có thể sử dụng hiện tại
@@ -82,7 +81,8 @@ public class Player extends Entity {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
-        attackArea = new Rectangle(0, 0, 40, 40);
+        attackArea = new Rectangle(0, 0, 40, 40); 
+        // vungf maf quái vật chạm vào sẽ nhận sát thương khi nhân vật ở trong trạng thái tấn công
     }
 
     private void loadPlayerImage() {
@@ -137,7 +137,6 @@ public class Player extends Entity {
     @Override
     public void update() {
 
-        
         // Sát thương nhân vật gây ra tăng lên khi giết được quái vật
 
         if (useMana) {
@@ -222,10 +221,10 @@ public class Player extends Entity {
         // Biến đếm để cập nhật hình ảnh tạo hoạt ảnh nhân vật
         playerCounter++; 
         if (playerCounter <= 5) {
-            playerNum = true; 
+            playerNum = true;  // kiếm ngắn
         } 
         else if (playerCounter > 5 && playerCounter <= 25) {
-            playerNum = false;
+            playerNum = false; // kiếm dài
 
             // Lưu lại vị trí, vùng va chạm hiện tại của nhân vật
             int currentWorldX = worldX;

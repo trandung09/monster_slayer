@@ -103,8 +103,8 @@ public class CollisionChecker {
                 others[i].solidArea.y += others[i].worldY;
 
                 // Reset lại vị trí của thực thể được kiểm tra để tránh trường hợp
-                    // hai thực thể không thể tách rời nhau sau khi chạm nhau
-                    resetEntityLocation(entity);
+                // hai thực thể không thể tách rời nhau sau khi chạm nhau
+                resetEntityLocation(entity);
 
                 // Kiểm tra va chạm dựa vào phương thức intersects(Rectangle o)
                 if (entity != others[i] && entity.solidArea.intersects(others[i].solidArea)) {
