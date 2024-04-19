@@ -58,6 +58,9 @@ public class Entity {
     public boolean dying = false;
     public int dyingCounter = 0 ; // Giá trị sự sống hiện tại của thực thể
 
+    protected boolean attacking = false;   // enter -> attacking = true
+    protected int entityCounter = 0;      // Biến đếm để cập nhật biến playerNum
+    protected boolean entityNum = false;  // Biến kiểm tra chọn hình ảnh của nhân vật khi trong trạng thái tấn công
     
     public int projectilesCounter = 0;
     public ArrayList<Projectiles> projectiles = new ArrayList<>();
@@ -157,6 +160,10 @@ public class Entity {
             g2D.drawImage(image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
             g2D.setComposite(AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 1f));
         }
+    }
+
+    public void attacking() {
+        
     }
 
     public BufferedImage getRightImage(boolean checker) {

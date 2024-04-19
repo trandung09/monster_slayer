@@ -12,7 +12,7 @@ public class Rock extends Projectiles {
 
         this.gp = gp;
         name = "Rock";
-        speed = 3;
+        speed = 2;
         maxLife = 80;
         life = maxLife;
         alive = false;

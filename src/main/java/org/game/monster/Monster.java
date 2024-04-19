@@ -52,6 +52,10 @@ public class Monster extends Entity {
         direction = gp.player.getDirection();
     }
 
+    public void attacking() {
+
+    }
+
     @Override
     public void draw(Graphics2D g2D) {
         int screenX = worldX - gp.player.getWorldX() + gp.player.screenX;
@@ -76,7 +80,6 @@ public class Monster extends Entity {
                     throw new IllegalStateException("Unexcept value" + direction);
             }
             // Moster HP bar
-
             if (hpBarOn) {
                 double oneScale = (double) GamePanel.tileSize / maxLife;
                 double hpBar = oneScale * life;
@@ -93,6 +96,7 @@ public class Monster extends Entity {
                     hpBarOn = false;
                 }
             }
+            
             // Vẽ hình ảnh của thực thể
             if (invincible) {
                 hpBarOn = true;

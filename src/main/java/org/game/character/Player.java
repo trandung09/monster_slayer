@@ -18,9 +18,6 @@ public class Player extends Entity {
     public final int screenY = GamePanel.screenHeight/2 - GamePanel.tileSize/2;
 
     private InputHandler keyH;          // KeyEvent
-    private int playerCounter = 0;      // Biến đếm để cập nhật biến playerNum
-    private boolean playerNum = false;  // Biến kiểm tra chọn hình ảnh của nhân vật khi trong trạng thái tấn công
-    private boolean attacking = false;   // enter -> attacking = true
 
     private boolean selectedWeapon = true; // true = kiếm, false = rìu
 
@@ -254,12 +251,12 @@ public class Player extends Entity {
     /* Xử lý hình ảnh, hoạt động của nhân vật khi ở trong trạng thái tấn công.*/
     public void attacking() {
         // Biến đếm để cập nhật hình ảnh tạo hoạt ảnh nhân vật
-        playerCounter++; 
-        if (playerCounter <= 5) {
-            playerNum = true; 
+        entityCounter++; 
+        if (entityCounter <= 5) {
+            entityNum = true; 
         } 
-        else if (playerCounter > 5 && playerCounter <= 25) {
-            playerNum = false;
+        else if (entityCounter > 5 && entityCounter <= 25) {
+            entityNum = false;
 
             // Lưu lại vị trí, vùng va chạm hiện tại của nhân vật
             int currentWorldX = worldX;
@@ -293,8 +290,8 @@ public class Player extends Entity {
             solidArea.height = solidAreaHeight;
         }
         else{
-            playerNum = false;
-            playerCounter = 0;
+            entityNum = false;
+            entityCounter = 0;
             attacking = false; // Gán nhân vật không ở trong trạng thái tấn công
         }
     }
@@ -435,8 +432,8 @@ public class Player extends Entity {
                 // Lấy hình ảnh nhân vật khi không trong trạng thái tấn công
                 if (!attacking) image = (drawChecker ? up1 : up2); 
                 else { // Lấy hình ảnh nhân vật khi ở trong trạng thái tấn công
-                    if (selectedWeapon) image = (playerNum ? attackUp1 : attackUp2);
-                    else image = (playerNum ? cutUp1 : cutUp2);
+                    if (selectedWeapon) image = (entityNum ? attackUp1 : attackUp2);
+                    else image = (entityNum ? cutUp1 : cutUp2);
                     tempY -= GamePanel.tileSize;
                     // Cập nhật tọa độ Y của vị trí vẽ hình ảnh
                 }
@@ -444,23 +441,23 @@ public class Player extends Entity {
             case DOWN: 
                 if (!attacking) image = (drawChecker ? down1 : down2);
                 else {
-                    if (selectedWeapon) image = (playerNum ? attackDown1 : attackDown2);
-                    else image = (playerNum ? cutDown1 : cutDown2);
+                    if (selectedWeapon) image = (entityNum ? attackDown1 : attackDown2);
+                    else image = (entityNum ? cutDown1 : cutDown2);
                 }
                 break;
             case LEFT: 
                 if (!attacking) image = (drawChecker ? left1 : left2); 
                 else {
-                    if (selectedWeapon) image = (playerNum ? attackLeft1 : attackLeft2);
-                    else image = (playerNum ? cutLeft1 : cutLeft2);
+                    if (selectedWeapon) image = (entityNum ? attackLeft1 : attackLeft2);
+                    else image = (entityNum ? cutLeft1 : cutLeft2);
                     tempX -= GamePanel.tileSize;
                 }
                 break;
             case RIGHT: 
                 if (!attacking) image = (drawChecker ? right1 : right2);
                 else {
-                    if (selectedWeapon) image = (playerNum ? attackRight1 : attackRight2);
-                    else image = (playerNum ? cutRight1 : cutRight2);
+                    if (selectedWeapon) image = (entityNum ? attackRight1 : attackRight2);
+                    else image = (entityNum ? cutRight1 : cutRight2);
                 }
                 break;
             default: break;

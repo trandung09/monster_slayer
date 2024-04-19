@@ -12,6 +12,7 @@ import org.game.frame.GamePanel;
 import org.game.monster.Bat;
 import org.game.monster.GreenSlime;
 import org.game.monster.Monster;
+import org.game.monster.Sinister;
 import org.game.object.Boots;
 import org.game.object.SuperObject;
 
@@ -37,6 +38,9 @@ public class AssetSetter {
 
                 if (arr[2].equals("Slime")) {
                     ents[i] = new GreenSlime(gp);
+                }
+                if (arr[2].equals("Sinister")) {
+                    ents[i] = new Sinister(gp);
                 }
                 else if (arr[2].equals("Bat")) {
                     ents[i] = new Bat(gp);
