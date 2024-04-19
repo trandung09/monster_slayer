@@ -13,15 +13,6 @@ public class SuperObject {
     protected UtilityTool uTool;
     public BufferedImage image;
     
-<<<<<<< HEAD
-    public int attackValue;
-    public String name;
-    public Rectangle solidArea;
-    public int solidAreaDefaultX;
-    public int solidAreaDefaultY;
-    private int worldX, worldY;
-    public boolean collison;
-=======
     public int attackValue;  //
     public String name;             // tên object
     public Rectangle solidArea;     // vùng check va chạm 
@@ -29,7 +20,6 @@ public class SuperObject {
     public int solidAreaDefaultY;   
     public int worldX, worldY;
     public boolean collison;        
->>>>>>> 0bddc306652b30dc1659755560572a986096e4aa
 
     public SuperObject(GamePanel gp) {
 
@@ -76,6 +66,4 @@ public class SuperObject {
     public void setWorldY(int worldY) {
         this.worldY = worldY;
     }
-
-    
 }

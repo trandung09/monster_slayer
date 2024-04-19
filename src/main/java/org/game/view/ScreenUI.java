@@ -196,11 +196,7 @@ public class ScreenUI extends Interaction {
         g2D.drawString(value, textX, textY);
         textY += lineHeight / 2;
 
-<<<<<<< HEAD
         g2D.drawImage(gp.player.isSelectedWeapon() ? gp.player.currentWeaponSword : gp.player.currentWeaponAxe, 
-=======
-        g2D.drawImage(gp.player.selectedWeapon ? gp.player.currentWeaponSword : gp.player.currentWeaponAxe, 
->>>>>>> 0bddc306652b30dc1659755560572a986096e4aa
                     tailX - GamePanel.tileSize / 2 - 5, textY, 40, 38, null);
 
         // Item image

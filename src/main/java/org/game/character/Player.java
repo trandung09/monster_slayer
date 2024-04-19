@@ -394,6 +394,7 @@ public class Player extends Entity {
      */
     private void contactMonster(int index) {
         if (index == -1) return;
+        if (gp.monsters[index] == null) return;
         if (gp.monsters[index].name == "Bat") return;
         if (invincible == false) {
             if (!attacking) {
