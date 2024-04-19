@@ -38,14 +38,8 @@ public class Entity {
     // FOR EVENT CHECK
     protected EventHandler eventH;
 
-<<<<<<< HEAD
     protected int speed;          // Tốc độ của thực thể
     protected int worldX, worldY; // Vị trí của thực thể
-=======
-    public int damage = 1;
-    public int speed;          // Tốc độ của thực thể
-    public int worldX, worldY; // Vị trí của thực thể
->>>>>>> 0bddc306652b30dc1659755560572a986096e4aa
     public Rectangle solidArea;// Vùng đặc để kiểm tra va chạm
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0); // Vùng đặc kiểm tra va chạm khi tấn công
     public int solidAreaDefaultX; // Giá trị X mặc định ban đầu của vùng đặc va chạm
@@ -88,10 +82,10 @@ public class Entity {
         // Override by subclass
     }
 
-    
-    // Cập nhật hoạt động của thực thể sau khi nhận các sự kiện từ bàn phím,
-    // sự kiện từ hoạt động trong game. Cập nhật hướng di chuyển, vị trí và va 
-    // chạm hiện tại của thực thể với các thực thể khác trong game.
+    /* Cập nhật hoạt động của thực thể sau khi nhận các sự kiện từ bàn phím,
+    * sự kiện từ hoạt động trong game. Cập nhật hướng di chuyển, vị trí và va 
+    * chạm hiện tại của thực thể với các thực thể khác trong game. 
+    */
     public void update() {
 
         setAction();

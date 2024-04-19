@@ -20,7 +20,6 @@ public class Player extends Entity {
     private InputHandler keyH;          // KeyEvent
     private int playerCounter = 0;      // Biến đếm để cập nhật biến playerNum
     private boolean playerNum = false;  // Biến kiểm tra chọn hình ảnh của nhân vật khi trong trạng thái tấn công
-<<<<<<< HEAD
     private boolean attacking = false;   // enter -> attacking = true
 
     private boolean selectedWeapon = true; // true = kiếm, false = rìu
@@ -36,22 +35,6 @@ public class Player extends Entity {
     private int keys = 0;  // Số chìa khóa hiện có
     private int manas = 0; // Số năng lượng có thể sử dụng hiện tại
     private int diamonds = 0; // Số kim cương hiện có
-=======
-    public boolean attacking = false;   // trạng thái tấn công của nhân vật: kiểm tra nhân vật có ở trong trạng thái tấn công hay không
-    public boolean selectedWeapon = true; // true = kiếm, false = rìu
-
-    // PLAYER ATTRIBUTES
-    public int level = 1;
-    public int strengly = 0; // the more strengly he has, the more damage he gives
-    public int dexterity = 0; // the more dexterity he has, the less damage he recicives 
-    public int attack; // the total attack value is decided by strengly and dexterity == damage
-    public int exp = 0; // Kinh nghiệm nhân vật
-    public int nextLevelExp; // Lượng kinh nghiệm cần thiết để nâng cấp
-    public int coin = 0; // Sô tiền nhân vật hiện có
-    public int keys = 0;  // Số chìa khóa hiện có
-    public int manas = 0; // Số năng lượng có thể sử dụng hiện tại
-    public int diamonds = 0; // Số kim cương hiện có
->>>>>>> 0bddc306652b30dc1659755560572a986096e4aa
     public BufferedImage currentWeaponAxe; // Vũ khí hiện tại rìu
     public BufferedImage currentWeaponSword; // Vũ khí hiện tại là kiếm
     public BufferedImage key, diamond, mana;
@@ -97,8 +80,7 @@ public class Player extends Entity {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
-        attackArea = new Rectangle(0, 0, 40, 40); 
-        // vungf maf quái vật chạm vào sẽ nhận sát thương khi nhân vật ở trong trạng thái tấn công
+        attackArea = new Rectangle(0, 0, 40, 40);
     }
 
     private void loadPlayerImage() {
@@ -274,10 +256,10 @@ public class Player extends Entity {
         // Biến đếm để cập nhật hình ảnh tạo hoạt ảnh nhân vật
         playerCounter++; 
         if (playerCounter <= 5) {
-            playerNum = true;  // kiếm ngắn
+            playerNum = true; 
         } 
         else if (playerCounter > 5 && playerCounter <= 25) {
-            playerNum = false; // kiếm dài
+            playerNum = false;
 
             // Lưu lại vị trí, vùng va chạm hiện tại của nhân vật
             int currentWorldX = worldX;
