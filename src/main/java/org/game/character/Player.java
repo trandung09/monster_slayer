@@ -9,6 +9,7 @@ import org.game.enums.Direction;
 import org.game.enums.GameState;
 import org.game.event.InputHandler;
 import org.game.frame.GamePanel;
+import org.game.object.Fireball;
 
 public class Player extends Entity {
     
@@ -19,6 +20,23 @@ public class Player extends Entity {
     private InputHandler keyH;          // KeyEvent
     private int playerCounter = 0;      // Biến đếm để cập nhật biến playerNum
     private boolean playerNum = false;  // Biến kiểm tra chọn hình ảnh của nhân vật khi trong trạng thái tấn công
+<<<<<<< HEAD
+    private boolean attacking = false;   // enter -> attacking = true
+
+    private boolean selectedWeapon = true; // true = kiếm, false = rìu
+
+    // PLAYER ATTRIBUTES
+    private int level = 1;
+    private int strengly = 0; // the more strengly he has, the more damage he gives
+    private int dexterity = 0; // the more dexterity he has, the less damage he recicives 
+    private int attack; // the total attack value is decided by strengly and dexterity
+    private int exp = 0; // Kinh nghiệm nhân vật
+    private int nextLevelExp;
+    private int coin = 0; // Sô tiền nhân vật hiện có
+    private int keys = 0;  // Số chìa khóa hiện có
+    private int manas = 0; // Số năng lượng có thể sử dụng hiện tại
+    private int diamonds = 0; // Số kim cương hiện có
+=======
     public boolean attacking = false;   // trạng thái tấn công của nhân vật: kiểm tra nhân vật có ở trong trạng thái tấn công hay không
     public boolean selectedWeapon = true; // true = kiếm, false = rìu
 
@@ -33,6 +51,7 @@ public class Player extends Entity {
     public int keys = 0;  // Số chìa khóa hiện có
     public int manas = 0; // Số năng lượng có thể sử dụng hiện tại
     public int diamonds = 0; // Số kim cương hiện có
+>>>>>>> 0bddc306652b30dc1659755560572a986096e4aa
     public BufferedImage currentWeaponAxe; // Vũ khí hiện tại rìu
     public BufferedImage currentWeaponSword; // Vũ khí hiện tại là kiếm
     public BufferedImage key, diamond, mana;
@@ -40,9 +59,6 @@ public class Player extends Entity {
     public int current_choose = 0;  // Vật phẩm được chọn hiện tại
     public boolean useKey = false;  // Đánh dấu có chọn sử dụng khóa hay không
     public boolean useMana = false; // Đánh dấu có chọn sử dụng mana hay không
-
-    // Nhân vật tấn công với vũ khí là rìu
-    private BufferedImage cutUp1, cutUp2, cutDown1, cutDown2, cutLeft1, cutLeft2, cutRight1, cutRight2;
 
     public Player(GamePanel gp) {
 
@@ -134,13 +150,11 @@ public class Player extends Entity {
      * sự kiện từ hoạt động trong game. Cập nhật hướng di chuyển, vị trí và va 
      * chạm hiện tại của player với các thực thể trong game. 
      */
-    @Override
+    @Override     
     public void update() {
 
         // Sát thương nhân vật gây ra tăng lên khi giết được quái vật
-
         if (useMana) {
-
             useMana = false;
             if (life < maxLife) {
                 life++;
@@ -163,6 +177,7 @@ public class Player extends Entity {
             // Trạng thái khi tấn công của nhân vật
             attacking();
         }   
+
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
             // Xử lý cập nhật hướng di chuyển của player khi nhận input từ bàn phím
             if (keyH.upPressed) direction = Direction.UP;
@@ -173,6 +188,8 @@ public class Player extends Entity {
             // Kiểm tra va chạm với các thực thể, đối tượng khác
             collisionOn = false;
             coChecker.checkCoWithTile(this); 
+
+            System.out.println(collisionOn);
             int objIndex = coChecker.checkCoWithObject(this, true);
             int npcIndex = coChecker.checkCoWithEntity(this, gp.npcs);
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
@@ -182,11 +199,23 @@ public class Player extends Entity {
             interactNpc(npcIndex);
             contactMonster(monsterIndex);
 
+            for (Projectiles e : projectiles) {
+                int eIndex = coChecker.checkCoWithEntity(e, gp.monsters);
+                damageMonster(eIndex);
+            }
+
+            for (Entity e : gp.monsters) {
+                if (e == null) continue;
+                if (e.name == "Green Slime") {
+
+                }
+            }
+
             // Kiểm tra sự kiện va chạm với một số điểm trên bản đồ
             eventH.checkEvent();
 
             // Cập nhật vị trí của nhân vật theo hướng di chuyển của nhân vật
-            if (!collisionOn) {
+            if (collisionOn == false) {
                 switch (direction) {
                     case UP: worldY -= speed; break;
                     case DOWN: worldY += speed; break;
@@ -207,6 +236,30 @@ public class Player extends Entity {
                     invincible = false;
                     invincibleCounter = 0;
                 }
+            }
+        }
+
+        if (keyH.shootPressed) {
+            // chưa có quả nào, 
+            if (projectiles.size() == 0 || projectiles.getLast().life < 72) {
+                // tạo độ trễ giữ 2 quả đạn
+                Projectiles pr = new Fireball(gp);
+                pr.set(worldX, worldY, direction, true, this);
+    
+                projectiles.add(pr);
+            }
+        }
+
+        for (Entity e : gp.monsters) {
+            if (e == null) continue;
+            if (e.name == "Green Slime") {
+                Projectiles[] prs = new Projectiles[e.projectiles.size()];
+                for (int i = 0; i < prs.length; i++) {
+                    prs[i] = new Projectiles(gp);
+                    prs[i] = e.projectiles.get(i);
+                } 
+                int index = coChecker.checkCoWithEntity(this, prs);
+                contactMonster(index);
             }
         }
     }
@@ -287,13 +340,13 @@ public class Player extends Entity {
             gp.monsters[index].dying = true;
             gp.monsters[index].alive = false;
 
-            strengly++; // tăng chỉ số sát thương nhân vật lên 1
-            if (strengly - dexterity > 0) {
-                damage++;
-            }
-            else {
-                damage = 1;
-            }
+            // strengly++; // tăng chỉ số sát thương nhân vật lên 1
+            // if (strengly - dexterity > 0) {
+            //     damage++;
+            // }
+            // else {
+            //     damage = 1;
+            // }
 
             gp.screenUI.addMessage("Exp +" + gp.monsters[index].monsterExp + "!");
             gp.screenUI.addMessage("Strengly +1!");
@@ -359,6 +412,7 @@ public class Player extends Entity {
      */
     private void contactMonster(int index) {
         if (index == -1) return;
+        if (gp.monsters[index].name == "Bat") return;
         if (invincible == false) {
             if (!attacking) {
                 gp.playMusicSE(5);
@@ -368,7 +422,7 @@ public class Player extends Entity {
                 if (damage > 2) damage -= 1;
                 invincible = true;
 
-                gp.monsters[index].resetAction();
+                // gp.monsters[index].resetAction();
             }
         }
     }
@@ -436,4 +490,97 @@ public class Player extends Entity {
         g2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getStrengly() {
+        return strengly;
+    }
+
+    public void setStrengly(int strengly) {
+        this.strengly = strengly;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getNextLevelExp() {
+        return nextLevelExp;
+    }
+
+    public void setNextLevelExp(int nextLevelExp) {
+        this.nextLevelExp = nextLevelExp;
+    }
+
+    public int getCoin() {
+        return coin;
+    }
+
+    public void setCoin(int coin) {
+        this.coin = coin;
+    }
+
+    public int getKeys() {
+        return keys;
+    }
+
+    public void setKeys(int keys) {
+        this.keys = keys;
+    }
+
+    public int getManas() {
+        return manas;
+    }
+
+    public void setManas(int manas) {
+        this.manas = manas;
+    }
+
+    public int getDiamonds() {
+        return diamonds;
+    }
+
+    public void setDiamonds(int diamonds) {
+        this.diamonds = diamonds;
+    }
+
+    public boolean isAttacking() {
+        return attacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
+    }
+
+    public boolean isSelectedWeapon() {
+        return selectedWeapon;
+    }
+
+    public void setSelectedWeapon(boolean selectedWeapon) {
+        this.selectedWeapon = selectedWeapon;
+    }
+
 }

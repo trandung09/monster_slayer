@@ -14,9 +14,6 @@ public class Monster extends Entity {
 
     public int objRan = 0;          // Random ra kim cương hay mana khi quái vật chết đi
     public int monsterExp = 0;      // Kinh nghiệm có được khi quái vật chết đi
-    public boolean alive = true;    // Kiểm tra sự tồn tại của thực thể
-    public boolean dying = false;
-    private int dyingCounter = 0 ;
 
     public Monster(GamePanel gp) {
 
@@ -52,20 +49,20 @@ public class Monster extends Entity {
 
         actionCounter = 0;
 
-        direction = gp.player.direction;
+        direction = gp.player.getDirection();
     }
 
     @Override
     public void draw(Graphics2D g2D) {
-        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        int screenX = worldX - gp.player.getWorldX() + gp.player.screenX;
+        int screenY = worldY - gp.player.getWorldY() + gp.player.screenY;
 
         // Kiểm tra vị trí của nhân vật với vị trí hiến tại của thực thể,
         // nếu vị trí nhỏ hơn một khoảng X mới bắt đầu vẽ ảnh thực thể
-        if (worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
-                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
-                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY
+        if (worldX + GamePanel.tileSize > gp.player.getWorldX() - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.getWorldX() + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.getWorldY() - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.getWorldY() + gp.player.screenY
         ) {
 
             BufferedImage image = null;

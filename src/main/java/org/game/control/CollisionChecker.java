@@ -3,14 +3,6 @@ package org.game.control;
 import org.game.character.Entity;
 import org.game.frame.GamePanel;
 
-/**
- * Class chứa các phương thức để kiểm tra và cập nhật trạng thái va chạm 
- * của thực thể với các mảnh tile bản đồ, giữa một thực thể này với các thực
- * thể khác.
- * 
- * @author trandung09
- */
-
 public class CollisionChecker {
     
     GamePanel gp;
@@ -32,10 +24,10 @@ public class CollisionChecker {
      */
     public void checkCoWithTile(Entity entity) {
 
-        int worldLeftX = entity.worldX + entity.solidArea.x;
-        int worldRightX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
-        int worldTopY = entity.worldY + entity.solidArea.y;
-        int worldBottomY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
+        int worldLeftX = entity.getWorldX() + entity.solidArea.x;
+        int worldRightX = entity.getWorldX() + entity.solidArea.x + entity.solidArea.width;
+        int worldTopY = entity.getWorldY() + entity.solidArea.y;
+        int worldBottomY = entity.getWorldY() + entity.solidArea.y + entity.solidArea.height;
 
         int playerLeftCol = worldLeftX / GamePanel.tileSize;
         int playerRightCol = worldRightX / GamePanel.tileSize;
@@ -45,32 +37,32 @@ public class CollisionChecker {
         int tile1, tile2;
 
         // Xử lý dựa theo hướng đi của thực thể được chọn để kiểm tra
-        switch (entity.direction) {
+        switch (entity.getDirection()) {
             case UP:
-                playerTopRow = (worldTopY - entity.speed) / GamePanel.tileSize;
+                playerTopRow = (worldTopY - entity.getSpeed()) / GamePanel.tileSize;
                 tile1 = gp.tileM.mapNums[playerTopRow][playerLeftCol];
                 tile2 = gp.tileM.mapNums[playerTopRow][playerRightCol];
                 break;
 
             case DOWN:
-                playerBottomRow = (worldBottomY + entity.speed) / GamePanel.tileSize;
+                playerBottomRow = (worldBottomY + entity.getSpeed()) / GamePanel.tileSize;
                 tile1 = gp.tileM.mapNums[playerBottomRow][playerLeftCol];
                 tile2 = gp.tileM.mapNums[playerBottomRow][playerRightCol];
                 break;
 
             case LEFT:
-                playerLeftCol = (worldLeftX - entity.speed) / GamePanel.tileSize;
+                playerLeftCol = (worldLeftX - entity.getSpeed()) / GamePanel.tileSize;
                 tile1 = gp.tileM.mapNums[playerTopRow][playerLeftCol];
                 tile2 = gp.tileM.mapNums[playerBottomRow][playerLeftCol];
                 break;
 
             case RIGHT:
-                playerRightCol = (worldRightX + entity.speed) / GamePanel.tileSize;
+                playerRightCol = (worldRightX + entity.getSpeed()) / GamePanel.tileSize;
                 tile1 = gp.tileM.mapNums[playerTopRow][playerRightCol];
                 tile2 = gp.tileM.mapNums[playerBottomRow][playerRightCol];
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + entity.direction);
+                throw new IllegalStateException("Unexpected value: " + entity.getDirection());
         }
 
         // Nếu có va chạm với một thành phần nào đó thì gán collisionOn của thực thể
@@ -96,11 +88,11 @@ public class CollisionChecker {
         for (int i = 0; i < others.length; i++) {
             if (others[i] != null) {
                 // Xác định lại tọa độ của solidArea (là Rectangle) dựa vào tạo độ thực thể
-                entity.solidArea.x += entity.worldX;
-                entity.solidArea.y += entity.worldY;
+                entity.solidArea.x += entity.getWorldX();
+                entity.solidArea.y += entity.getWorldY();
                 // Xác định lại tọa độ của solidArea (là Rectangle) dựa vào tạo độ thực thể
-                others[i].solidArea.x += others[i].worldX;
-                others[i].solidArea.y += others[i].worldY;
+                others[i].solidArea.x += others[i].getWorldX();
+                others[i].solidArea.y += others[i].getWorldY();
 
                 // Reset lại vị trí của thực thể được kiểm tra để tránh trường hợp
                 // hai thực thể không thể tách rời nhau sau khi chạm nhau
@@ -139,11 +131,11 @@ public class CollisionChecker {
         for (int i = 0; i < gp.objs.length ; i++) {
             if (gp.objs[i] != null) {
                 
-                entity.solidArea.x += entity.worldX;
-                entity.solidArea.y += entity.worldY;
+                entity.solidArea.x += entity.getWorldX();
+                entity.solidArea.y += entity.getWorldY();
 
-                gp.objs[i].solidArea.x += gp.objs[i].worldX;
-                gp.objs[i].solidArea.y += gp.objs[i].worldY;
+                gp.objs[i].solidArea.x += gp.objs[i].getWorldX();
+                gp.objs[i].solidArea.y += gp.objs[i].getWorldY();
 
                 resetEntityLocation(entity);
 
@@ -171,12 +163,12 @@ public class CollisionChecker {
     public void checkCoWithPlayer(Entity entity) {
 
         // Xác định lại tọa độ của solidArea (là Rectangle) dựa vào tạo độ thực thể
-        entity.solidArea.x += entity.worldX;
-        entity.solidArea.y += entity.worldY;
+        entity.solidArea.x += entity.getWorldX();
+        entity.solidArea.y += entity.getWorldY();
 
         // Xác định lại tọa độ của solidArea (là Rectangle) dựa vào tạo độ player
-        gp.player.solidArea.x += gp.player.worldX;
-        gp.player.solidArea.y += gp.player.worldY;
+        gp.player.solidArea.x += gp.player.getWorldX();
+        gp.player.solidArea.y += gp.player.getWorldY();
 
         resetEntityLocation(entity);
         // Kiểm tra va chạm bằng phương thức intersects(Rectangle o)
@@ -200,11 +192,11 @@ public class CollisionChecker {
      */
     private void resetEntityLocation(Entity entity) {
         // Xử lý reset vị trí thực thể dựa theo hướng đi nhân vật
-        switch (entity.direction) {
-            case UP: entity.solidArea.y -= entity.speed; break;
-            case DOWN: entity.solidArea.y += entity.speed; break;
-            case LEFT: entity.solidArea.x -= entity.speed; break;
-            case RIGHT: entity.solidArea.x += entity.speed; break;
+        switch (entity.getDirection()) {
+            case UP: entity.solidArea.y -= entity.getSpeed(); break;
+            case DOWN: entity.solidArea.y += entity.getSpeed(); break;
+            case LEFT: entity.solidArea.x -= entity.getSpeed(); break;
+            case RIGHT: entity.solidArea.x += entity.getSpeed(); break;
             default: break;
         }
     }

@@ -102,13 +102,6 @@ public class TileManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        for (int i = 0; i < 50; i ++) {
-            for (int j = 0; j < 50; j++) {
-                System.out.print(mapNums[i][j] + " ");
-            }
-            System.out.println();
-        }
     }
 
     public void draw(Graphics2D g2D) {
@@ -121,8 +114,8 @@ public class TileManager {
 
             int worldX = col * GamePanel.tileSize;
             int worldY = row * GamePanel.tileSize;
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+            int screenX = worldX - gp.player.getWorldX() + gp.player.screenX;
+            int screenY = worldY - gp.player.getWorldY() + gp.player.screenY;
 
             g2D.drawImage(tiles[tileNum].image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
 

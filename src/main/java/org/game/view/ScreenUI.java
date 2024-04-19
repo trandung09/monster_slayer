@@ -92,7 +92,7 @@ public class ScreenUI extends Interaction {
         int i = 0;
 
         // Draw blank heart
-        while(i < gp.player.maxLife / 2) {
+        while(i < gp.player.getMaxLife() / 2) {
             g2D.drawImage(Heart._blank, X, Y, null);
             X += GamePanel.tileSize;
             i++;
@@ -102,10 +102,10 @@ public class ScreenUI extends Interaction {
         Y = GamePanel.tileSize / 2;
         i = 0;
         // Draw current life
-        while(i < gp.player.life) {
+        while(i < gp.player.getLife()) {
             g2D.drawImage(Heart._half, X, Y, null);
             i++;
-            if (i < gp.player.life) {
+            if (i < gp.player.getLife()) {
                 g2D.drawImage(Heart._full, X, Y, null);
             }
             i++;
@@ -156,47 +156,51 @@ public class ScreenUI extends Interaction {
         textY = Y + GamePanel.tileSize;
         String value;
 
-        value = String.valueOf(gp.player.level);
+        value = String.valueOf(gp.player.getLevel());
         textX = gteXForAlignToRightText(value, tailX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
-        value = String.valueOf(gp.player.life + "/" + gp.player.maxLife);
+        value = String.valueOf(gp.player.getLife() + "/" + gp.player.getMaxLife());
         textX = gteXForAlignToRightText(value, tailX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
-        value = String.valueOf(gp.player.strengly);
+        value = String.valueOf(gp.player.getStrengly());
         textX = gteXForAlignToRightText(value, tailX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
         
-        value = String.valueOf(gp.player.dexterity);
+        value = String.valueOf(gp.player.getDexterity());
         textX = gteXForAlignToRightText(value, tailX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
-        value = String.valueOf(gp.player.damage);
+        value = String.valueOf(gp.player.getDamage());
         textX = gteXForAlignToRightText(value, tailX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
-        value = String.valueOf(gp.player.exp);
+        value = String.valueOf(gp.player.getExp());
         textX = gteXForAlignToRightText(value, tailX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
-  
-        value = String.valueOf(gp.player.nextLevelExp);
+
+        value = String.valueOf(gp.player.getNextLevelExp());
         textX = gteXForAlignToRightText(value, tailX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
-     
-        value = String.valueOf(gp.player.coin);
+
+        value = String.valueOf(gp.player.getCoin());
         textX = gteXForAlignToRightText(value, tailX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight / 2;
 
+<<<<<<< HEAD
+        g2D.drawImage(gp.player.isSelectedWeapon() ? gp.player.currentWeaponSword : gp.player.currentWeaponAxe, 
+=======
         g2D.drawImage(gp.player.selectedWeapon ? gp.player.currentWeaponSword : gp.player.currentWeaponAxe, 
+>>>>>>> 0bddc306652b30dc1659755560572a986096e4aa
                     tailX - GamePanel.tileSize / 2 - 5, textY, 40, 38, null);
 
         // Item image
@@ -216,21 +220,21 @@ public class ScreenUI extends Interaction {
             drawSubWindow(usedItemX - 15, usedItemY - 15, width - GamePanel.tileSize * 2 - 5, 70);
         }
         g2D.drawImage(gp.player.key, usedItemX + 5, usedItemY, 40, 40, null);
-        g2D.drawString("x" + gp.player.keys, usedItemX + 65, usedItemY + 32);
+        g2D.drawString("x" + gp.player.getKeys(), usedItemX + 65, usedItemY + 32);
         usedItemY += lineHeight + 15;
 
         if (gp.player.current_choose == 1) {
             drawSubWindow(usedItemX - 15, usedItemY - 15, width - GamePanel.tileSize * 2 - 5, 70);
         }
         g2D.drawImage(gp.player.diamond, usedItemX + 5, usedItemY, 40, 40, null);
-        g2D.drawString("x" + gp.player.diamonds, usedItemX + 65, usedItemY + 32);
+        g2D.drawString("x" + gp.player.getDiamonds(), usedItemX + 65, usedItemY + 32);
         usedItemY += lineHeight + 15;
 
         if (gp.player.current_choose == 2) {
             drawSubWindow(usedItemX - 15, usedItemY - 15, width - GamePanel.tileSize * 2 - 5, 70);
         }
         g2D.drawImage(gp.player.mana, usedItemX + 5, usedItemY, 40, 40, null);
-        g2D.drawString("x" + gp.player.manas, usedItemX + 66, usedItemY + 32);
+        g2D.drawString("x" + gp.player.getManas(), usedItemX + 66, usedItemY + 32);
     }   
 
     private void drawWaitScreen() {

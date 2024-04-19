@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import org.game.control.CollisionChecker;
 import org.game.control.UtilityTool;
@@ -13,17 +14,12 @@ import org.game.frame.GamePanel;
 
 public class Entity {
     
-    protected GamePanel gp;
     protected String name;
 
-    // CHARECTER STATUS
-    public boolean invincible = false; // Trạng thái vô địch của thực thể
-    public int invincibleCounter = 0;  // Biến đếm cập nhật trạng thái vô địch của thực thể
-    public int maxLife = 0;                // Giá trị lớn nhất máu thực thể
-    public int life = 0;                   // Giá trị sự sống hiện tại của thực thể
+    protected GamePanel gp;
 
-    protected boolean hpBarOn = false; // Biến để cập nhật thời gian vẽ thanh máu của quái vật
-    protected int hpBarCounter = 0;    // Biến đếm để cập nhật hpBarOn
+    public boolean hpBarOn = false; // Biến để cập nhật thời gian vẽ thanh máu của quái vật
+    public int hpBarCounter = 0;    // Biến đếm để cập nhật hpBarOn
 
     // CHARECTER STAGE (Draw)
     protected boolean drawChecker = true; // Biến sử dụng cập nhật hình ảnh nhân vật khi không trong trạng thái tấn công
@@ -33,6 +29,7 @@ public class Entity {
     // CHARACTER IMAGE
     protected BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     protected BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
+    protected BufferedImage cutUp1, cutUp2, cutDown1, cutDown2, cutLeft1, cutLeft2, cutRight1, cutRight2;
     protected UtilityTool uTool; 
 
     // FOR COLLISION CHECK
@@ -41,15 +38,35 @@ public class Entity {
     // FOR EVENT CHECK
     protected EventHandler eventH;
 
+<<<<<<< HEAD
+    protected int speed;          // Tốc độ của thực thể
+    protected int worldX, worldY; // Vị trí của thực thể
+=======
     public int damage = 1;
     public int speed;          // Tốc độ của thực thể
     public int worldX, worldY; // Vị trí của thực thể
+>>>>>>> 0bddc306652b30dc1659755560572a986096e4aa
     public Rectangle solidArea;// Vùng đặc để kiểm tra va chạm
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0); // Vùng đặc kiểm tra va chạm khi tấn công
     public int solidAreaDefaultX; // Giá trị X mặc định ban đầu của vùng đặc va chạm
     public int solidAreaDefaultY; // Giá trị Y mặc định ban đầu của vùng đặc va chạm
-    public Direction direction = Direction.DOWN; // Enum Direction (class)
+    protected Direction direction = Direction.DOWN; // Enum Direction (class)
     public boolean collisionOn = false;
+
+    // CHARECTER STATUS
+    protected boolean invincible = false; // Trạng thái vô địch của thực thể
+
+    protected int invincibleCounter = 0;  // Biến đếm cập nhật trạng thái vô địch của thực thể
+    protected int maxLife = 0;                // Giá trị lớn nhất máu thực thể
+    protected int life = 0;     
+    protected int damage = 1;
+    public boolean alive = true;    // Kiểm tra sự tồn tại của thực thể
+    public boolean dying = false;
+    public int dyingCounter = 0 ; // Giá trị sự sống hiện tại của thực thể
+
+    
+    public int projectilesCounter = 0;
+    public ArrayList<Projectiles> projectiles = new ArrayList<>();
 
     protected Entity() {
     }
@@ -151,5 +168,86 @@ public class Entity {
     public BufferedImage getRightImage(boolean checker) {
 
         return checker ? right1 : right2; 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public GamePanel getGp() {
+        return gp;
+    }
+
+    public void setGp(GamePanel gp) {
+        this.gp = gp;
+    }
+
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getWorldX() {
+        return worldX;
+    }
+
+    public void setWorldX(int worldX) {
+        this.worldX = worldX;
+    }
+
+    public int getWorldY() {
+        return worldY;
+    }
+
+    public void setWorldY(int worldY) {
+        this.worldY = worldY;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public int getMaxLife() {
+        return maxLife;
+    }
+
+    public void setMaxLife(int maxLife) {
+        this.maxLife = maxLife;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
     }
 }

@@ -31,9 +31,9 @@ public class EventHandler {
     public void checkEvent() {
 
         if (hit(23, 21, Direction.UP)) {
-            if (!gp.player.invincible) {
-                gp.player.life -= 1;
-                gp.player.invincible = true;
+            if (!gp.player.isInvincible()) {
+                gp.player.setLife(gp.player.getLife() - 1);
+                gp.player.setInvincible(true);
             }
         }
     }
@@ -42,14 +42,14 @@ public class EventHandler {
 
         boolean hit = false;
 
-        gp.player.solidArea.x += gp.player.worldX;
-        gp.player.solidArea.y += gp.player.worldY;
+        gp.player.solidArea.x += gp.player.getWorldX();
+        gp.player.solidArea.y += gp.player.getWorldY();
 
         eventRects[row][col].x += row * GamePanel.tileSize;
         eventRects[row][col].y += col * GamePanel.tileSize;
 
         if (gp.player.solidArea.intersects(eventRects[row][col])) {
-            if (gp.player.direction == direction)
+            if (gp.player.getDirection() == direction)
                 hit = true;
         }
 
@@ -61,16 +61,4 @@ public class EventHandler {
 
         return hit;
     }
-
-    // private void damagePit() {
-
-    // }
-
-    // private void teleport() {
-
-    // }
-
-    // private void healingPool() {
-
-    // }
 }

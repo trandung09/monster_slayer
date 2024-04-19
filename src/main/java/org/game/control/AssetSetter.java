@@ -35,16 +35,15 @@ public class AssetSetter {
 
                 String[] arr = line.split(" ");
 
-                System.out.println(arr[0] + arr[1] + " " + arr[2]);
-
                 if (arr[2].equals("Slime")) {
                     ents[i] = new GreenSlime(gp);
                 }
                 else if (arr[2].equals("Bat")) {
                     ents[i] = new Bat(gp);
                 }
-                ents[i].worldX = GamePanel.tileSize * Integer.parseInt(arr[0]);
-                ents[i].worldY = GamePanel.tileSize * Integer.parseInt(arr[1]);
+
+                ents[i].setWorldX(GamePanel.tileSize * Integer.parseInt(arr[0]));
+                ents[i].setWorldY(GamePanel.tileSize * Integer.parseInt(arr[1]));
                 
                 i++;
             }
@@ -72,8 +71,8 @@ public class AssetSetter {
                 String[] arr = line.split(" ");
 
                 ents[i] = new Oldman(gp);
-                ents[i].worldX = GamePanel.tileSize * Integer.parseInt(arr[0]);
-                ents[i].worldY = GamePanel.tileSize * Integer.parseInt(arr[1]);
+                ents[i].setWorldX(GamePanel.tileSize * Integer.parseInt(arr[0]));
+                ents[i].setWorldY(GamePanel.tileSize * Integer.parseInt(arr[1]));
                 i++;
             }
             br.close();
@@ -100,8 +99,8 @@ public class AssetSetter {
                 String[] arr = line.split(" ");
 
                 objs[i] = new Boots(gp);
-                objs[i].worldX = GamePanel.tileSize * Integer.parseInt(arr[0]);
-                objs[i].worldY = GamePanel.tileSize * Integer.parseInt(arr[1]);
+                objs[i].setWorldX(GamePanel.tileSize * Integer.parseInt(arr[0]));
+                objs[i].setWorldY(GamePanel.tileSize * Integer.parseInt(arr[1]));
 
                 i++;
             }

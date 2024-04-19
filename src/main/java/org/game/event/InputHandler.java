@@ -10,7 +10,7 @@ import org.game.frame.GamePanel;
 public class InputHandler implements KeyListener {
 
     private GamePanel gp;
-    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, lightingPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, lightingPressed, shootPressed;
 
     public InputHandler(GamePanel gp) {
 
@@ -33,20 +33,21 @@ public class InputHandler implements KeyListener {
                 case KeyEvent.VK_A: leftPressed = true; break;
                 case KeyEvent.VK_D: rightPressed = true; break;
                 case KeyEvent.VK_L: lightingPressed = !lightingPressed; break;
+                case KeyEvent.VK_BACK_SLASH: shootPressed = true; break;
                 case KeyEvent.VK_P:
                     if (gp.mainstate == GameState.START) gp.mainstate = GameState.PAUSE;
                     break;
                 case KeyEvent.VK_ENTER:
                     enterPressed = true;
                     // gp.playMusicSE(5);
-                    gp.player.attacking = true;
+                    gp.player.setAttacking(true);
                     break;
                 case KeyEvent.VK_QUOTE: 
                     gp.mainstate = GameState.CHARACRTER; break;
                 case KeyEvent.VK_SPACE: 
-                    gp.player.selectedWeapon = !gp.player.selectedWeapon; 
+                    gp.player.setSelectedWeapon(!gp.player.isSelectedWeapon());; 
                     gp.playMusicSE(8);
-                    gp.screenUI.addMessage("Weapon: " + (gp.player.selectedWeapon ? "Sword" : "Axe"));
+                    gp.screenUI.addMessage("Weapon: " + (gp.player.isSelectedWeapon() ? "Sword" : "Axe"));
                     break;
                 default: break;
             }
@@ -77,8 +78,8 @@ public class InputHandler implements KeyListener {
                     gp.mainstate = GameState.START; 
                     break;
                 case KeyEvent.VK_ENTER:
-                    if (gp.player.current_choose == 0 && gp.player.keys > 0) gp.player.useKey = true;
-                    else if (gp.player.current_choose == 2 && gp.player.manas > 0) gp.player.useMana = true;
+                    if (gp.player.current_choose == 0 && gp.player.getKeys() > 0) gp.player.useKey = true;
+                    else if (gp.player.current_choose == 2 && gp.player.getManas() > 0) gp.player.useMana = true;
                     gp.mainstate = GameState.START;
                     break;
                 case KeyEvent.VK_UP: 
@@ -107,7 +108,7 @@ public class InputHandler implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-         
+
         int kCode = e.getKeyCode();
 
         if (kCode == KeyEvent.VK_W) {
@@ -124,6 +125,9 @@ public class InputHandler implements KeyListener {
         }
         else if (kCode == KeyEvent.VK_ENTER) {
             enterPressed = false;
+        }
+        else if (kCode == KeyEvent.VK_BACK_SLASH) {
+            shootPressed = false;
         }
     }
 

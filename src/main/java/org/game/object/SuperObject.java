@@ -13,6 +13,15 @@ public class SuperObject {
     protected UtilityTool uTool;
     public BufferedImage image;
     
+<<<<<<< HEAD
+    public int attackValue;
+    public String name;
+    public Rectangle solidArea;
+    public int solidAreaDefaultX;
+    public int solidAreaDefaultY;
+    private int worldX, worldY;
+    public boolean collison;
+=======
     public int attackValue;  //
     public String name;             // tên object
     public Rectangle solidArea;     // vùng check va chạm 
@@ -20,6 +29,7 @@ public class SuperObject {
     public int solidAreaDefaultY;   
     public int worldX, worldY;
     public boolean collison;        
+>>>>>>> 0bddc306652b30dc1659755560572a986096e4aa
 
     public SuperObject(GamePanel gp) {
 
@@ -35,13 +45,13 @@ public class SuperObject {
 
     public void draw(Graphics2D g2D) {
 
-        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        int screenX = worldX - gp.player.getWorldX() + gp.player.screenX;
+        int screenY = worldY - gp.player.getWorldY() + gp.player.screenY;
 
-        if (worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
-            worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
-            worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
-            worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY
+        if (worldX + GamePanel.tileSize > gp.player.getWorldX() - gp.player.screenX &&
+            worldX - GamePanel.tileSize < gp.player.getWorldX() + gp.player.screenX &&
+            worldY + GamePanel.tileSize > gp.player.getWorldY() - gp.player.screenY &&
+            worldY - GamePanel.tileSize < gp.player.getWorldY() + gp.player.screenY
         )
             g2D.drawImage(image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
     }
@@ -50,4 +60,22 @@ public class SuperObject {
 
         return uTool.getImage(imagePath, width, height);
     }
+
+    public int getWorldX() {
+        return worldX;
+    }
+
+    public void setWorldX(int worldX) {
+        this.worldX = worldX;
+    }
+
+    public int getWorldY() {
+        return worldY;
+    }
+
+    public void setWorldY(int worldY) {
+        this.worldY = worldY;
+    }
+
+    
 }

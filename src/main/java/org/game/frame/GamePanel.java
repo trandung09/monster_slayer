@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import org.game.character.Entity;
 import org.game.character.Player;
+import org.game.character.Projectiles;
 import org.game.control.AssetSetter;
 import org.game.control.Sound;
 import org.game.enums.CommandNum;
@@ -49,6 +50,8 @@ public class GamePanel extends JPanel implements Runnable {
     
     public Sound sound = new Sound();
     public EnvironmentManager eManager = new EnvironmentManager(this);
+
+    
 
     public InputHandler keyH = new InputHandler(this);
     public ScreenUI screenUI = new ScreenUI(this);
@@ -125,6 +128,30 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity ent : npcs) {
                 if (ent != null) ent.update();
             }
+        
+            // cập nhật vị trí mảng các đnạ được bắn ra từ nhân vật
+            for (int i = 0; i < player.projectiles.size(); i++) {
+                if (player.projectiles.get(i).alive == true) {
+                    player.projectiles.get(i).update();
+                }
+                else {
+                    player.projectiles.remove(i);
+                }
+            }
+
+            for (Entity e : monsters) {
+                if (e == null) continue;
+                if (e.getName() == "Green Slime") {
+                    for (int i = 0; i < e.projectiles.size(); i++) {
+                        if (e.projectiles.get(i).alive == true) {
+                            e.projectiles.get(i).update();
+                        }
+                        else {
+                            e.projectiles.remove(i);
+                        }
+                    }
+                }
+            }
 
             for (int i = 0; i < monsters.length; i++) {
                 if (monsters[i] != null) {
@@ -132,8 +159,8 @@ public class GamePanel extends JPanel implements Runnable {
                         monsters[i].update();
                     }
                     else if (monsters[i].alive == false && monsters[i].dying == true){
-                        int wX = monsters[i].worldX;
-                        int wY = monsters[i].worldY;
+                        int wX = monsters[i].getWorldX();
+                        int wY = monsters[i].getWorldY();
 
                         for (int k = 0; k < objs.length; k++) {
                             if (objs[k] != null) continue;
@@ -141,8 +168,8 @@ public class GamePanel extends JPanel implements Runnable {
                             if (monsters[i].objRan == 1) objs[k] = new Diamond(this);
                             else if (monsters[i].objRan == 2) objs[k] = new Mana(this);
 
-                            objs[k].worldX = wX;
-                            objs[k].worldY = wY;
+                            objs[k].setWorldX(wX);
+                            objs[k].setWorldY(wY);
                             break;
                         }
 
@@ -157,9 +184,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics gr) {
 
         super.paintComponent(gr);
-
         
-
         Graphics2D g2D = (Graphics2D) gr;
 
         if (mainstate == GameState.WAIT){
@@ -170,14 +195,35 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity ent : npcs) if (ent != null) ent.draw(g2D);
             for (SuperObject sobj : objs) 
-                if (sobj != null){
+                if (sobj != null) {
                     sobj.draw(g2D);
                 }
+
             for (Entity ent : monsters) 
                 if (ent != null) ent.draw(g2D);
 
+            // vez hình ảnh đạn bắn ra của nhân vật
+            for (Projectiles pr : player.projectiles) {
+                pr.draw(g2D);
+            }
+
+            // vez hình ảnh đạn bắn ra của quái vật
+            for (Entity e : monsters) {
+                if (e == null) continue;
+                if (e.getName() == "Green Slime") {
+                    for (Projectiles pr : e.projectiles)
+                        pr.draw(g2D);
+                }
+            }
+
             player.draw(g2D);
             eManager.draw(g2D);
+
+            /**
+             * 
+             * 
+             * 
+             */
         }
         screenUI.draw(g2D);
         gr.dispose();
