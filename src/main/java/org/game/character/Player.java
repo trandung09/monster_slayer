@@ -24,14 +24,17 @@ public class Player extends Entity {
 
     // PLAYER ATTRIBUTES
     private int level = 1;
-    private int strengly = 0; // the more strengly he has, the more damage he gives
     private int dexterity = 0; // the more dexterity he has, the less damage he recicives 
     private int exp = 0; // Kinh nghiệm nhân vật
     private int nextLevelExp;
     private int coin = 0; // Sô tiền nhân vật hiện có
     private int keys = 0;  // Số chìa khóa hiện có
     private int manas = 0; // Số năng lượng có thể sử dụng hiện tại
+    private int maxManas = 0;
     private int diamonds = 0; // Số kim cương hiện có
+    private int energy = 0;
+
+    private int maxEnergy = 0;
 
     public int currentItemSlected = 0;  // Vật phẩm được chọn hiện tại
     public boolean useKey = false;  // Đánh dấu có chọn sử dụng khóa hay không
@@ -50,8 +53,10 @@ public class Player extends Entity {
 
     private void setPlayerInfo() {
 
-        maxLife = 6;
+        maxLife = 8;
         life = maxLife;
+        maxEnergy = 10;
+        energy = maxEnergy;
 
         worldX = GamePanel.tileSize * 23;
         worldY = GamePanel.tileSize * 21;
@@ -134,6 +139,11 @@ public class Player extends Entity {
             level++;
             nextLevelExp *= 2;
 
+            maxEnergy = maxEnergy + 5;
+            energy = maxEnergy;
+
+            damage++;
+
             gp.screenUI.currentText = "You are level " + level + " now!\n"
                                         + "You feel stronger!";
 
@@ -202,10 +212,14 @@ public class Player extends Entity {
             // chưa có quả nào, 
             if (projectiles.size() == 0 || projectiles.getLast().life < 72) {
                 // tạo độ trễ giữ 2 quả đạn
-                Projectiles pr = new Fireball(gp);
-                pr.set(worldX, worldY, direction, true, this);
-    
-                projectiles.add(pr);
+                if (energy > 0) {
+                    Projectiles pr = new Fireball(gp);
+                    pr.set(worldX, worldY, direction, true, this);
+        
+                    projectiles.add(pr);
+
+                    energy--;
+                }
             }
         }
     }
@@ -303,22 +317,22 @@ public class Player extends Entity {
 
         switch (name) {
             case "Boots": 
-                speed += 2; gp.objs[index] = null; 
+                speed += 1; gp.objs[index] = null; 
                 gp.playMusicSE(2);
                 gp.screenUI.addMessage("Speed up!");
                 break;
             case "Diamond":
-                gp.player.diamonds++;
+                diamonds++;
                 gp.objs[index] = null;
                 gp.screenUI.addMessage("Diamond +1!");
                 break;
             case "Mana": 
-                gp.player.manas++;
+                manas++;
                 gp.objs[index] = null;
                 gp.screenUI.addMessage("Mana +1!");
                 break;
             case "Key": 
-                gp.player.keys++;
+                keys++;
                 gp.objs[index] = null;
                 gp.screenUI.addMessage("Key +1!");
                 break;
@@ -400,6 +414,8 @@ public class Player extends Entity {
 
         maxLife = 6;
         life = maxLife;
+        maxEnergy = 10;
+        energy = maxEnergy;
 
         worldX = GamePanel.tileSize * 23;
         worldY = GamePanel.tileSize * 21;
@@ -420,20 +436,24 @@ public class Player extends Entity {
         this.level = level;
     }
 
-    public int getStrengly() {
-        return strengly;
-    }
-
-    public void setStrengly(int strengly) {
-        this.strengly = strengly;
-    }
-
     public int getDexterity() {
         return dexterity;
     }
 
     public void setDexterity(int dexterity) {
         this.dexterity = dexterity;
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
+    public int getMaxEnergy() {
+        return maxEnergy;
     }
 
     public int getExp() {
@@ -474,6 +494,10 @@ public class Player extends Entity {
 
     public void setManas(int manas) {
         this.manas = manas;
+    }
+
+    public int getMaxManas() {
+        return maxManas;
     }
 
     public int getDiamonds() {

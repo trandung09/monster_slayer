@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import org.game.enums.Menu;
 import org.game.frame.GamePanel;
 import org.game.helper.Image;
-import org.game.object.Heart;
 import org.game.options.Option;
 
 public class ScreenUI extends Interaction {
@@ -35,10 +34,11 @@ public class ScreenUI extends Interaction {
         switch (gp.mainState) {
             case WAIT: drawWaitScreen(); break;
             case START: drawPlayScreen(); drawPlayerLife(); break;
-            case PAUSE: drawPauseScreen(); break;
+            case PAUSE: drawWinScreen(); break;
             case END: drawEndScreen(); break;
             case CHARACRTER:drawCharacterScreen(); break;
             case DIALOGUE: drawDialogueScreen(); break;
+            case WIN: drawWinScreen();
             default: break;
         }
     }
@@ -85,30 +85,52 @@ public class ScreenUI extends Interaction {
 
     private void drawPlayerLife() {
 
-        int posX = GamePanel.tileSize / 2;
-        int posY = GamePanel.tileSize / 2;
-        int i = 0;
+        int screenX = GamePanel.tileSize;
+        int screenY = GamePanel.tileSize;
 
-        // Draw blank heart
-        while(i < gp.player.getMaxLife() / 2) {
-            g2D.drawImage(Heart._blank, posX, posY, null);
-            posX += GamePanel.tileSize;
-            i++;
-        }
-        // Reset X and Y
-        posX = GamePanel.tileSize / 2;
-        posY = GamePanel.tileSize / 2;
-        i = 0;
-        // Draw current life
-        while(i < gp.player.getLife()) {
-            g2D.drawImage(Heart._half, posX, posY, null);
-            i++;
-            if (i < gp.player.getLife()) {
-                g2D.drawImage(Heart._full, posX, posY, null);
-            }
-            i++;
-            posX += GamePanel.tileSize;
-        }
+        double lifeOnScale = (double) GamePanel.tileSize / gp.player.getMaxLife();
+        double hpBar = lifeOnScale * gp.player.getLife();
+
+        g2D.setColor(new Color(255, 255, 255));
+        g2D.fillRect(screenX - 1, screenY - 16, GamePanel.tileSize * 3 + 2, 24);
+
+        g2D.setColor(new Color(255, 35, 35));
+        g2D.fillRect(screenX, screenY - 15, (int)hpBar * 3, 20);
+
+        double manaOnScale = (double) GamePanel.tileSize / gp.player.getMaxEnergy();
+        double manaBar = manaOnScale * gp.player.getEnergy();
+
+        screenY += (GamePanel.tileSize * 3) / 4;
+        g2D.setColor(new Color(255, 255, 255));
+        g2D.fillRect(screenX - 1, screenY - 16, GamePanel.tileSize * 3 + 2, 24);
+
+        g2D.setColor(new Color(255, 255, 153));
+        g2D.fillRect(screenX, screenY - 15, (int)manaBar * 3, 20);
+
+        // int posX = GamePanel.tileSize / 2;
+        // int posY = GamePanel.tileSize / 2;
+        // int i = 0;
+
+        // // Draw blank heart
+        // while(i < gp.player.getMaxLife() / 2) {
+        //     g2D.drawImage(Heart._blank, posX, posY, null);
+        //     posX += GamePanel.tileSize;
+        //     i++;
+        // }
+        // // Reset X and Y
+        // posX = GamePanel.tileSize / 2;
+        // posY = GamePanel.tileSize / 2;
+        // i = 0;
+        // // Draw current life
+        // while(i < gp.player.getLife()) {
+        //     g2D.drawImage(Heart._half, posX, posY, null);
+        //     i++;
+        //     if (i < gp.player.getLife()) {
+        //         g2D.drawImage(Heart._full, posX, posY, null);
+        //     }
+        //     i++;
+        //     posX += GamePanel.tileSize;
+        // }
     }
 
     private void drawCharacterScreen() {
@@ -134,7 +156,7 @@ public class ScreenUI extends Interaction {
         textY += lineHeight;
         g2D.drawString("Life", textX, textY);
         textY += lineHeight;
-        g2D.drawString("Strength", textX, textY);
+        g2D.drawString("Energy", textX, textY);
         textY += lineHeight;
         g2D.drawString("Dexterity", textX, textY);
         textY += lineHeight;
@@ -165,7 +187,7 @@ public class ScreenUI extends Interaction {
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
-        value = String.valueOf(gp.player.getStrengly());
+        value = String.valueOf(gp.player.getEnergy() + "/" + gp.player.getMaxEnergy());
         textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
@@ -364,6 +386,45 @@ public class ScreenUI extends Interaction {
         g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 40f));
 
         text = "Retry";
+        screenX = getXForCenterText(text);
+        screenY += GamePanel.tileSize * 4;
+
+        if (Option.endState == Menu.RETRY) {
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
+        }
+        g2D.drawString(text, screenX, screenY);
+
+        text = "Quit";
+        screenX = getXForCenterText(text);
+        screenY += GamePanel.tileSize;
+
+        if (Option.endState == Menu.QUIT) {
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
+        }
+        g2D.drawString(text, screenX, screenY);
+    }
+
+    private void drawWinScreen() {
+        g2D.setColor(Color.WHITE);
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 65f));
+
+        String text = "Congratulations";
+
+        int screenX = getXForCenterText(text);
+        int screenY = GamePanel.tileSize * 2 + GamePanel.tileSize / 2;
+
+        g2D.drawString(text, screenX, screenY);
+
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 50f));
+
+        text = "on winning";
+        screenX = getXForCenterText(text);
+        screenY = screenY + GamePanel.tileSize;
+        g2D.drawString(text, screenX, screenY);
+
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 40f));
+
+        text = "New Game";
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize * 4;
 

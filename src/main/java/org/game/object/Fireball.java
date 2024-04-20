@@ -14,7 +14,7 @@ public class Fireball extends Projectiles {
         maxLife = 80;
         life = maxLife;
         alive = false; // nếu còn sống thì vẫn còn vẽ 
-        damage = 1;
+        damage = 3;
 
         loadFireballImage();
     }
