@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import org.game.frame.GamePanel;
 
-public class Image {
+public class Images {
 
     private static int width  = GamePanel.tileSize;
     private static int height = GamePanel.tileSize;

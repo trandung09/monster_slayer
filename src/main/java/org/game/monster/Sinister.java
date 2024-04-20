@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 import org.game.enums.Direction;
 import org.game.frame.GamePanel;
-import org.game.helper.Image;
+import org.game.helper.Images;
 
 public class Sinister extends Monster {
 
@@ -42,14 +42,14 @@ public class Sinister extends Monster {
         int width  = GamePanel.tileSize;
         int height = GamePanel.tileSize;
 
-        up1    = Image.getImage("/monster/orc_up_1", width, height);
-        up2    = Image.getImage("/monster/orc_up_2", width, height);
-        down1  = Image.getImage("/monster/orc_down_1", width, height);
-        down2  = Image.getImage("/monster/orc_down_2", width, height);
-        left1  = Image.getImage("/monster/orc_left_1", width, height);
-        left2  = Image.getImage("/monster/orc_left_2", width, height);
-        right1 = Image.getImage("/monster/orc_right_1", width, height);
-        right2 = Image.getImage("/monster/orc_right_2", width, height);
+        up1    = Images.getImage("/monster/orc_up_1", width, height);
+        up2    = Images.getImage("/monster/orc_up_2", width, height);
+        down1  = Images.getImage("/monster/orc_down_1", width, height);
+        down2  = Images.getImage("/monster/orc_down_2", width, height);
+        left1  = Images.getImage("/monster/orc_left_1", width, height);
+        left2  = Images.getImage("/monster/orc_left_2", width, height);
+        right1 = Images.getImage("/monster/orc_right_1", width, height);
+        right2 = Images.getImage("/monster/orc_right_2", width, height);
     }
 
     private void loadSinisterAttackImage() {
@@ -57,14 +57,14 @@ public class Sinister extends Monster {
         int width  = GamePanel.tileSize * 2;
         int height = GamePanel.tileSize * 2;
 
-        attackUp1    = Image.getImage("/monster/orc_attack_up_1", width / 2, height);
-        attackUp2    = Image.getImage("/monster/orc_attack_up_2", width / 2, height);
-        attackDown1  = Image.getImage("/monster/orc_attack_down_1", width / 2, height);
-        attackDown2  = Image.getImage("/monster/orc_attack_down_2", width / 2, height);
-        attackLeft1  = Image.getImage("/monster/orc_attack_left_1", width, height / 2);
-        attackLeft2  = Image.getImage("/monster/orc_attack_left_2", width, height / 2);
-        attackRight1 = Image.getImage("/monster/orc_attack_right_1", width, height / 2);
-        attackRight2 = Image.getImage("/monster/orc_attack_right_2", width, height / 2);
+        attackUp1    = Images.getImage("/monster/orc_attack_up_1", width / 2, height);
+        attackUp2    = Images.getImage("/monster/orc_attack_up_2", width / 2, height);
+        attackDown1  = Images.getImage("/monster/orc_attack_down_1", width / 2, height);
+        attackDown2  = Images.getImage("/monster/orc_attack_down_2", width / 2, height);
+        attackLeft1  = Images.getImage("/monster/orc_attack_left_1", width, height / 2);
+        attackLeft2  = Images.getImage("/monster/orc_attack_left_2", width, height / 2);
+        attackRight1 = Images.getImage("/monster/orc_attack_right_1", width, height / 2);
+        attackRight2 = Images.getImage("/monster/orc_attack_right_2", width, height / 2);
     }
 
     public void update() {

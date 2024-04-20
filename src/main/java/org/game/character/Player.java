@@ -9,7 +9,7 @@ import org.game.enums.Direction;
 import org.game.enums.GameState;
 import org.game.event.InputHandler;
 import org.game.frame.GamePanel;
-import org.game.helper.Image;
+import org.game.helper.Images;
 import org.game.object.Fireball;
 
 public class Player extends Entity {
@@ -33,7 +33,6 @@ public class Player extends Entity {
     private int maxManas = 0;
     private int diamonds = 0; // Số kim cương hiện có
     private int energy = 0;
-
     private int maxEnergy = 0;
 
     public int currentItemSlected = 0;  // Vật phẩm được chọn hiện tại
@@ -79,14 +78,14 @@ public class Player extends Entity {
         int width  = GamePanel.tileSize;
         int height = GamePanel.tileSize;
 
-        up1    = Image.getImage("/player/boy_up_1", width, height);
-        up2    = Image.getImage("/player/boy_up_2", width, height);
-        down1  = Image.getImage("/player/boy_down_1", width, height);
-        down2  = Image.getImage("/player/boy_down_2", width, height);
-        left1  = Image.getImage("/player/boy_left_1", width, height);
-        left2  = Image.getImage("/player/boy_left_2", width, height);
-        right1 = Image.getImage("/player/boy_right_1", width, height);
-        right2 = Image.getImage("/player/boy_right_2", width, height);
+        up1    = Images.getImage("/player/boy_up_1", width, height);
+        up2    = Images.getImage("/player/boy_up_2", width, height);
+        down1  = Images.getImage("/player/boy_down_1", width, height);
+        down2  = Images.getImage("/player/boy_down_2", width, height);
+        left1  = Images.getImage("/player/boy_left_1", width, height);
+        left2  = Images.getImage("/player/boy_left_2", width, height);
+        right1 = Images.getImage("/player/boy_right_1", width, height);
+        right2 = Images.getImage("/player/boy_right_2", width, height);
     }
 
     private void loadPlayerAttackImage() {
@@ -94,14 +93,14 @@ public class Player extends Entity {
         int width  = GamePanel.tileSize * 2;
         int height = GamePanel.tileSize * 2;
 
-        attackUp1    = Image.getImage("/player/boy_attack_up_1", width / 2, height);
-        attackUp2    = Image.getImage("/player/boy_attack_up_2", width / 2, height);
-        attackDown1  = Image.getImage("/player/boy_attack_down_1", width / 2, height);
-        attackDown2  = Image.getImage("/player/boy_attack_down_2", width / 2, height);
-        attackLeft1  = Image.getImage("/player/boy_attack_left_1", width, height / 2);
-        attackLeft2  = Image.getImage("/player/boy_attack_left_2", width, height / 2);
-        attackRight1 = Image.getImage("/player/boy_attack_right_1", width, height / 2);
-        attackRight2 = Image.getImage("/player/boy_attack_right_2", width, height / 2);
+        attackUp1    = Images.getImage("/player/boy_attack_up_1", width / 2, height);
+        attackUp2    = Images.getImage("/player/boy_attack_up_2", width / 2, height);
+        attackDown1  = Images.getImage("/player/boy_attack_down_1", width / 2, height);
+        attackDown2  = Images.getImage("/player/boy_attack_down_2", width / 2, height);
+        attackLeft1  = Images.getImage("/player/boy_attack_left_1", width, height / 2);
+        attackLeft2  = Images.getImage("/player/boy_attack_left_2", width, height / 2);
+        attackRight1 = Images.getImage("/player/boy_attack_right_1", width, height / 2);
+        attackRight2 = Images.getImage("/player/boy_attack_right_2", width, height / 2);
     }
 
     private void loadPlayerCutImage() {
@@ -109,14 +108,14 @@ public class Player extends Entity {
         int width  = GamePanel.tileSize * 2;
         int height = GamePanel.tileSize * 2;
 
-        cutUp1    = Image.getImage("/player/boy_axe_up_1", width / 2, height);
-        cutUp2    = Image.getImage("/player/boy_axe_up_2", width / 2, height);
-        cutDown1  = Image.getImage("/player/boy_axe_down_1", width / 2, height);
-        cutDown2  = Image.getImage("/player/boy_axe_down_2", width / 2, height);
-        cutLeft1  = Image.getImage("/player/boy_axe_left_1", width, height / 2);
-        cutLeft2  = Image.getImage("/player/boy_axe_left_2", width, height / 2);
-        cutRight1 = Image.getImage("/player/boy_axe_right_1", width, height / 2);
-        cutRight2 = Image.getImage("/player/boy_axe_right_2", width, height / 2);
+        cutUp1    = Images.getImage("/player/boy_axe_up_1", width / 2, height);
+        cutUp2    = Images.getImage("/player/boy_axe_up_2", width / 2, height);
+        cutDown1  = Images.getImage("/player/boy_axe_down_1", width / 2, height);
+        cutDown2  = Images.getImage("/player/boy_axe_down_2", width / 2, height);
+        cutLeft1  = Images.getImage("/player/boy_axe_left_1", width, height / 2);
+        cutLeft2  = Images.getImage("/player/boy_axe_left_2", width, height / 2);
+        cutRight1 = Images.getImage("/player/boy_axe_right_1", width, height / 2);
+        cutRight2 = Images.getImage("/player/boy_axe_right_2", width, height / 2);
     }
 
     /* Cập nhật hoạt động của nhân vật sau khi nhận các sự kiện từ bàn phím,

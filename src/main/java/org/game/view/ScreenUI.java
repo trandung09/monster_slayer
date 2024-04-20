@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import org.game.enums.Menu;
 import org.game.frame.GamePanel;
-import org.game.helper.Image;
+import org.game.helper.Images;
 import org.game.options.Option;
 
 public class ScreenUI extends Interaction {
@@ -217,7 +217,7 @@ public class ScreenUI extends Interaction {
         g2D.drawString(value, textX, textY);
         textY += lineHeight / 2;
 
-        g2D.drawImage(gp.player.isSelectedWeapon() ? Image.sword : Image.axe, 
+        g2D.drawImage(gp.player.isSelectedWeapon() ? Images.sword : Images.axe, 
                     valueX - 29, textY, 40, 38, null);
 
         // Item image
@@ -236,21 +236,21 @@ public class ScreenUI extends Interaction {
         if (gp.player.currentItemSlected == 0) {
             drawSubWindow(usedItemX - 15, usedItemY - 15, width - 101, 70);
         }
-        g2D.drawImage(Image.key, usedItemX + 5, usedItemY, 40, 40, null);
+        g2D.drawImage(Images.key, usedItemX + 5, usedItemY, 40, 40, null);
         g2D.drawString("x" + gp.player.getKeys(), usedItemX + 65, usedItemY + 32);
         usedItemY += lineHeight + 15;
 
         if (gp.player.currentItemSlected == 1) {
             drawSubWindow(usedItemX - 15, usedItemY - 15, width - 101, 70);
         }
-        g2D.drawImage(Image.coin, usedItemX + 5, usedItemY, 40, 40, null);
+        g2D.drawImage(Images.coin, usedItemX + 5, usedItemY, 40, 40, null);
         g2D.drawString("x" + gp.player.getDiamonds(), usedItemX + 65, usedItemY + 32);
         usedItemY += lineHeight + 15;
 
         if (gp.player.currentItemSlected == 2) {
             drawSubWindow(usedItemX - 15, usedItemY - 15, width - 101, 70);
         }
-        g2D.drawImage(Image.mana, usedItemX + 5, usedItemY, 40, 40, null);
+        g2D.drawImage(Images.mana, usedItemX + 5, usedItemY, 40, 40, null);
         g2D.drawString("x" + gp.player.getManas(), usedItemX + 66, usedItemY + 32);
     }   
 
@@ -279,7 +279,7 @@ public class ScreenUI extends Interaction {
         screenX = GamePanel.screenWidth / 2 - (GamePanel.tileSize * 3)  / 4;
         screenY += GamePanel.tileSize;
 
-        g2D.drawImage((drawChecker ? Image.playerRight1 : Image.playerRight2), screenX, screenY, 72, 72, null);
+        g2D.drawImage((drawChecker ? Images.playerRight1 : Images.playerRight2), screenX, screenY, 72, 72, null);
         g2D.drawLine(GamePanel.screenWidth / 6, screenY + 72, (GamePanel.screenWidth * 5 ) / 6, screenY + 72);
 
         // Draw menu choose (new game : load_game : quit)

@@ -1,7 +1,7 @@
 package org.game.object;
 
 import org.game.frame.GamePanel;
-import org.game.helper.Image;
+import org.game.helper.Images;
 
 public class Diamond extends SuperObject {
 
@@ -10,7 +10,7 @@ public class Diamond extends SuperObject {
         super(gp);
 
         name = "Diamond";
-        image = Image.diamond;
+        image = Images.diamond;
     }
     
 }

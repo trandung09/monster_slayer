@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import org.game.character.Projectiles;
 import org.game.enums.Direction;
 import org.game.frame.GamePanel;
-import org.game.helper.Image;
+import org.game.helper.Images;
 import org.game.object.Rock;
 
 public class GreenSlime extends Monster {
@@ -90,13 +90,13 @@ public class GreenSlime extends Monster {
         int width = GamePanel.tileSize;
         int height = GamePanel.tileSize;
 
-        up1    = Image.getImage("/monster/greenslime_down_1", width, height);
-        up2    = Image.getImage("/monster/greenslime_down_2", width, height);
-        down1  = Image.getImage("/monster/greenslime_down_1", width, height);
-        down2  = Image.getImage("/monster/greenslime_down_2", width, height);
-        left1  = Image.getImage("/monster/greenslime_down_1", width, height);
-        left2  = Image.getImage("/monster/greenslime_down_2", width, height);
-        right1 = Image.getImage("/monster/greenslime_down_1", width, height);
-        right2 = Image.getImage("/monster/greenslime_down_2", width, height);
+        up1    = Images.getImage("/monster/greenslime_down_1", width, height);
+        up2    = Images.getImage("/monster/greenslime_down_2", width, height);
+        down1  = Images.getImage("/monster/greenslime_down_1", width, height);
+        down2  = Images.getImage("/monster/greenslime_down_2", width, height);
+        left1  = Images.getImage("/monster/greenslime_down_1", width, height);
+        left2  = Images.getImage("/monster/greenslime_down_2", width, height);
+        right1 = Images.getImage("/monster/greenslime_down_1", width, height);
+        right2 = Images.getImage("/monster/greenslime_down_2", width, height);
     }
 }

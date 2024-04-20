@@ -1,7 +1,7 @@
 package org.game.object;
 
 import org.game.frame.GamePanel;
-import org.game.helper.Image;
+import org.game.helper.Images;
 
 public class GoldCoin extends SuperObject {
     
@@ -10,6 +10,6 @@ public class GoldCoin extends SuperObject {
         super(gp);
 
         name = "GoldCoin";
-        image = Image.coin;
+        image = Images.coin;
     }
 }
