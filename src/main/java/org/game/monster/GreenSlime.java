@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import org.game.character.Projectiles;
 import org.game.enums.Direction;
 import org.game.frame.GamePanel;
+import org.game.helper.Image;
 import org.game.object.Rock;
 
 public class GreenSlime extends Monster {
@@ -73,6 +74,15 @@ public class GreenSlime extends Monster {
                 }
             }
         }
+
+        for (Projectiles pr : projectiles) {
+            pr.collisionOn = false;
+            coChecker.checkCoWithPlayer(pr);
+
+            if (pr.collisionOn == true) {
+                damagePlayer();
+            }
+        }
     }
 
     private void loadSlimeImage() {
@@ -80,13 +90,13 @@ public class GreenSlime extends Monster {
         int width = GamePanel.tileSize;
         int height = GamePanel.tileSize;
 
-        up1 = getImage("/monster/greenslime_down_1", width, height);
-        up2 = getImage("/monster/greenslime_down_2", width, height);
-        down1 = getImage("/monster/greenslime_down_1", width, height);
-        down2 = getImage("/monster/greenslime_down_2", width, height);
-        left1 = getImage("/monster/greenslime_down_1", width, height);
-        left2 = getImage("/monster/greenslime_down_2", width, height);
-        right1 = getImage("/monster/greenslime_down_1", width, height);
-        right2 = getImage("/monster/greenslime_down_2", width, height);
+        up1    = Image.getImage("/monster/greenslime_down_1", width, height);
+        up2    = Image.getImage("/monster/greenslime_down_2", width, height);
+        down1  = Image.getImage("/monster/greenslime_down_1", width, height);
+        down2  = Image.getImage("/monster/greenslime_down_2", width, height);
+        left1  = Image.getImage("/monster/greenslime_down_1", width, height);
+        left2  = Image.getImage("/monster/greenslime_down_2", width, height);
+        right1 = Image.getImage("/monster/greenslime_down_1", width, height);
+        right2 = Image.getImage("/monster/greenslime_down_2", width, height);
     }
 }

@@ -2,15 +2,13 @@ package org.game.object;
 
 import org.game.character.Projectiles;
 import org.game.frame.GamePanel;
+import org.game.helper.Image;
 
 public class Fireball extends Projectiles {
-    
-    GamePanel gp;
 
     public Fireball(GamePanel gp) {
         super(gp);
 
-        this.gp = gp;
         name = "Fireball";
         speed = 6;
         maxLife = 80;
@@ -18,19 +16,20 @@ public class Fireball extends Projectiles {
         alive = false; // nếu còn sống thì vẫn còn vẽ 
         damage = 1;
 
-        setImage();
+        loadFireballImage();
     }
     
-    public void setImage() {
-        int width = GamePanel.tileSize;
+    public void loadFireballImage() {
+        int width  = GamePanel.tileSize;
         int height = GamePanel.tileSize;
-        up1 = getImage("/object/fireball_up_1", width, height);
-        up2 = getImage("/object/fireball_up_2", width, height);
-        down1 = getImage("/object/fireball_down_1", width, height);
-        down2 = getImage("/object/fireball_down_2", width, height);
-        left1 = getImage("/object/fireball_left_1", width, height);
-        left2 = getImage("/object/fireball_left_2", width, height);
-        right1 = getImage("/object/fireball_right_1", width, height);
-        right2 = getImage("/object/fireball_right_2", width, height);
+
+        up1    = Image.getImage("/object/fireball_up_1", width, height);
+        up2    = Image.getImage("/object/fireball_up_2", width, height);
+        down1  = Image.getImage("/object/fireball_down_1", width, height);
+        down2  = Image.getImage("/object/fireball_down_2", width, height);
+        left1  = Image.getImage("/object/fireball_left_1", width, height);
+        left2  = Image.getImage("/object/fireball_left_2", width, height);
+        right1 = Image.getImage("/object/fireball_right_1", width, height);
+        right2 = Image.getImage("/object/fireball_right_2", width, height);
     }
 }

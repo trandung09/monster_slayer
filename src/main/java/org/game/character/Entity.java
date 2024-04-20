@@ -6,11 +6,10 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import org.game.control.CollisionChecker;
-import org.game.control.UtilityTool;
 import org.game.enums.Direction;
 import org.game.event.EventHandler;
 import org.game.frame.GamePanel;
+import org.game.helper.CollisionChecker;
 
 public class Entity {
     
@@ -30,7 +29,6 @@ public class Entity {
     protected BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     protected BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
     protected BufferedImage cutUp1, cutUp2, cutDown1, cutDown2, cutLeft1, cutLeft2, cutRight1, cutRight2;
-    protected UtilityTool uTool; 
 
     // FOR COLLISION CHECK
     protected CollisionChecker coChecker; // Đối tượng kiêm tra va chạm cho thực thể
@@ -41,7 +39,7 @@ public class Entity {
     protected int speed;          // Tốc độ của thực thể
     protected int worldX, worldY; // Vị trí của thực thể
     public Rectangle solidArea;// Vùng đặc để kiểm tra va chạm
-    public Rectangle attackArea = new Rectangle(0, 0, 0, 0); // Vùng đặc kiểm tra va chạm khi tấn công
+    public Rectangle attackArea; // Vùng đặc kiểm tra va chạm khi tấn công
     public int solidAreaDefaultX; // Giá trị X mặc định ban đầu của vùng đặc va chạm
     public int solidAreaDefaultY; // Giá trị Y mặc định ban đầu của vùng đặc va chạm
     protected Direction direction = Direction.DOWN; // Enum Direction (class)
@@ -56,7 +54,7 @@ public class Entity {
     protected int damage = 1;
     public boolean alive = true;    // Kiểm tra sự tồn tại của thực thể
     public boolean dying = false;
-    public int dyingCounter = 0 ; // Giá trị sự sống hiện tại của thực thể
+    protected int dyingCounter = 0 ; // Giá trị sự sống hiện tại của thực thể
 
     protected boolean attacking = false;   // enter -> attacking = true
     protected int entityCounter = 0;      // Biến đếm để cập nhật biến playerNum
@@ -71,14 +69,8 @@ public class Entity {
     protected Entity(GamePanel gp) {
 
         this.gp = gp;
-        this.uTool = new UtilityTool();
         this.eventH = new EventHandler(gp);
         this.coChecker = new CollisionChecker(gp);
-    }
-
-    protected BufferedImage getImage(String imagePath, int width, int height) {
-
-        return uTool.getImage(imagePath, width, height);
     }
 
     protected void setAction() {
@@ -121,6 +113,10 @@ public class Entity {
 
     public void resetAction() {
 
+    }
+
+    public void reInitialize() {
+        
     }
 
     /**
@@ -166,11 +162,6 @@ public class Entity {
         
     }
 
-    public BufferedImage getRightImage(boolean checker) {
-
-        return checker ? right1 : right2; 
-    }
-
     public String getName() {
         return name;
     }
@@ -186,7 +177,6 @@ public class Entity {
     public void setGp(GamePanel gp) {
         this.gp = gp;
     }
-
 
     public int getSpeed() {
         return speed;

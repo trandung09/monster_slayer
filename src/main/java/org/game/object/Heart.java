@@ -2,8 +2,8 @@ package org.game.object;
 
 import java.awt.image.BufferedImage;
 
-import org.game.control.UtilityTool;
 import org.game.frame.GamePanel;
+import org.game.helper.UtilityTool;
 
 public class Heart {
     

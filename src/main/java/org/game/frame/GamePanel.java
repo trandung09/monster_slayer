@@ -7,15 +7,14 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import org.game.Sound.Sound;
 import org.game.character.Entity;
 import org.game.character.Player;
 import org.game.character.Projectiles;
-import org.game.control.AssetSetter;
-import org.game.control.Sound;
-import org.game.enums.CommandNum;
 import org.game.enums.GameState;
 import org.game.environment.EnvironmentManager;
 import org.game.event.InputHandler;
+import org.game.helper.AssetSetter;
 import org.game.map.TileManager;
 import org.game.monster.Monster;
 import org.game.object.Diamond;
@@ -42,16 +41,13 @@ public class GamePanel extends JPanel implements Runnable {
     public final int FPS = 60;
 
     // GAME STATE SETTINGS
-    public GameState mainstate = GameState.WAIT; // Enum GameState (class)
-    public CommandNum waitstate = CommandNum.NEW_GAME; // Enum CommandNum (class)
+    public GameState mainState = GameState.WAIT; // Enum GameState (class)
 
     // OBJECTS OF THE GAME
     Thread gameThread;
     
     public Sound sound = new Sound();
     public EnvironmentManager eManager = new EnvironmentManager(this);
-
-    
 
     public InputHandler keyH = new InputHandler(this);
     public ScreenUI screenUI = new ScreenUI(this);
@@ -71,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         this.addKeyListener(keyH);
 
-        setNpcs();
+        setEntityAndObject();
         startGameThread();
         // playMusic(0);
     }
@@ -84,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     // Khởi tạo các Entity và Object của game
-    private void setNpcs() {
+    private void setEntityAndObject() {
 
         npcs = AssetSetter.setNpc(this);
         objs = AssetSetter.setObject(this);
@@ -122,7 +118,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Mọi cập nhật của các đối tượng trong game được cập nhật ở đây
     public void update() {
 
-        if (mainstate == GameState.START) {
+        if (mainState == GameState.START) {
             player.update();
             eManager.update();
             for (Entity ent : npcs) {
@@ -154,6 +150,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             for (int i = 0; i < monsters.length; i++) {
+                // && !monsters[i].getName().equals("Sinister")
                 if (monsters[i] != null) {
                     if (monsters[i].alive == true && monsters[i].dying == false) {
                         monsters[i].update();
@@ -187,7 +184,7 @@ public class GamePanel extends JPanel implements Runnable {
         
         Graphics2D g2D = (Graphics2D) gr;
 
-        if (mainstate == GameState.WAIT){
+        if (mainState == GameState.WAIT){
 
         }
         else {
@@ -227,6 +224,16 @@ public class GamePanel extends JPanel implements Runnable {
         }
         screenUI.draw(g2D);
         gr.dispose();
+    }
+
+    public void reInitialize() {
+        player.reInitialize();
+
+        npcs = new Entity[50];
+        monsters = new Monster[50];
+        objs = new SuperObject[50];
+
+        setEntityAndObject();
     }
 
     public void playMusic(int index) {

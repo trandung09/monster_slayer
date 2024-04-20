@@ -6,8 +6,8 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import org.game.control.UtilityTool;
 import org.game.frame.GamePanel;
+import org.game.helper.UtilityTool;
 
 public class TileManager {
 

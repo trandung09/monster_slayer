@@ -1,4 +1,4 @@
-package org.game.control;
+package org.game.helper;
 
 import org.game.character.Entity;
 import org.game.frame.GamePanel;

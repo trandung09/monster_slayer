@@ -4,28 +4,26 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import org.game.enums.CommandNum;
+import org.game.enums.Menu;
 import org.game.frame.GamePanel;
+import org.game.helper.Image;
 import org.game.object.Heart;
+import org.game.options.Option;
 
 public class ScreenUI extends Interaction {
 
     public ArrayList<String> message = new ArrayList<>();
     public ArrayList<Integer> messageCounter = new ArrayList<>();
+    public String currentText;
 
-    private BufferedImage player_image;
     private boolean drawChecker = false;
     private int drawCounter = 0;
-
-    public String curreString;
 
     public ScreenUI(GamePanel gp) {
 
         super(gp);
-
     }
 
     public void draw(Graphics2D g2D) {
@@ -34,7 +32,7 @@ public class ScreenUI extends Interaction {
 
         g2D.setFont(maruMonica.deriveFont(Font.BOLD, 54f));
 
-        switch (gp.mainstate) {
+        switch (gp.mainState) {
             case WAIT: drawWaitScreen(); break;
             case START: drawPlayScreen(); drawPlayerLife(); break;
             case PAUSE: drawPauseScreen(); break;
@@ -66,69 +64,69 @@ public class ScreenUI extends Interaction {
     }
 
     private void drawDialogueScreen() {
-       
-        int x = GamePanel.tileSize * 2;
-        int y = GamePanel.tileSize / 2;
+
+        int screenX = GamePanel.tileSize * 2;
+        int screenY = GamePanel.tileSize / 2;
 
         int width = GamePanel.screenWidth - GamePanel.tileSize*4;
         int height = GamePanel.tileSize * 4;
 
-        drawSubWindow(x, y, width, height);
+        drawSubWindow(screenX, screenY, width, height);
 
-        x += GamePanel.tileSize/2;
-        y += GamePanel.tileSize;
+        screenX += GamePanel.tileSize / 2;
+        screenY += GamePanel.tileSize;
 
         g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 30f));
-        for (String line : curreString.split("\n")) {
-            g2D.drawString(line, x, y);
-            y += 40;
+        for (String line : currentText.split("\n")) {
+            g2D.drawString(line, screenX, screenY);
+            screenY += 40;
         }
     }
 
     private void drawPlayerLife() {
 
-        int X = GamePanel.tileSize / 2;
-        int Y = GamePanel.tileSize / 2;
+        int posX = GamePanel.tileSize / 2;
+        int posY = GamePanel.tileSize / 2;
         int i = 0;
 
         // Draw blank heart
         while(i < gp.player.getMaxLife() / 2) {
-            g2D.drawImage(Heart._blank, X, Y, null);
-            X += GamePanel.tileSize;
+            g2D.drawImage(Heart._blank, posX, posY, null);
+            posX += GamePanel.tileSize;
             i++;
         }
         // Reset X and Y
-        X = GamePanel.tileSize / 2;
-        Y = GamePanel.tileSize / 2;
+        posX = GamePanel.tileSize / 2;
+        posY = GamePanel.tileSize / 2;
         i = 0;
         // Draw current life
         while(i < gp.player.getLife()) {
-            g2D.drawImage(Heart._half, X, Y, null);
+            g2D.drawImage(Heart._half, posX, posY, null);
             i++;
             if (i < gp.player.getLife()) {
-                g2D.drawImage(Heart._full, X, Y, null);
+                g2D.drawImage(Heart._full, posX, posY, null);
             }
             i++;
-            X += GamePanel.tileSize;
+            posX += GamePanel.tileSize;
         }
     }
 
     private void drawCharacterScreen() {
 
         // Create a frame
-        final int X = (GamePanel.tileSize * 3) / 4 ;
-        final int Y = GamePanel.tileSize;
+        final int frameX = (GamePanel.tileSize * 3) / 4 ;
+        final int frameY = GamePanel.tileSize;
         final int height = GamePanel.tileSize * 8;
         final int width = GamePanel.tileSize * 5;
 
         // Draw sub window
-        drawSubWindow(X, Y, width, height);
+        drawSubWindow(frameX, frameY, width, height);
 
         g2D.setColor(Color.WHITE);
         g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 32f));
 
-        int textX = X + 20;
-        int textY = Y + GamePanel.tileSize;
+        int textX = frameX + 20;
+        int textY = frameY + GamePanel.tileSize;
         int lineHeight = 35;
 
         // Names
@@ -152,84 +150,85 @@ public class ScreenUI extends Interaction {
         textY += lineHeight;
 
         // Values
-        int tailX = X + width - 30;
-        textY = Y + GamePanel.tileSize;
+        int valueX = frameX + width - 30;
+        textY = frameY + GamePanel.tileSize;
+
         String value;
 
         value = String.valueOf(gp.player.getLevel());
-        textX = gteXForAlignToRightText(value, tailX);
+        textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
         value = String.valueOf(gp.player.getLife() + "/" + gp.player.getMaxLife());
-        textX = gteXForAlignToRightText(value, tailX);
+        textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
         value = String.valueOf(gp.player.getStrengly());
-        textX = gteXForAlignToRightText(value, tailX);
+        textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
         
         value = String.valueOf(gp.player.getDexterity());
-        textX = gteXForAlignToRightText(value, tailX);
+        textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
         value = String.valueOf(gp.player.getDamage());
-        textX = gteXForAlignToRightText(value, tailX);
+        textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
         value = String.valueOf(gp.player.getExp());
-        textX = gteXForAlignToRightText(value, tailX);
+        textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
         value = String.valueOf(gp.player.getNextLevelExp());
-        textX = gteXForAlignToRightText(value, tailX);
+        textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight;
 
         value = String.valueOf(gp.player.getCoin());
-        textX = gteXForAlignToRightText(value, tailX);
+        textX = gteXForAlignToRightText(value, valueX);
         g2D.drawString(value, textX, textY);
         textY += lineHeight / 2;
 
-        g2D.drawImage(gp.player.isSelectedWeapon() ? gp.player.currentWeaponSword : gp.player.currentWeaponAxe, 
-                    tailX - GamePanel.tileSize / 2 - 5, textY, 40, 38, null);
+        g2D.drawImage(gp.player.isSelectedWeapon() ? Image.sword : Image.axe, 
+                    valueX - 29, textY, 40, 38, null);
 
         // Item image
         lineHeight += 10;
-        int usedItemX = GamePanel.screenWidth - X - width;
-        int usedItemY = Y;
+        int usedItemX = GamePanel.screenWidth - frameX - width;
+        int usedItemY = frameY;
 
-        drawSubWindow(usedItemX, usedItemY, width - GamePanel.tileSize - 32, height / 2 + 30);
-        drawSubWindow(usedItemX, usedItemY + 30 + height / 2 + 12, width, height / 4 - 12);
+        drawSubWindow(usedItemX, usedItemY, width - 80, height / 2 + 30);
+        drawSubWindow(usedItemX, usedItemY + height / 2 + 42, width, height / 4 - 12);
 
         g2D.drawString("[ENTER] to use!", usedItemX + 20, usedItemY + height / 2 + 90);
 
         usedItemX += 25;
         usedItemY += 25;
 
-        if (gp.player.current_choose == 0) {
-            drawSubWindow(usedItemX - 15, usedItemY - 15, width - GamePanel.tileSize * 2 - 5, 70);
+        if (gp.player.currentItemSlected == 0) {
+            drawSubWindow(usedItemX - 15, usedItemY - 15, width - 101, 70);
         }
-        g2D.drawImage(gp.player.key, usedItemX + 5, usedItemY, 40, 40, null);
+        g2D.drawImage(Image.key, usedItemX + 5, usedItemY, 40, 40, null);
         g2D.drawString("x" + gp.player.getKeys(), usedItemX + 65, usedItemY + 32);
         usedItemY += lineHeight + 15;
 
-        if (gp.player.current_choose == 1) {
-            drawSubWindow(usedItemX - 15, usedItemY - 15, width - GamePanel.tileSize * 2 - 5, 70);
+        if (gp.player.currentItemSlected == 1) {
+            drawSubWindow(usedItemX - 15, usedItemY - 15, width - 101, 70);
         }
-        g2D.drawImage(gp.player.diamond, usedItemX + 5, usedItemY, 40, 40, null);
+        g2D.drawImage(Image.coin, usedItemX + 5, usedItemY, 40, 40, null);
         g2D.drawString("x" + gp.player.getDiamonds(), usedItemX + 65, usedItemY + 32);
         usedItemY += lineHeight + 15;
 
-        if (gp.player.current_choose == 2) {
-            drawSubWindow(usedItemX - 15, usedItemY - 15, width - GamePanel.tileSize * 2 - 5, 70);
+        if (gp.player.currentItemSlected == 2) {
+            drawSubWindow(usedItemX - 15, usedItemY - 15, width - 101, 70);
         }
-        g2D.drawImage(gp.player.mana, usedItemX + 5, usedItemY, 40, 40, null);
+        g2D.drawImage(Image.mana, usedItemX + 5, usedItemY, 40, 40, null);
         g2D.drawString("x" + gp.player.getManas(), usedItemX + 66, usedItemY + 32);
     }   
 
@@ -240,13 +239,13 @@ public class ScreenUI extends Interaction {
 
         // Draw string: "PIXEL HUNTER" in panel
         String text = "PIXEL HUNTER";
-        int X = getXForCenterText(text);
-        int Y = GamePanel.tileSize * 2;
+        int screenX = getXForCenterText(text);
+        int screenY = GamePanel.tileSize * 2;
 
-        g2D.drawString(text, X + 3, Y - 3);
+        g2D.drawString(text, screenX + 3, screenY - 3);
 
         g2D.setColor(Color.WHITE);
-        g2D.drawString(text, X, Y);
+        g2D.drawString(text, screenX, screenY);
 
         // Draw image.gif (player image) in panel
         drawCounter++;
@@ -254,40 +253,39 @@ public class ScreenUI extends Interaction {
             drawCounter = 0;
             drawChecker = !drawChecker;
         }
-        player_image = gp.player.getRightImage(drawChecker);
 
-        X = GamePanel.screenWidth / 2 - (GamePanel.tileSize * 3)  / 4;
-        Y += GamePanel.tileSize;
+        screenX = GamePanel.screenWidth / 2 - (GamePanel.tileSize * 3)  / 4;
+        screenY += GamePanel.tileSize;
 
-        g2D.drawImage(player_image, X, Y, (GamePanel.tileSize * 3) / 2, (GamePanel.tileSize * 3) / 2, null);
-        g2D.drawLine(GamePanel.screenWidth / 6, Y + (GamePanel.tileSize * 3) / 2, GamePanel.screenWidth - GamePanel.screenWidth / 6, Y + (GamePanel.tileSize * 3) / 2);
+        g2D.drawImage((drawChecker ? Image.playerRight1 : Image.playerRight2), screenX, screenY, 72, 72, null);
+        g2D.drawLine(GamePanel.screenWidth / 6, screenY + 72, (GamePanel.screenWidth * 5 ) / 6, screenY + 72);
 
         // Draw menu choose (new game : load_game : quit)
         g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 48f));
 
         text = "NEW GAME";
-        X = getXForCenterText(text);
-        Y = Y + (GamePanel.tileSize * 7) / 2;
+        screenX = getXForCenterText(text);
+        screenY = screenY + (GamePanel.tileSize * 7) / 2;
 
-        g2D.drawString(text, X, Y);
-        if (gp.waitstate == CommandNum.NEW_GAME) 
-            g2D.drawString(">", X - GamePanel.tileSize, Y);
+        g2D.drawString(text, screenX, screenY);
+        if (Option.waitState == Menu.NEW_GAME) 
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
 
         text = "ABOUT";
-        X = getXForCenterText(text);
-        Y = Y + (GamePanel.tileSize * 4) / 3;
+        screenX = getXForCenterText(text);
+        screenY = screenY + (GamePanel.tileSize * 4) / 3;
 
-        g2D.drawString(text, X, Y);
-        if (gp.waitstate == CommandNum.ABOUT) 
-            g2D.drawString(">", X - GamePanel.tileSize, Y);
+        g2D.drawString(text, screenX, screenY);
+        if (Option.waitState == Menu.ABOUT) 
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
 
         text = "QUIT";
-        X = getXForCenterText(text);
-        Y = Y + (GamePanel.tileSize * 4) / 3;
+        screenX = getXForCenterText(text);
+        screenY = screenY + (GamePanel.tileSize * 4) / 3;
 
-        g2D.drawString(text, X, Y);
-        if (gp.waitstate == CommandNum.QUIT) 
-            g2D.drawString(">", X - GamePanel.tileSize, Y);
+        g2D.drawString(text, screenX, screenY);
+        if (Option.waitState == Menu.QUIT) 
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
     }
 
     private void drawPlayScreen() {
@@ -320,42 +318,67 @@ public class ScreenUI extends Interaction {
     }
 
     private void drawPauseScreen() {
+        g2D.setColor(Color.WHITE);
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 85f));
 
-        // drawSubWindow(100, 100, 400, 200);
-   
-        // g2D.setColor(Color.GRAY);
-        // g2D.setFont(g2D.getFont().deriveFont(Font.BOLD,76f));
-        // String text = "PAUSE";
-        // int drawX = getXForCenterText(text);
-        // int drawY = GamePanel.tileSize * 2;
-        
-        // g2D.drawString(text, drawX, drawY);
+        String text = "Game Pause";
 
-        // g2D.setColor(Color.WHITE);
-        // g2D.drawString(text, drawX - 5, drawY + 5);
-        // //Continew,Quit
-        // text = "CONTINEW";
-        // drawX = getXForCenterText(text);
-        // drawY = drawY + (GamePanel.tileSize * 3) / 2;
+        int screenX = getXForCenterText(text);
+        int screenY = GamePanel.tileSize * 4 - (GamePanel.tileSize * 3) / 4;
 
-        // if (gp.waitstate == CommandNum.) {
-        //     g2D.drawString(">", drawX - GamePanel.tileSize, drawY);
-        // }
-        // g2D.drawString(text, drawX, drawY);
+        g2D.drawString(text, screenX, screenY);
 
-        // text = "QUIT";
-        // drawX = getXForCenterText(text);
-        // drawY = drawY + (GamePanel.tileSize * 3) / 2;
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 40f));
 
-        // if (gp.waitstate == CommandNum.QUIT) {
-        //     g2D.drawString(">", drawX - GamePanel.tileSize, drawY);
-        // }
-        // g2D.drawString(text, drawX, drawY);
+        text = "Continue";
+        screenX = getXForCenterText(text);
+        screenY += GamePanel.tileSize * 4;
 
+        if (Option.pauseState == Menu.CONTINUE) {
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
+        }
+        g2D.drawString(text, screenX, screenY);
+
+        text = "Quit";
+        screenX = getXForCenterText(text);
+        screenY += GamePanel.tileSize;
+
+        if (Option.pauseState == Menu.QUIT) {
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
+        }
+        g2D.drawString(text, screenX, screenY);
     }
 
     private void drawEndScreen() {
-        
 
+        g2D.setColor(Color.WHITE);
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 85f));
+
+        String text = "Game Over";
+
+        int screenX = getXForCenterText(text);
+        int screenY = GamePanel.tileSize * 4 - (GamePanel.tileSize * 3) / 4;
+
+        g2D.drawString(text, screenX, screenY);
+
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 40f));
+
+        text = "Retry";
+        screenX = getXForCenterText(text);
+        screenY += GamePanel.tileSize * 4;
+
+        if (Option.endState == Menu.RETRY) {
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
+        }
+        g2D.drawString(text, screenX, screenY);
+
+        text = "Quit";
+        screenX = getXForCenterText(text);
+        screenY += GamePanel.tileSize;
+
+        if (Option.endState == Menu.QUIT) {
+            g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
+        }
+        g2D.drawString(text, screenX, screenY);
     }
 }

@@ -1,4 +1,4 @@
-package org.game.control;
+package org.game.helper;
 
 import java.io.BufferedReader;
 import java.io.File;

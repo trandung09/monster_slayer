@@ -6,12 +6,12 @@ package org.game.enums;
  * @author trandung09
  */
 
-public enum CommandNum {
+public enum Menu {
     
-    NEW_GAME(0), ABOUT(1), QUIT(2);
+    NEW_GAME(0), ABOUT(1), QUIT(2), RETRY(3), CONTINUE(4);
 
     private int value; 
-    private CommandNum(int value) {
+    private Menu(int value) {
         
         this.value = value;
     }

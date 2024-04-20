@@ -4,29 +4,26 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import org.game.control.UtilityTool;
 import org.game.frame.GamePanel;
 
 public class SuperObject {
     
     protected GamePanel gp;
-    protected UtilityTool uTool;
-    public BufferedImage image;
-    
-    public int attackValue;  //
-    public String name;             // tên object
+
+    protected BufferedImage image;
+    protected String name;             // tên object
+    protected int worldX, worldY;
+    protected boolean collison;        
+
     public Rectangle solidArea;     // vùng check va chạm 
     public int solidAreaDefaultX;  
     public int solidAreaDefaultY;   
-    public int worldX, worldY;
-    public boolean collison;        
 
     public SuperObject(GamePanel gp) {
 
         collison = true;
 
         this.gp = gp;
-        this.uTool = new UtilityTool();
         this.solidArea = new Rectangle(0, 0, GamePanel.tileSize, GamePanel.tileSize);
 
         solidAreaDefaultX = solidArea.x;
@@ -46,11 +43,6 @@ public class SuperObject {
             g2D.drawImage(image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
     }
 
-    protected BufferedImage getImage(String imagePath, int width, int height) {
-
-        return uTool.getImage(imagePath, width, height);
-    }
-
     public int getWorldX() {
         return worldX;
     }
@@ -65,5 +57,9 @@ public class SuperObject {
 
     public void setWorldY(int worldY) {
         this.worldY = worldY;
+    }
+
+    public String getName() {
+        return name;
     }
 }

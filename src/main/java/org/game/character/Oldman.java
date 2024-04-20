@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import org.game.enums.Direction;
 import org.game.frame.GamePanel;
+import org.game.helper.Image;
 
 public class Oldman extends Entity {
     
@@ -37,14 +38,14 @@ public class Oldman extends Entity {
         int width = GamePanel.tileSize;
         int height = GamePanel.tileSize;
         
-        up1 = getImage("/npc/oldman_up_1", width, height);
-        up2 = getImage("/npc/oldman_up_2", width, height);
-        down1 = getImage("/npc/oldman_down_1", width, height);
-        down2 = getImage("/npc/oldman_down_2", width, height);
-        left1 = getImage("/npc/oldman_left_1", width, height);
-        left2 = getImage("/npc/oldman_left_2", width, height);
-        right1 = getImage("/npc/oldman_right_1", width, height);
-        right2 = getImage("/npc/oldman_right_2", width, height);
+        up1    = Image.getImage("/npc/oldman_up_1", width, height);
+        up2    = Image.getImage("/npc/oldman_up_2", width, height);
+        down1  = Image.getImage("/npc/oldman_down_1", width, height);
+        down2  = Image.getImage("/npc/oldman_down_2", width, height);
+        left1  = Image.getImage("/npc/oldman_left_1", width, height);
+        left2  = Image.getImage("/npc/oldman_left_2", width, height);
+        right1 = Image.getImage("/npc/oldman_right_1", width, height);
+        right2 = Image.getImage("/npc/oldman_right_2", width, height);
     }
 
     /**

@@ -27,7 +27,7 @@ public abstract class Interaction {
 
     protected int getXForCenterText(String text) {
         
-        return GamePanel.screenWidth/2 - (int)g2D.getFontMetrics().getStringBounds(text, g2D).getWidth()/2;
+        return GamePanel.screenWidth / 2 - (int)g2D.getFontMetrics().getStringBounds(text, g2D).getWidth()/2;
     }
 
     protected int gteXForAlignToRightText(String text, int tailX ) {

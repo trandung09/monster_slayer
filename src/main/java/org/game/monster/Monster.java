@@ -3,34 +3,39 @@ package org.game.monster;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import org.game.character.Entity;
 import org.game.enums.Direction;
+import org.game.enums.GameState;
 import org.game.frame.GamePanel;
 
 public class Monster extends Entity {
 
     public int objRan = 0;          // Random ra kim cương hay mana khi quái vật chết đi
     public int monsterExp = 0;      // Kinh nghiệm có được khi quái vật chết đi
+    protected int attackCounter = 0;
 
     public Monster(GamePanel gp) {
 
         super(gp);
+
+        attackArea = new Rectangle(0, 0, 40, 40);
     }
 
     @Override
     protected void setAction() {
 
         drawCounter++;
-        if (drawCounter == 10) {
+        if (drawCounter == 15) {
             drawCounter = 0;
             drawChecker = !drawChecker;
         }
 
         actionCounter++;
-        if (actionCounter == 120) {
+        if (actionCounter == 150) {
             
             Random random = new Random();
             int n = random.nextInt(100) + 1;
@@ -50,6 +55,21 @@ public class Monster extends Entity {
         actionCounter = 0;
 
         direction = gp.player.getDirection();
+    }
+
+    public void damagePlayer() {
+        if (gp.player.getLife() > 0 && !gp.player.isInvincible()) {
+            gp.player.setLife(gp.player.getLife() - damage);
+
+            if (gp.player.getLife() <= 0) {
+                gp.player.alive = false;
+                gp.player.dying = true;
+
+                gp.mainState = GameState.END;
+            }
+
+            gp.player.setInvincible(true);
+        }
     }
 
     public void attacking() {
@@ -96,7 +116,7 @@ public class Monster extends Entity {
                     hpBarOn = false;
                 }
             }
-            
+
             // Vẽ hình ảnh của thực thể
             if (invincible) {
                 hpBarOn = true;

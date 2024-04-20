@@ -3,6 +3,7 @@ package org.game.monster;
 import java.awt.Rectangle;
 import org.game.enums.Direction;
 import org.game.frame.GamePanel;
+import org.game.helper.Image;
 
 public class Bat extends Monster {
     
@@ -34,14 +35,14 @@ public class Bat extends Monster {
         int width = GamePanel.tileSize;
         int height = GamePanel.tileSize;
 
-        up1 = getImage("/monster/bat_down_1", width, height);
-        up2 = getImage("/monster/bat_down_2", width, height);
-        down1 = getImage("/monster/bat_down_1", width, height);
-        down2 = getImage("/monster/bat_down_2", width, height);
-        left1 = getImage("/monster/bat_down_1", width, height);
-        left2 = getImage("/monster/bat_down_2", width, height);
-        right1 = getImage("/monster/bat_down_1", width, height);
-        right2 = getImage("/monster/bat_down_2", width, height);
+        up1    = Image.getImage("/monster/bat_down_1", width, height);
+        up2    = Image.getImage("/monster/bat_down_2", width, height);
+        down1  = Image.getImage("/monster/bat_down_1", width, height);
+        down2  = Image.getImage("/monster/bat_down_2", width, height);
+        left1  = Image.getImage("/monster/bat_down_1", width, height);
+        left2  = Image.getImage("/monster/bat_down_2", width, height);
+        right1 = Image.getImage("/monster/bat_down_1", width, height);
+        right2 = Image.getImage("/monster/bat_down_2", width, height);
     }
 
     @Override

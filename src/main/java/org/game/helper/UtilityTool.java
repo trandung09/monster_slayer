@@ -1,4 +1,4 @@
-package org.game.control;
+package org.game.helper;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

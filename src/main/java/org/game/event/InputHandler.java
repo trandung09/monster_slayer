@@ -3,9 +3,10 @@ package org.game.event;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import org.game.enums.CommandNum;
+import org.game.enums.Menu;
 import org.game.enums.GameState;
 import org.game.frame.GamePanel;
+import org.game.options.Option;
 
 public class InputHandler implements KeyListener {
 
@@ -19,90 +20,26 @@ public class InputHandler implements KeyListener {
         lightingPressed = true;
     }
 
-    
     @Override
     public void keyPressed(KeyEvent e) {
         // Lấy ra key code của KeyEvent e
         int kCode = e.getKeyCode();
 
         // Xử lý nếu trạng thái của game đang trong trạng thái START (đã bắt đầu)
-        if (gp.mainstate == GameState.START) {
-            switch (kCode) {
-                case KeyEvent.VK_W: upPressed = true; break;
-                case KeyEvent.VK_S: downPressed = true; break;
-                case KeyEvent.VK_A: leftPressed = true; break;
-                case KeyEvent.VK_D: rightPressed = true; break;
-                case KeyEvent.VK_L: lightingPressed = !lightingPressed; break;
-                case KeyEvent.VK_BACK_SLASH: shootPressed = true; break;
-                case KeyEvent.VK_P:
-                    if (gp.mainstate == GameState.START) gp.mainstate = GameState.PAUSE;
-                    break;
-                case KeyEvent.VK_ENTER:
-                    enterPressed = true;
-                    // gp.playMusicSE(5);
-                    gp.player.setAttacking(true);
-                    break;
-                case KeyEvent.VK_QUOTE: 
-                    gp.mainstate = GameState.CHARACRTER; break;
-                case KeyEvent.VK_SPACE: 
-                    gp.player.setSelectedWeapon(!gp.player.isSelectedWeapon());; 
-                    gp.playMusicSE(8);
-                    gp.screenUI.addMessage("Weapon: " + (gp.player.isSelectedWeapon() ? "Sword" : "Axe"));
-                    break;
-                default: break;
-            }
+        if (gp.mainState == GameState.START) {
+            startState(kCode);
         }
         // Xử lý nếu trạng thái game đang trong trạng thái WAIT (chờ)
-        else if (gp.mainstate == GameState.WAIT) {
-            switch (kCode) {
-                case KeyEvent.VK_ENTER:
-                    if (gp.waitstate == CommandNum.NEW_GAME) gp.mainstate = GameState.START;
-                    else if (gp.waitstate == CommandNum.QUIT) System.exit(1);
-                    break;
-                case KeyEvent.VK_UP:
-                    if (gp.waitstate == CommandNum.NEW_GAME) gp.waitstate = CommandNum.QUIT;
-                    else if (gp.waitstate == CommandNum.ABOUT) gp.waitstate = CommandNum.NEW_GAME;
-                    else if (gp.waitstate == CommandNum.QUIT) gp.waitstate = CommandNum.ABOUT;
-                    break;
-                case KeyEvent.VK_DOWN:
-                    if (gp.waitstate == CommandNum.NEW_GAME) gp.waitstate = CommandNum.ABOUT;
-                    else if (gp.waitstate == CommandNum.ABOUT) gp.waitstate = CommandNum.QUIT;
-                    else if (gp.waitstate == CommandNum.QUIT) gp.waitstate = CommandNum.NEW_GAME;
-                    break;
-                default: break;
-            }
-        }
-        else if (gp.mainstate == GameState.CHARACRTER) {
-            switch (kCode) {
-                case KeyEvent.VK_QUOTE: 
-                    gp.mainstate = GameState.START; 
-                    break;
-                case KeyEvent.VK_ENTER:
-                    if (gp.player.current_choose == 0 && gp.player.getKeys() > 0) gp.player.useKey = true;
-                    else if (gp.player.current_choose == 2 && gp.player.getManas() > 0) gp.player.useMana = true;
-                    gp.mainstate = GameState.START;
-                    break;
-                case KeyEvent.VK_UP: 
-                    if (gp.player.current_choose == 0) gp.player.current_choose = 2;
-                    else gp.player.current_choose--;
-                    break;
-                case KeyEvent.VK_DOWN: 
-                    if (gp.player.current_choose == 2) gp.player.current_choose = 0;
-                    else gp.player.current_choose++;
-                    break;
-                default:
-                    break;
-            }
-        }
-        else if (gp.mainstate == GameState.DIALOGUE) {
-            if (kCode == KeyEvent.VK_ENTER) {
-                gp.mainstate = GameState.START;
-            }
-        }
-        else if (gp.mainstate == GameState.PAUSE) {
-            if (kCode == KeyEvent.VK_ENTER) {
-                gp.mainstate = GameState.START;
-            }
+        else if (gp.mainState == GameState.WAIT) {
+            waitState(kCode);
+        } else if (gp.mainState == GameState.CHARACRTER) {
+            charecterState(kCode);
+        } else if (gp.mainState == GameState.DIALOGUE) {
+            dialougeState(kCode);
+        } else if (gp.mainState == GameState.PAUSE) {
+            pauseState(kCode);
+        } else if (gp.mainState == GameState.END) {
+            endState(kCode);
         }
     }
 
@@ -113,26 +50,175 @@ public class InputHandler implements KeyListener {
 
         if (kCode == KeyEvent.VK_W) {
             upPressed = false;
-        }
-        else if (kCode == KeyEvent.VK_S) {
+        } else if (kCode == KeyEvent.VK_S) {
             downPressed = false;
-        }
-        else if (kCode == KeyEvent.VK_A) {
+        } else if (kCode == KeyEvent.VK_A) {
             leftPressed = false;
-        }
-        else if (kCode == KeyEvent.VK_D) {
+        } else if (kCode == KeyEvent.VK_D) {
             rightPressed = false;
-        }
-        else if (kCode == KeyEvent.VK_ENTER) {
+        } else if (kCode == KeyEvent.VK_ENTER) {
             enterPressed = false;
-        }
-        else if (kCode == KeyEvent.VK_BACK_SLASH) {
+        } else if (kCode == KeyEvent.VK_BACK_SLASH) {
             shootPressed = false;
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
+    }
+
+    private void startState(int kCode) {
+        switch (kCode) {
+            case KeyEvent.VK_W:
+                upPressed = true;
+                break;
+            case KeyEvent.VK_S:
+                downPressed = true;
+                break;
+            case KeyEvent.VK_A:
+                leftPressed = true;
+                break;
+            case KeyEvent.VK_D:
+                rightPressed = true;
+                break;
+            case KeyEvent.VK_L:
+                lightingPressed = !lightingPressed;
+                break;
+            case KeyEvent.VK_BACK_SLASH:
+                shootPressed = true;
+                break;
+            case KeyEvent.VK_P:
+                if (gp.mainState == GameState.START)
+                    gp.mainState = GameState.PAUSE;
+                break;
+            case KeyEvent.VK_ENTER:
+                enterPressed = true;
+                // gp.playMusicSE(5);
+                gp.player.setAttacking(true);
+                break;
+            case KeyEvent.VK_QUOTE:
+                gp.mainState = GameState.CHARACRTER;
+                break;
+            case KeyEvent.VK_SPACE:
+                gp.player.setSelectedWeapon(!gp.player.isSelectedWeapon());
+                ;
+                gp.playMusicSE(8);
+                gp.screenUI.addMessage("Weapon: " + (gp.player.isSelectedWeapon() ? "Sword" : "Axe"));
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void waitState(int kCode) {
+        switch (kCode) {
+            case KeyEvent.VK_ENTER:
+                if (Option.waitState == Menu.NEW_GAME)
+                    gp.mainState = GameState.START;
+                else if (Option.waitState == Menu.QUIT)
+                    System.exit(1);
+                break;
+            case KeyEvent.VK_UP:
+                if (Option.waitState == Menu.NEW_GAME)
+                    Option.waitState = Menu.QUIT;
+                else if (Option.waitState == Menu.ABOUT)
+                    Option.waitState = Menu.NEW_GAME;
+                else if (Option.waitState == Menu.QUIT)
+                    Option.waitState = Menu.ABOUT;
+                break;
+            case KeyEvent.VK_DOWN:
+                if (Option.waitState == Menu.NEW_GAME)
+                    Option.waitState = Menu.ABOUT;
+                else if (Option.waitState == Menu.ABOUT)
+                    Option.waitState = Menu.QUIT;
+                else if (Option.waitState == Menu.QUIT)
+                    Option.waitState = Menu.NEW_GAME;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void charecterState(int kCode) {
+        switch (kCode) {
+            case KeyEvent.VK_QUOTE:
+                gp.mainState = GameState.START;
+                break;
+            case KeyEvent.VK_ENTER:
+                if (gp.player.currentItemSlected == 0 && gp.player.getKeys() > 0)
+                    gp.player.useKey = true;
+                else if (gp.player.currentItemSlected == 2 && gp.player.getManas() > 0)
+                    gp.player.useMana = true;
+                gp.mainState = GameState.START;
+                break;
+            case KeyEvent.VK_UP:
+                if (gp.player.currentItemSlected == 0)
+                    gp.player.currentItemSlected = 2;
+                else
+                    gp.player.currentItemSlected--;
+                break;
+            case KeyEvent.VK_DOWN:
+                if (gp.player.currentItemSlected == 2)
+                    gp.player.currentItemSlected = 0;
+                else
+                    gp.player.currentItemSlected++;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void dialougeState(int kCode) {
+        if (kCode == KeyEvent.VK_ENTER) {
+            gp.mainState = GameState.START;
+        }
+    }
+
+    private void pauseState(int kCode) {
+        switch (kCode) {
+            case KeyEvent.VK_ENTER:
+                if (Option.pauseState == Menu.CONTINUE)
+                    gp.mainState = GameState.START;
+                else if (Option.pauseState == Menu.QUIT)
+                    System.exit(1);
+                break;
+            case KeyEvent.VK_UP:
+                if (Option.pauseState == Menu.CONTINUE)
+                    Option.pauseState = Menu.QUIT;
+                else if (Option.pauseState == Menu.QUIT)
+                    Option.pauseState = Menu.CONTINUE;
+            case KeyEvent.VK_DOWN:
+                if (Option.pauseState == Menu.CONTINUE)
+                    Option.pauseState = Menu.QUIT;
+                else if (Option.pauseState == Menu.QUIT)
+                    Option.pauseState = Menu.CONTINUE;
+            default:
+                break;
+        }
+    }
+
+    private void endState(int kCode) {
+        switch (kCode) {
+            case KeyEvent.VK_ENTER:
+                if (Option.endState == Menu.RETRY) {
+                    gp.reInitialize();
+                    gp.mainState = GameState.START;
+                } else if (Option.endState == Menu.QUIT)
+                    System.exit(1);
+                break;
+            case KeyEvent.VK_UP:
+                if (Option.endState == Menu.RETRY)
+                    Option.endState = Menu.QUIT;
+                else if (Option.endState == Menu.QUIT)
+                    Option.endState = Menu.RETRY;
+            case KeyEvent.VK_DOWN:
+                if (Option.endState == Menu.RETRY)
+                    Option.endState = Menu.QUIT;
+                else if (Option.endState == Menu.QUIT)
+                    Option.endState = Menu.RETRY;
+            default:
+                break;
+        }
     }
 }

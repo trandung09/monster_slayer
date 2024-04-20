@@ -1,4 +1,4 @@
-package org.game.control;
+package org.game.Sound;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;

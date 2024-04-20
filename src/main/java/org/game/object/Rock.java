@@ -2,6 +2,7 @@ package org.game.object;
 
 import org.game.character.Projectiles;
 import org.game.frame.GamePanel;
+import org.game.helper.Image;
 
 public class Rock extends Projectiles {
     
@@ -18,19 +19,20 @@ public class Rock extends Projectiles {
         alive = false;
         damage = 1;
 
-        setImage();
+        loadRockImage();
     }
     
-    public void setImage() {
-        int width = GamePanel.tileSize;
+    public void loadRockImage() {
+        int width  = GamePanel.tileSize;
         int height = GamePanel.tileSize;
-        up1 = getImage("/object/rock_down_1", width, height);
-        up2 = getImage("/object/rock_down_1", width, height);
-        down1 = getImage("/object/rock_down_1", width, height);
-        down2 = getImage("/object/rock_down_1", width, height);
-        left1 = getImage("/object/rock_down_1", width, height);
-        left2 = getImage("/object/rock_down_1", width, height);
-        right1 = getImage("/object/rock_down_1", width, height);
-        right2 = getImage("/object/rock_down_1", width, height);
+
+        up1    = Image.getImage("/object/rock_down_1", width, height);
+        up2    = Image.getImage("/object/rock_down_1", width, height);
+        down1  = Image.getImage("/object/rock_down_1", width, height);
+        down2  = Image.getImage("/object/rock_down_1", width, height);
+        left1  = Image.getImage("/object/rock_down_1", width, height);
+        left2  = Image.getImage("/object/rock_down_1", width, height);
+        right1 = Image.getImage("/object/rock_down_1", width, height);
+        right2 = Image.getImage("/object/rock_down_1", width, height);
     }
 }

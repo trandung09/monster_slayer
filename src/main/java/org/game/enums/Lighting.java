@@ -5,7 +5,7 @@ package org.game.enums;
  * 
  * @author trandung09
  */
-public enum LightingState {
+public enum Lighting {
     
     LIGHT, DUSK, NIGHT;
 }   

@@ -9,13 +9,14 @@ import org.game.enums.Direction;
 import org.game.enums.GameState;
 import org.game.event.InputHandler;
 import org.game.frame.GamePanel;
+import org.game.helper.Image;
 import org.game.object.Fireball;
 
 public class Player extends Entity {
     
     // CAMERA SETTINGS
-    public final int screenX = GamePanel.screenWidth/2 - GamePanel.tileSize/2; 
-    public final int screenY = GamePanel.screenHeight/2 - GamePanel.tileSize/2;
+    public final int screenX = GamePanel.screenWidth / 2 - GamePanel.tileSize / 2; 
+    public final int screenY = GamePanel.screenHeight / 2 - GamePanel.tileSize;
 
     private InputHandler keyH;          // KeyEvent
 
@@ -25,18 +26,14 @@ public class Player extends Entity {
     private int level = 1;
     private int strengly = 0; // the more strengly he has, the more damage he gives
     private int dexterity = 0; // the more dexterity he has, the less damage he recicives 
-    private int attack; // the total attack value is decided by strengly and dexterity
     private int exp = 0; // Kinh nghiệm nhân vật
     private int nextLevelExp;
     private int coin = 0; // Sô tiền nhân vật hiện có
     private int keys = 0;  // Số chìa khóa hiện có
     private int manas = 0; // Số năng lượng có thể sử dụng hiện tại
     private int diamonds = 0; // Số kim cương hiện có
-    public BufferedImage currentWeaponAxe; // Vũ khí hiện tại rìu
-    public BufferedImage currentWeaponSword; // Vũ khí hiện tại là kiếm
-    public BufferedImage key, diamond, mana;
 
-    public int current_choose = 0;  // Vật phẩm được chọn hiện tại
+    public int currentItemSlected = 0;  // Vật phẩm được chọn hiện tại
     public boolean useKey = false;  // Đánh dấu có chọn sử dụng khóa hay không
     public boolean useMana = false; // Đánh dấu có chọn sử dụng mana hay không
 
@@ -62,14 +59,6 @@ public class Player extends Entity {
 
         nextLevelExp = 5;
 
-        currentWeaponSword = getImage("/object/sword_normal", GamePanel.tileSize, GamePanel.tileSize);
-        currentWeaponAxe = getImage("/object/axe", GamePanel.tileSize, GamePanel.tileSize);
-        key = getImage("/object/key", GamePanel.tileSize, GamePanel.tileSize);
-        mana = getImage("/object/mana", GamePanel.tileSize, GamePanel.tileSize);
-        diamond = getImage("/object/blueheart", GamePanel.tileSize, GamePanel.tileSize);
-
-        attack = getAttack();
-
         direction = Direction.DOWN;
         drawChecker = true;
 
@@ -82,47 +71,47 @@ public class Player extends Entity {
 
     private void loadPlayerImage() {
 
-        int width = GamePanel.tileSize;
+        int width  = GamePanel.tileSize;
         int height = GamePanel.tileSize;
 
-        up1 = getImage("/player/boy_up_1", width, height);
-        up2 = getImage("/player/boy_up_2", width, height);
-        down1 = getImage("/player/boy_down_1", width, height);
-        down2 = getImage("/player/boy_down_2", width, height);
-        left1 = getImage("/player/boy_left_1", width, height);
-        left2 = getImage("/player/boy_left_2", width, height);
-        right1 = getImage("/player/boy_right_1", width, height);
-        right2 = getImage("/player/boy_right_2", width, height);
+        up1    = Image.getImage("/player/boy_up_1", width, height);
+        up2    = Image.getImage("/player/boy_up_2", width, height);
+        down1  = Image.getImage("/player/boy_down_1", width, height);
+        down2  = Image.getImage("/player/boy_down_2", width, height);
+        left1  = Image.getImage("/player/boy_left_1", width, height);
+        left2  = Image.getImage("/player/boy_left_2", width, height);
+        right1 = Image.getImage("/player/boy_right_1", width, height);
+        right2 = Image.getImage("/player/boy_right_2", width, height);
     }
 
     private void loadPlayerAttackImage() {
 
-        int width = GamePanel.tileSize * 2;
+        int width  = GamePanel.tileSize * 2;
         int height = GamePanel.tileSize * 2;
 
-        attackUp1 = getImage("/player/boy_attack_up_1", width / 2, height);
-        attackUp2 = getImage("/player/boy_attack_up_2", width / 2, height);
-        attackDown1 = getImage("/player/boy_attack_down_1", width / 2, height);
-        attackDown2 = getImage("/player/boy_attack_down_2", width / 2, height);
-        attackLeft1 = getImage("/player/boy_attack_left_1", width, height / 2);
-        attackLeft2 = getImage("/player/boy_attack_left_2", width, height / 2);
-        attackRight1 = getImage("/player/boy_attack_right_1", width, height / 2);
-        attackRight2 = getImage("/player/boy_attack_right_2", width, height / 2);
+        attackUp1    = Image.getImage("/player/boy_attack_up_1", width / 2, height);
+        attackUp2    = Image.getImage("/player/boy_attack_up_2", width / 2, height);
+        attackDown1  = Image.getImage("/player/boy_attack_down_1", width / 2, height);
+        attackDown2  = Image.getImage("/player/boy_attack_down_2", width / 2, height);
+        attackLeft1  = Image.getImage("/player/boy_attack_left_1", width, height / 2);
+        attackLeft2  = Image.getImage("/player/boy_attack_left_2", width, height / 2);
+        attackRight1 = Image.getImage("/player/boy_attack_right_1", width, height / 2);
+        attackRight2 = Image.getImage("/player/boy_attack_right_2", width, height / 2);
     }
 
     private void loadPlayerCutImage() {
 
-        int width = GamePanel.tileSize * 2;
+        int width  = GamePanel.tileSize * 2;
         int height = GamePanel.tileSize * 2;
 
-        cutUp1 = getImage("/player/boy_axe_up_1", width / 2, height);
-        cutUp2 = getImage("/player/boy_axe_up_2", width / 2, height);
-        cutDown1 = getImage("/player/boy_axe_down_1", width / 2, height);
-        cutDown2 = getImage("/player/boy_axe_down_2", width / 2, height);
-        cutLeft1 = getImage("/player/boy_axe_left_1", width, height / 2);
-        cutLeft2 = getImage("/player/boy_axe_left_2", width, height / 2);
-        cutRight1 = getImage("/player/boy_axe_right_1", width, height / 2);
-        cutRight2 = getImage("/player/boy_axe_right_2", width, height / 2);
+        cutUp1    = Image.getImage("/player/boy_axe_up_1", width / 2, height);
+        cutUp2    = Image.getImage("/player/boy_axe_up_2", width / 2, height);
+        cutDown1  = Image.getImage("/player/boy_axe_down_1", width / 2, height);
+        cutDown2  = Image.getImage("/player/boy_axe_down_2", width / 2, height);
+        cutLeft1  = Image.getImage("/player/boy_axe_left_1", width, height / 2);
+        cutLeft2  = Image.getImage("/player/boy_axe_left_2", width, height / 2);
+        cutRight1 = Image.getImage("/player/boy_axe_right_1", width, height / 2);
+        cutRight2 = Image.getImage("/player/boy_axe_right_2", width, height / 2);
     }
 
     /* Cập nhật hoạt động của nhân vật sau khi nhận các sự kiện từ bàn phím,
@@ -145,10 +134,10 @@ public class Player extends Entity {
             level++;
             nextLevelExp *= 2;
 
-            gp.screenUI.curreString = "You are level " + level + " now!\n"
+            gp.screenUI.currentText = "You are level " + level + " now!\n"
                                         + "You feel stronger!";
 
-            gp.mainstate = GameState.DIALOGUE;
+            gp.mainState = GameState.DIALOGUE;
             gp.playMusicSE(7);
         } // tăng cấp độ người chơi lên 1
 
@@ -167,8 +156,7 @@ public class Player extends Entity {
             // Kiểm tra va chạm với các thực thể, đối tượng khác
             collisionOn = false;
             coChecker.checkCoWithTile(this); 
-
-            System.out.println(collisionOn);
+            
             int objIndex = coChecker.checkCoWithObject(this, true);
             int npcIndex = coChecker.checkCoWithEntity(this, gp.npcs);
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
@@ -176,18 +164,10 @@ public class Player extends Entity {
             // Các phương thức xử lý khi va chạm với một đối tượng khác cụ thể
             pickObject(objIndex);
             interactNpc(npcIndex);
-            contactMonster(monsterIndex);
 
             for (Projectiles e : projectiles) {
                 int eIndex = coChecker.checkCoWithEntity(e, gp.monsters);
                 damageMonster(eIndex);
-            }
-
-            for (Entity e : gp.monsters) {
-                if (e == null) continue;
-                if (e.name == "Green Slime") {
-
-                }
             }
 
             // Kiểm tra sự kiện va chạm với một số điểm trên bản đồ
@@ -228,24 +208,6 @@ public class Player extends Entity {
                 projectiles.add(pr);
             }
         }
-
-        for (Entity e : gp.monsters) {
-            if (e == null) continue;
-            if (e.name == "Green Slime") {
-                Projectiles[] prs = new Projectiles[e.projectiles.size()];
-                for (int i = 0; i < prs.length; i++) {
-                    prs[i] = new Projectiles(gp);
-                    prs[i] = e.projectiles.get(i);
-                } 
-                int index = coChecker.checkCoWithEntity(this, prs);
-                contactMonster(index);
-            }
-        }
-    }
-
-    public int getAttack() {
-
-        return attack = strengly * 2;
     }
 
     /* Xử lý hình ảnh, hoạt động của nhân vật khi ở trong trạng thái tấn công.*/
@@ -319,14 +281,6 @@ public class Player extends Entity {
             gp.monsters[index].dying = true;
             gp.monsters[index].alive = false;
 
-            // strengly++; // tăng chỉ số sát thương nhân vật lên 1
-            // if (strengly - dexterity > 0) {
-            //     damage++;
-            // }
-            // else {
-            //     damage = 1;
-            // }
-
             gp.screenUI.addMessage("Exp +" + gp.monsters[index].monsterExp + "!");
             gp.screenUI.addMessage("Strengly +1!");
             gp.screenUI.addMessage("Killed the " + gp.monsters[index].name + "!");
@@ -345,7 +299,7 @@ public class Player extends Entity {
     private void pickObject(int index) {
 
         if (index == -1) return;
-        String name = gp.objs[index].name;
+        String name = gp.objs[index].getName();
 
         switch (name) {
             case "Boots": 
@@ -381,35 +335,6 @@ public class Player extends Entity {
         }
     }
 
-    /**
-     * Xử lý sự kiện khi nhân vật bị quái vật chạm vào. Nếu nhân vật đang không
-     * ở trong trạng thái vô địch thì máu của nhân vật bị trừ đi 1 và gán trạng
-     * thái vô địch của nhân vật là true
-     * 
-     * @param index: chỉ số của quái vật đang chạm vào nhân vật hiện tại, nếu
-     * index = -1 thì không có quái vật nào hiện tại đang chạm vào nhân vật
-     */
-    private void contactMonster(int index) {
-        if (index == -1) return;
-        if (gp.monsters[index] == null) return;
-        if (gp.monsters[index].name == "Bat") return;
-        if (invincible == false) {
-            if (!attacking) {
-                gp.playMusicSE(5);
-                life -= 1;
-                dexterity++; // chỉ số giảm sát thương nhân vật
-
-                if (damage > 2) damage -= 1;
-                invincible = true;
-
-                // gp.monsters[index].resetAction();
-            }
-        }
-    }
-
-    public void cutTree() {
-
-    }
     /**
      * Phương thức thực hiện chức năng vẽ hình ảnh nhân vật ở mỗi trạng thái của 
      * nhân vật lên panel chính tại vị trí tempX, tempY.
@@ -471,6 +396,22 @@ public class Player extends Entity {
         
     }
 
+    public void reInitialize() {
+
+        maxLife = 6;
+        life = maxLife;
+
+        worldX = GamePanel.tileSize * 23;
+        worldY = GamePanel.tileSize * 21;
+        speed = 3;
+
+        nextLevelExp = 5;
+        level = 1;
+
+        direction = Direction.DOWN;
+        drawChecker = true;
+    }
+
     public int getLevel() {
         return level;
     }
@@ -493,10 +434,6 @@ public class Player extends Entity {
 
     public void setDexterity(int dexterity) {
         this.dexterity = dexterity;
-    }
-
-    public void setAttack(int attack) {
-        this.attack = attack;
     }
 
     public int getExp() {
