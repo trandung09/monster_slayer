@@ -31,7 +31,21 @@ public class EventHandler {
     public void checkEvent() {
 
         if (hit(23, 21, Direction.UP)) {
-            if (!gp.player.isInvincible()) {
+            if (!gp.player.isInvincible() && gp.player.getLife() > 1) {
+                gp.player.setLife(gp.player.getLife() - 1);
+                gp.player.setInvincible(true);
+            }
+        }
+
+        if (hit(10, 18, Direction.UP)) {
+            if (!gp.player.isInvincible() && gp.player.getLife() > 1) {
+                gp.player.setLife(gp.player.getLife() - 1);
+                gp.player.setInvincible(true);
+            }
+        }
+
+        if (hit(40, 32, Direction.UP)) {
+            if (!gp.player.isInvincible() && gp.player.getLife() > 1) {
                 gp.player.setLife(gp.player.getLife() - 1);
                 gp.player.setInvincible(true);
             }

@@ -11,7 +11,7 @@ import org.game.event.EventHandler;
 import org.game.frame.GamePanel;
 import org.game.helper.CollisionChecker;
 
-public class Entity {
+public abstract class Entity {
     
     protected String name;
 
@@ -57,8 +57,8 @@ public class Entity {
     protected int dyingCounter = 0 ; // Giá trị sự sống hiện tại của thực thể
 
     protected boolean attacking = false;   // enter -> attacking = true
-    protected int entityCounter = 0;      // Biến đếm để cập nhật biến playerNum
-    protected boolean entityNum = false;  // Biến kiểm tra chọn hình ảnh của nhân vật khi trong trạng thái tấn công
+    protected int attackImageCounter = 0;      // Biến đếm để cập nhật biến playerNum
+    protected boolean attackImage = false;  // Biến kiểm tra chọn hình ảnh của nhân vật khi trong trạng thái tấn công
     
     public int projectilesCounter = 0;
     public ArrayList<Projectiles> projectiles = new ArrayList<>();

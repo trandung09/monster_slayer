@@ -10,16 +10,43 @@ import org.game.character.Entity;
 import org.game.character.Oldman;
 import org.game.frame.GamePanel;
 import org.game.monster.Bat;
+import org.game.monster.Boss;
 import org.game.monster.GreenSlime;
 import org.game.monster.Monster;
 import org.game.monster.Sinister;
 import org.game.object.Boots;
+import org.game.object.Door;
+import org.game.object.Key;
 import org.game.object.SuperObject;
 
 public class AssetSetter {
 
     public AssetSetter() {
 
+    }
+
+    public static Boss[] setBoss(GamePanel gp) {
+        Boss[] boss = new Boss[1];
+
+        try {
+            File file = new File("src/main/resources/setter/bosslocation.txt");
+            BufferedReader br = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8);
+
+            String[] arr = br.readLine().split(" ");
+
+            boss[0] = new Boss(gp); 
+            boss[0].setWorldX(GamePanel.tileSize * Integer.parseInt(arr[0]));
+            boss[0].setWorldY(GamePanel.tileSize * Integer.parseInt(arr[1]));
+
+            br.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(boss[0].getWorldX());
+
+        return boss;
     }
 
     public static Monster[] setMonster(GamePanel gp) {
@@ -101,6 +128,15 @@ public class AssetSetter {
                 if (line == null) break;
 
                 String[] arr = line.split(" ");
+
+                if (arr[2].equals("Boots")) {
+                    objs[i] = new Boots(gp);
+                }
+                else if (arr[2].equals("Key")) {
+                    objs[i] = new Key(gp);
+                }
+                else if (arr[2].equals("Door")) 
+                    objs[i] = new Door(gp);
 
                 objs[i] = new Boots(gp);
                 objs[i].setWorldX(GamePanel.tileSize * Integer.parseInt(arr[0]));

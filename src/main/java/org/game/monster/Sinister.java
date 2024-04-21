@@ -22,7 +22,7 @@ public class Sinister extends Monster {
 
         monsterExp = 5;
         objRan = 2;
-        damage = 1;
+        damage = 2;
 
         maxLife = 12;
         life = maxLife;
@@ -99,11 +99,11 @@ public class Sinister extends Monster {
 
     public void attacking() {
 
-        entityCounter++;
-        if (entityCounter <= 5) {
-            entityNum = true;
-        } else if (entityCounter > 5 && entityCounter <= 25) {
-            entityNum = false;
+        attackImageCounter++;
+        if (attackImageCounter <= 5) {
+            attackImage = true;
+        } else if (attackImageCounter > 5 && attackImageCounter <= 25) {
+            attackImage = false;
 
             // Lưu lại vị trí, vùng va chạm hiện tại của nhân vật
             int currentWorldX = worldX;
@@ -140,8 +140,8 @@ public class Sinister extends Monster {
             solidArea.height = solidAreaHeight;
 
         } else {
-            entityNum = false;
-            entityCounter = 0;
+            attackImage = false;
+            attackImageCounter = 0;
             attacking = false; // Gán nhân vật không ở trong trạng thái tấn công
         }
     }
@@ -168,7 +168,7 @@ public class Sinister extends Monster {
                     if (!attacking)
                         image = (drawChecker ? up1 : up2);
                     else { // Lấy hình ảnh nhân vật khi ở trong trạng thái tấn công
-                        image = (entityNum ? attackUp1 : attackUp2);
+                        image = (attackImage ? attackUp1 : attackUp2);
                         tempY -= GamePanel.tileSize;
                         // Cập nhật tọa độ Y của vị trí vẽ hình ảnh
                     }
@@ -177,14 +177,14 @@ public class Sinister extends Monster {
                     if (!attacking)
                         image = (drawChecker ? down1 : down2);
                     else {
-                        image = (entityNum ? attackDown1 : attackDown2);
+                        image = (attackImage ? attackDown1 : attackDown2);
                     }
                     break;
                 case LEFT:
                     if (!attacking)
                         image = (drawChecker ? left1 : left2);
                     else {
-                        image = (entityNum ? attackLeft1 : attackLeft2);
+                        image = (attackImage ? attackLeft1 : attackLeft2);
                         tempX -= GamePanel.tileSize;
                     }
                     break;
@@ -192,7 +192,7 @@ public class Sinister extends Monster {
                     if (!attacking)
                         image = (drawChecker ? right1 : right2);
                     else {
-                        image = (entityNum ? attackRight1 : attackRight2);
+                        image = (attackImage ? attackRight1 : attackRight2);
                     }
                     break;
                 default:

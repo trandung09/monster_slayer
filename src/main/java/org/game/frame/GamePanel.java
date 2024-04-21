@@ -16,8 +16,9 @@ import org.game.environment.EnvironmentManager;
 import org.game.event.InputHandler;
 import org.game.helper.AssetSetter;
 import org.game.map.TileManager;
+import org.game.monster.Boss;
 import org.game.monster.Monster;
-import org.game.object.Diamond;
+import org.game.object.GoldCoin;
 import org.game.object.Mana;
 import org.game.object.SuperObject;
 import org.game.view.ScreenUI;
@@ -56,6 +57,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Monster[] monsters = new Monster[50];
     public SuperObject[] objs = new SuperObject[50];
     public TileManager tileM = new TileManager(this);
+    public Boss[] boss = new Boss[1];
+
+    public boolean bossWarning = false;
 
     public GamePanel() {
 
@@ -69,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         setEntityAndObject();
         startGameThread();
-        // playMusic(0);
+        playMusic(0);
     }
 
     // Khởi tạo gameThread của game 
@@ -119,6 +123,13 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
 
         if (mainState == GameState.START) {
+            for (Boss b : boss) {
+                if (b != null && b.alive == true && b.dying == false) {
+                    b.update();
+                    System.out.println(b.getLife());
+                }
+            }
+
             player.update();
             eManager.update();
             for (Entity ent : npcs) {
@@ -158,19 +169,31 @@ public class GamePanel extends JPanel implements Runnable {
                     else if (monsters[i].alive == false && monsters[i].dying == true){
                         int wX = monsters[i].getWorldX();
                         int wY = monsters[i].getWorldY();
-
-                        for (int k = 0; k < objs.length; k++) {
-                            if (objs[k] != null) continue;
-
-                            if (monsters[i].objRan == 1) objs[k] = new Diamond(this);
-                            else if (monsters[i].objRan == 2) objs[k] = new Mana(this);
-
-                            objs[k].setWorldX(wX);
-                            objs[k].setWorldY(wY);
-                            break;
-                        }
-
+                        String name = monsters[i].getName();
+                        int objRan = monsters[i].objRan;
                         monsters[i] = null;
+
+                        if (name != "Bat") {
+                            for (int k = 0; k < objs.length; k++) {
+                                if (objs[k] != null) continue;
+    
+                                if (objRan == 1) objs[k] = new GoldCoin(this);
+                                else if (objRan == 2) objs[k] = new Mana(this);
+    
+                                objs[k].setWorldX(wX);
+                                objs[k].setWorldY(wY);
+                                break;
+                            }
+
+                            if (checkBossWarning()) {
+                                bossWarning = true;
+                
+                                mainState = GameState.DIALOGUE;
+                                screenUI.currentText = "Warning,\nyou will fight the boss now";
+                
+                                bossWarning = true;
+                            }
+                        }
                     }
                 }
             }
@@ -214,13 +237,11 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
             player.draw(g2D);
-            eManager.draw(g2D);
 
-            /**
-             * 
-             * 
-             * 
-             */
+            for (Boss b : boss) 
+                if (b != null) b.draw(g2D);
+
+            eManager.draw(g2D);
         }
         screenUI.draw(g2D);
         gr.dispose();
@@ -229,11 +250,23 @@ public class GamePanel extends JPanel implements Runnable {
     public void reInitialize() {
         player.reInitialize();
 
+        boss = new Boss[1];
         npcs = new Entity[50];
         monsters = new Monster[50];
         objs = new SuperObject[50];
 
         setEntityAndObject();
+        tileM.loadMap(tileM.maps[0]);
+    }
+
+    public boolean checkBossWarning() {
+
+        for (Monster mon : monsters) {
+            if (mon != null && mon.getName() != "Bat") {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void playMusic(int index) {

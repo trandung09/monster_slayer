@@ -53,11 +53,24 @@ public class Bat extends Monster {
         collisionOn = false;
 
         if (!collisionOn) {
+            int width  = GamePanel.tileSize * GamePanel.maxScreenCol;
+            int height = GamePanel.tileSize * GamePanel.maxScreenRow;
             switch (direction) {
-                case UP: worldY -= speed; break;
-                case DOWN: worldY += speed; break;
-                case LEFT: worldX -= speed; break;
-                case RIGHT: worldX += speed; break;
+                case UP: 
+                    if (worldY - speed > 0) 
+                        worldY -= speed;
+                    break;
+                case DOWN: 
+                    if (worldY - speed < width)
+                        worldY += speed; 
+                    break;
+                case LEFT:
+                    if (worldX - speed > 0) 
+                        worldX -= speed;
+                    break;
+                case RIGHT:   if (worldX - speed < height) 
+                    worldX += speed; 
+                break;
             }
         }
         // Cập nhật trạng thái vô địch cho thực thể

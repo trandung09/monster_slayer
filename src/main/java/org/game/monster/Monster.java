@@ -54,7 +54,18 @@ public class Monster extends Entity {
 
         actionCounter = 0;
 
-        direction = gp.player.getDirection();
+        if (gp.player.getDirection() == Direction.DOWN)
+            direction = Direction.UP;
+        else if (gp.player.getDirection() == Direction.UP)
+            direction = Direction.DOWN;
+        else if (gp.player.getDirection() == Direction.RIGHT)
+            direction = Direction.LEFT;
+        else direction = Direction.RIGHT;
+
+        if (direction == Direction.DOWN) worldY -= speed * 15;
+        else if (direction == Direction.UP) worldY += speed * 15;
+        else if (direction == Direction.LEFT) worldX += speed * 15;
+        else worldX -= speed * 15;
     }
 
     public void damagePlayer() {

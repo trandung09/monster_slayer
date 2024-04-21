@@ -4,8 +4,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import org.game.enums.Menu;
+import org.game.character.Entity;
 import org.game.enums.GameState;
 import org.game.frame.GamePanel;
+import org.game.helper.AssetSetter;
 import org.game.options.Option;
 
 public class InputHandler implements KeyListener {
@@ -171,6 +173,20 @@ public class InputHandler implements KeyListener {
 
     private void dialougeState(int kCode) {
         if (kCode == KeyEvent.VK_ENTER) {
+            if (gp.bossWarning) {
+                gp.tileM.loadMap(gp.tileM.maps[1]);
+                gp.npcs = new Entity[50];
+                gp.boss = AssetSetter.setBoss(gp);
+                
+                gp.player.setWorldX(21 * GamePanel.tileSize);
+                gp.player.setWorldY(23 * GamePanel.tileSize);
+                gp.player.setManas(gp.player.getManas() + 3);
+                if (gp.player.getEnergy() < gp.player.getMaxEnergy() / 2) 
+                    gp.player.setEnergy(gp.player.getMaxEnergy() / 2);
+
+                gp.bossWarning = false;
+            }
+
             gp.mainState = GameState.START;
         }
     }

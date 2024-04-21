@@ -34,7 +34,7 @@ public class ScreenUI extends Interaction {
         switch (gp.mainState) {
             case WAIT: drawWaitScreen(); break;
             case START: drawPlayScreen(); drawPlayerLife(); break;
-            case PAUSE: drawWinScreen(); break;
+            case PAUSE: drawPauseScreen(); break;
             case END: drawEndScreen(); break;
             case CHARACRTER:drawCharacterScreen(); break;
             case DIALOGUE: drawDialogueScreen(); break;
