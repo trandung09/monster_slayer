@@ -137,8 +137,7 @@ public class AssetSetter {
                 }
                 else if (arr[2].equals("Door")) 
                     objs[i] = new Door(gp);
-
-                objs[i] = new Boots(gp);
+                    
                 objs[i].setWorldX(GamePanel.tileSize * Integer.parseInt(arr[0]));
                 objs[i].setWorldY(GamePanel.tileSize * Integer.parseInt(arr[1]));
 

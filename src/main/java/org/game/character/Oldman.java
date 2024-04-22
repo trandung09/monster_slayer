@@ -1,7 +1,10 @@
 package org.game.character;
 
 import java.util.Random;
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import org.game.enums.Direction;
 import org.game.frame.GamePanel;
@@ -72,6 +75,52 @@ public class Oldman extends Entity {
             else direction = Direction.RIGHT;
             
             actionCounter = 0;
+        }
+    }
+
+    @Override
+    public void update() {
+        setAction();
+
+        collisionOn = false;
+
+        if (!collisionOn) {
+            switch (direction) {
+                case UP: worldY -= speed; break;
+                case DOWN: worldY += speed; break;
+                case LEFT: worldX -= speed; break;
+                case RIGHT: worldX += speed; break;
+            }
+        }
+    }
+    
+    @Override
+    public void draw(Graphics2D g2D) {
+
+        int screenX = worldX - gp.player.worldX + gp.player.screenX;
+        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+
+        // Kiểm tra vị trí của nhân vật với vị trí hiến tại của thực thể,
+        // nếu vị trí nhỏ hơn một khoảng X mới bắt đầu vẽ ảnh thực thể
+        if (worldX + GamePanel.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX - GamePanel.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + GamePanel.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - GamePanel.tileSize < gp.player.worldY + gp.player.screenY
+        ) {
+
+            BufferedImage image = null;
+            // Xử lý dựa vào hướng di chuyển của thực thể
+            switch (direction) {
+                case UP: image = (drawChecker ? up1 : up2); break;
+                case DOWN: image = (drawChecker ? down1 : down2); break;
+                case LEFT: image = (drawChecker ? left1 : left2); break;
+                case RIGHT: image = (drawChecker ? right1 : right2); break;
+                default:
+                    throw new IllegalStateException("Unexcept value" + direction);
+            }
+            // Vẽ hình ảnh của thực thể
+            g2D.setComposite(AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 0.4f));
+            g2D.drawImage(image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
         }
     }
 }

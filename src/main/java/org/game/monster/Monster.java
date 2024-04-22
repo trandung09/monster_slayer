@@ -9,7 +9,6 @@ import java.util.Random;
 
 import org.game.character.Entity;
 import org.game.enums.Direction;
-import org.game.enums.GameState;
 import org.game.frame.GamePanel;
 
 public class Monster extends Entity {
@@ -71,12 +70,10 @@ public class Monster extends Entity {
     public void damagePlayer() {
         if (gp.player.getLife() > 0 && !gp.player.isInvincible()) {
             gp.player.setLife(gp.player.getLife() - damage);
-
+            gp.playMusicSE(6);
             if (gp.player.getLife() <= 0) {
                 gp.player.alive = false;
                 gp.player.dying = true;
-
-                gp.mainState = GameState.END;
             }
 
             gp.player.setInvincible(true);
@@ -85,6 +82,56 @@ public class Monster extends Entity {
 
     public void attacking() {
 
+    }
+
+    public void checkVisibility(double uView, double rView, int size) {
+
+        finPathToPlayer(rView, uView, size);
+    }
+
+    public void checkAttacking(double uView,  double aView) {
+        if (uView <= aView) {
+            if (actionCounter == 100) {
+                attacking = true;
+            }
+            attackCounter++;
+
+            if (attackCounter >= 120) {
+                attackCounter = 0;
+            }
+        } else {
+            attackCounter = 0;
+            attacking = false;
+        }
+    }
+
+    public void finPathToPlayer(double rView, double uView, int size) {
+        int pX = gp.player.getWorldX() + GamePanel.tileSize / 2;
+        int pY = gp.player.getWorldY() + GamePanel.tileSize / 2;
+
+        int mX = worldX + size;
+        int mY = worldY + size;
+
+        if (uView <= rView) {
+            if (mY > pY + GamePanel.tileSize / 12) {
+                direction = Direction.UP;
+                worldY -= speed;
+            }
+            else if (mY < pY) {
+                direction = Direction.DOWN;
+                worldY += speed;
+            }
+            else if (mY == pY) {
+                if (mX < pX) {
+                    direction = Direction.RIGHT;
+                    worldX += speed;
+                }
+                else if (mX >= pX) {
+                    direction = Direction.LEFT;
+                    worldX -= speed;
+                }
+            }
+        }
     }
 
     @Override

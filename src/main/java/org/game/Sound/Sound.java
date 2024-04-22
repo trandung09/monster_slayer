@@ -13,7 +13,7 @@ public class Sound {
 
     public Sound() {
 
-        soundURL[0] = getClass().getResource("/sound/BlueBoyAdventure.wav");
+        soundURL[0] = getClass().getResource("/sound/Dungeon.wav");
         soundURL[1] = getClass().getResource("/sound/coin.wav");
         soundURL[2] = getClass().getResource("/sound/powerup.wav");
         soundURL[3] = getClass().getResource("/sound/unlock.wav");
@@ -22,6 +22,9 @@ public class Sound {
         soundURL[6] = getClass().getResource("/sound/receivedamage.wav");
         soundURL[7] = getClass().getResource("/sound/levelup.wav");
         soundURL[8] = getClass().getResource("/sound/tape-machine-button-press-metal-84484.wav");
+        soundURL[9] = getClass().getResource("/sound/gameover.wav");
+        soundURL[10] = getClass().getResource("/sound/unlock.wav");
+        soundURL[11] = getClass().getResource("/sound/parry.wav");
     }
 
     public void setFile(int index) {
@@ -43,5 +46,9 @@ public class Sound {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public void stop() { clip.stop(); }
+    public void stop() { 
+        if (clip.isRunning()) {
+            clip.stop();
+        }
+    }
 }

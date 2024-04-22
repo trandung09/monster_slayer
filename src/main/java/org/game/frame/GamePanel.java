@@ -126,7 +126,6 @@ public class GamePanel extends JPanel implements Runnable {
             for (Boss b : boss) {
                 if (b != null && b.alive == true && b.dying == false) {
                     b.update();
-                    System.out.println(b.getLife());
                 }
             }
 
@@ -255,8 +254,25 @@ public class GamePanel extends JPanel implements Runnable {
         monsters = new Monster[50];
         objs = new SuperObject[50];
 
+        playMusic(0);
+
         setEntityAndObject();
         tileM.loadMap(tileM.maps[0]);
+    }
+
+    public void loadBossMap(String mapPath) {
+        tileM.loadMap(mapPath);
+        npcs = new Entity[50];
+        objs = new SuperObject[50];
+        boss = AssetSetter.setBoss(this);
+                
+        player.setWorldX(21 * GamePanel.tileSize);
+        player.setWorldY(23 * GamePanel.tileSize);
+        player.setManas(player.getManas() + 3);
+        if (player.getEnergy() < player.getMaxEnergy() / 2) 
+            player.setEnergy(player.getMaxEnergy() / 2);
+
+        bossWarning = false;
     }
 
     public boolean checkBossWarning() {
@@ -277,7 +293,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void stopMusic() {
-
         sound.stop();
     }
 

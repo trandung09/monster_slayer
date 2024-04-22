@@ -1,6 +1,5 @@
 package org.game.event;
 
-import org.game.enums.Direction;
 import org.game.frame.GamePanel;
 
 public class EventHandler {
@@ -30,29 +29,22 @@ public class EventHandler {
 
     public void checkEvent() {
 
-        if (hit(23, 21, Direction.UP)) {
-            if (!gp.player.isInvincible() && gp.player.getLife() > 1) {
-                gp.player.setLife(gp.player.getLife() - 1);
-                gp.player.setInvincible(true);
-            }
-        }
+        bombExplosion(23, 21);
+        bombExplosion(10, 18);
+        bombExplosion(40, 32);
+    }
 
-        if (hit(10, 18, Direction.UP)) {
-            if (!gp.player.isInvincible() && gp.player.getLife() > 1) {
-                gp.player.setLife(gp.player.getLife() - 1);
-                gp.player.setInvincible(true);
-            }
-        }
-
-        if (hit(40, 32, Direction.UP)) {
-            if (!gp.player.isInvincible() && gp.player.getLife() > 1) {
+    public void bombExplosion(int row, int col) {
+        if (hit(row, col)) {
+            if (!gp.player.isInvincible() && gp.player.getLife() >= 1) {
+                gp.playMusicSE(11);
                 gp.player.setLife(gp.player.getLife() - 1);
                 gp.player.setInvincible(true);
             }
         }
     }
 
-    public boolean hit(int row, int col, Direction direction) {
+    public boolean hit(int row, int col) {
 
         boolean hit = false;
 
@@ -63,8 +55,7 @@ public class EventHandler {
         eventRects[row][col].y += col * GamePanel.tileSize;
 
         if (gp.player.solidArea.intersects(eventRects[row][col])) {
-            if (gp.player.getDirection() == direction)
-                hit = true;
+            hit = true;
         }
 
         gp.player.solidArea.x = gp.player.solidAreaDefaultX;

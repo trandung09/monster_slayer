@@ -24,7 +24,7 @@ public class Sinister extends Monster {
         objRan = 2;
         damage = 2;
 
-        maxLife = 12;
+        maxLife = 10;
         life = maxLife;
 
         direction = Direction.RIGHT;
@@ -121,6 +121,7 @@ public class Sinister extends Monster {
                 case RIGHT: worldX += attackArea.width; break;
                 default:
                     break;
+                    
             }
 
             solidArea.height = attackArea.height;

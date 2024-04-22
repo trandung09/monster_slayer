@@ -428,7 +428,7 @@ public class ScreenUI extends Interaction {
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize * 4;
 
-        if (Option.endState == Menu.RETRY) {
+        if (Option.winState == Menu.NEW_GAME) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);
@@ -437,7 +437,7 @@ public class ScreenUI extends Interaction {
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize;
 
-        if (Option.endState == Menu.QUIT) {
+        if (Option.winState == Menu.QUIT) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);

@@ -9,9 +9,7 @@ import org.game.enums.Direction;
 import org.game.enums.GameState;
 import org.game.event.InputHandler;
 import org.game.frame.GamePanel;
-import org.game.helper.AssetSetter;
 import org.game.helper.Images;
-import org.game.monster.Monster;
 import org.game.object.Fireball;
 
 public class Player extends Entity {
@@ -61,7 +59,7 @@ public class Player extends Entity {
 
         worldX = GamePanel.tileSize * 23;
         worldY = GamePanel.tileSize * 21;
-        speed = 3;
+        speed = 6;
 
         nextLevelExp = 5;
 
@@ -127,6 +125,12 @@ public class Player extends Entity {
      */
     @Override
     public void update() {
+
+        if (life <= 0) {
+            gp.mainState = GameState.END;
+            gp.stopMusic();
+            gp.playMusicSE(9);
+        }
         // Sát thương nhân vật gây ra tăng lên khi giết được quái vật
         if (useMana) {
             useMana = false;
@@ -173,13 +177,11 @@ public class Player extends Entity {
             coChecker.checkCoWithTile(this);
 
             int objIndex = coChecker.checkCoWithObject(this, true);
-            int npcIndex = coChecker.checkCoWithEntity(this, gp.npcs);
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
             int bossIndex = coChecker.checkCoWithEntity(this, gp.boss);
 
             // Các phương thức xử lý khi va chạm với một đối tượng khác cụ thể
             pickObject(objIndex);
-            interactNpc(npcIndex);
 
             for (Projectiles e : projectiles) {
                 int eIndex = coChecker.checkCoWithEntity(e, gp.monsters);
@@ -195,16 +197,12 @@ public class Player extends Entity {
             if (collisionOn == false) {
                 switch (direction) {
                     case UP:
-                        worldY -= speed;
-                        break;
+                        worldY -= speed; break;
                     case DOWN:
-                        worldY += speed;
-                        break;
+                        worldY += speed; break;
                     case LEFT:
-                        worldX -= speed;
-                        break;
-                    case RIGHT:
-                        worldX += speed;
+                        worldX -= speed; break;
+                    case RIGHT: worldX += speed;
                         break;
                 }
             }
@@ -317,12 +315,10 @@ public class Player extends Entity {
             gp.boss[index].dying = true;
             gp.boss[index].alive = false;
 
-            gp.screenUI.addMessage("Exp +" + gp.monsters[index].monsterExp + "!");
+            gp.screenUI.addMessage("Exp +" + gp.boss[index].monsterExp + "!");
             gp.screenUI.addMessage("Strengly +1!");
-            gp.screenUI.addMessage("Killed the " + gp.monsters[index].name + "!");
+            gp.screenUI.addMessage("Killed the " + gp.boss[index].name + "!");
             exp += gp.boss[index].monsterExp;
-
-            gp.mainState = GameState.WIN;
         }
     }
 
@@ -373,6 +369,7 @@ public class Player extends Entity {
             case "GoldCoin":
                 coin++;
                 gp.objs[index] = null;
+                gp.playMusicSE(1);
                 gp.screenUI.addMessage("Gold coin +1!");
             case "Boots":
                 speed += 1;
@@ -395,17 +392,14 @@ public class Player extends Entity {
                 gp.objs[index] = null;
                 gp.screenUI.addMessage("Key +1!");
                 break;
+            case "Door":
+                if (useKey == true) {
+                    gp.objs[index] = null;
+                    gp.playMusicSE(2);
+                    gp.screenUI.addMessage("Opened the door");
+                }
             default:
                 break;
-        }
-    }
-
-    private void interactNpc(int index) {
-
-        if (index == -1)
-            return;
-        if (gp.keyH.enterPressed) {
-
         }
     }
 
@@ -497,6 +491,8 @@ public class Player extends Entity {
 
         nextLevelExp = 5;
         level = 1;
+
+        exp = 0;
 
         direction = Direction.DOWN;
         drawChecker = true;

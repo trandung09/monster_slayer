@@ -4,10 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import org.game.enums.Menu;
-import org.game.character.Entity;
 import org.game.enums.GameState;
 import org.game.frame.GamePanel;
-import org.game.helper.AssetSetter;
 import org.game.options.Option;
 
 public class InputHandler implements KeyListener {
@@ -42,6 +40,8 @@ public class InputHandler implements KeyListener {
             pauseState(kCode);
         } else if (gp.mainState == GameState.END) {
             endState(kCode);
+        } else if (gp.mainState == GameState.WIN) {
+            winState(kCode);
         }
     }
 
@@ -73,23 +73,18 @@ public class InputHandler implements KeyListener {
     private void startState(int kCode) {
         switch (kCode) {
             case KeyEvent.VK_W:
-                upPressed = true;
-                break;
+                upPressed = true; break;
             case KeyEvent.VK_S:
-                downPressed = true;
-                break;
+                downPressed = true; break;
             case KeyEvent.VK_A:
-                leftPressed = true;
-                break;
+                leftPressed = true; break;
             case KeyEvent.VK_D:
-                rightPressed = true;
-                break;
+                rightPressed = true; break;
             case KeyEvent.VK_L:
-                lightingPressed = !lightingPressed;
+                lightingPressed = !lightingPressed; 
                 break;
             case KeyEvent.VK_BACK_SLASH:
-                shootPressed = true;
-                break;
+                shootPressed = true; break;
             case KeyEvent.VK_P:
                 if (gp.mainState == GameState.START)
                     gp.mainState = GameState.PAUSE;
@@ -174,17 +169,7 @@ public class InputHandler implements KeyListener {
     private void dialougeState(int kCode) {
         if (kCode == KeyEvent.VK_ENTER) {
             if (gp.bossWarning) {
-                gp.tileM.loadMap(gp.tileM.maps[1]);
-                gp.npcs = new Entity[50];
-                gp.boss = AssetSetter.setBoss(gp);
-                
-                gp.player.setWorldX(21 * GamePanel.tileSize);
-                gp.player.setWorldY(23 * GamePanel.tileSize);
-                gp.player.setManas(gp.player.getManas() + 3);
-                if (gp.player.getEnergy() < gp.player.getMaxEnergy() / 2) 
-                    gp.player.setEnergy(gp.player.getMaxEnergy() / 2);
-
-                gp.bossWarning = false;
+                gp.loadBossMap(gp.tileM.maps[1]);
             }
 
             gp.mainState = GameState.START;
@@ -233,6 +218,32 @@ public class InputHandler implements KeyListener {
                     Option.endState = Menu.QUIT;
                 else if (Option.endState == Menu.QUIT)
                     Option.endState = Menu.RETRY;
+            default:
+                break;
+        }
+    }
+
+    private void winState(int kCode) {
+        switch (kCode) {
+            case KeyEvent.VK_UP: 
+                if (Option.winState == Menu.NEW_GAME) 
+                    Option.winState = Menu.QUIT;
+                else if (Option.winState == Menu.QUIT)
+                    Option.winState = Menu.NEW_GAME; 
+                break;
+            case KeyEvent.VK_DOWN:
+                if (Option.winState == Menu.NEW_GAME)
+                    Option.winState = Menu.QUIT;
+                else if (Option.winState == Menu.QUIT)
+                    Option.winState = Menu.NEW_GAME;
+                break;
+            case KeyEvent.VK_ENTER:
+                if (Option.winState == Menu.NEW_GAME) {
+                    gp.reInitialize();
+                    gp.mainState = GameState.START;
+                } else if (Option.winState == Menu.QUIT)
+                    System.exit(1);
+                break;
             default:
                 break;
         }

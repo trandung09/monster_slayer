@@ -67,7 +67,6 @@ public abstract class Entity {
     }
 
     protected Entity(GamePanel gp) {
-
         this.gp = gp;
         this.eventH = new EventHandler(gp);
         this.coChecker = new CollisionChecker(gp);
