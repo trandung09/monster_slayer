@@ -1,8 +1,7 @@
-18 10 Boots
-35 40 Boots
-27 12 Key
-34 29 Key
-20 40 Key
-15 37 Door
-31 40 Door
-19 17 Door
+25 35 Boots
+20 10 Key
+8 21 Key
+40 31 Key
+18 23 Door
+30 40 Door
+30 19 Door

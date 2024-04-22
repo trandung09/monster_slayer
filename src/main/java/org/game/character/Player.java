@@ -52,7 +52,7 @@ public class Player extends Entity {
 
     private void setPlayerInfo() {
 
-        maxLife = 8;
+        maxLife = 12;
         life = maxLife;
         maxEnergy = 10;
         energy = maxEnergy;
@@ -135,7 +135,7 @@ public class Player extends Entity {
         if (useMana) {
             useMana = false;
             if (life < maxLife) {
-                life++;
+                life += 2;
                 manas--;
             }
         }
@@ -144,10 +144,11 @@ public class Player extends Entity {
             level++;
             nextLevelExp *= 2;
 
-            maxEnergy = maxEnergy + 5;
             energy = maxEnergy;
 
-            damage++;
+            if (damage < 3) {
+                damage++;
+            }
 
             gp.screenUI.currentText = "You are level " + level + " now!\n"
                     + "You feel stronger!";
@@ -179,6 +180,8 @@ public class Player extends Entity {
             int objIndex = coChecker.checkCoWithObject(this, true);
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
             int bossIndex = coChecker.checkCoWithEntity(this, gp.boss);
+
+            System.out.println(monsterIndex + " " + bossIndex);
 
             // Các phương thức xử lý khi va chạm với một đối tượng khác cụ thể
             pickObject(objIndex);
@@ -335,6 +338,7 @@ public class Player extends Entity {
                 gp.monsters[index].life -= damage;
                 gp.monsters[index].invincible = true; // Sau khi nhận sát thương thì quái vật trong trạng thái vô địch
 
+                System.out.println(gp.monsters[index].invincible);
                 gp.monsters[index].resetAction();
                 gp.playMusicSE(5);
 
@@ -395,8 +399,10 @@ public class Player extends Entity {
                 break;
             case "Door":
                 if (useKey == true) {
+                    useKey = false;
+                    keys--;
                     gp.objs[index] = null;
-                    gp.playMusicSE(11);
+                    gp.playMusicSE(10);
                     gp.screenUI.addMessage("Opened the door");
                 }
             default:
@@ -481,14 +487,14 @@ public class Player extends Entity {
 
     public void reInitialize() {
 
-        maxLife = 8;
+        maxLife = 12;
         life = maxLife;
         maxEnergy = 10;
         energy = maxEnergy;
 
         worldX = GamePanel.tileSize * 8;
         worldY = GamePanel.tileSize * 7;
-        speed = 3;
+        speed = 2;
 
         nextLevelExp = 5;
         level = 1;

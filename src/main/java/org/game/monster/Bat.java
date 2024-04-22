@@ -13,12 +13,12 @@ public class Bat extends Monster {
 
         invincible = false;
         name = "Bat";
-        speed = 1;
+        speed = 2;
 
-        monsterExp = 2;
+        monsterExp = 1;
         objRan = 1;
 
-        maxLife = 4;
+        maxLife = 2;
         life = maxLife;
 
         direction = Direction.RIGHT;

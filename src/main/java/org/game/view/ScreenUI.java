@@ -244,7 +244,7 @@ public class ScreenUI extends Interaction {
             drawSubWindow(usedItemX - 15, usedItemY - 15, width - 101, 70);
         }
         g2D.drawImage(Images.coin, usedItemX + 5, usedItemY, 40, 40, null);
-        g2D.drawString("x" + gp.player.getDiamonds(), usedItemX + 65, usedItemY + 32);
+        g2D.drawString("x" + gp.player.getCoin(), usedItemX + 65, usedItemY + 32);
         usedItemY += lineHeight + 15;
 
         if (gp.player.currentItemSlected == 2) {

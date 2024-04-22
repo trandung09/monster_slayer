@@ -22,9 +22,9 @@ public class Boss extends Monster {
 
         monsterExp = 15;
         objRan = 3;
-        damage = 2;
+        damage = 3;
 
-        maxLife = 10;
+        maxLife = 50;
         life = maxLife;
 
         direction = Direction.RIGHT;

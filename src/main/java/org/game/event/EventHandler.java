@@ -30,8 +30,8 @@ public class EventHandler {
     public void checkEvent() {
 
         bombExplosion(23, 21);
-        bombExplosion(10, 18);
-        bombExplosion(40, 32);
+        bombExplosion(32, 26);
+        bombExplosion(40, 39);
     }
 
     public void bombExplosion(int row, int col) {

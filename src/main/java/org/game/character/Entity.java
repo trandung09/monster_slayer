@@ -103,7 +103,7 @@ public abstract class Entity {
         // Cập nhật trạng thái vô địch cho thực thể
         if (invincible) {
             invincibleCounter++;
-            if (invincibleCounter > 40) {
+            if (invincibleCounter > 60) {
                 invincible = false;
                 invincibleCounter = 0;
             }

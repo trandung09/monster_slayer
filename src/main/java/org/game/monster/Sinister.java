@@ -21,10 +21,10 @@ public class Sinister extends Monster {
         speed = 1;
 
         monsterExp = 5;
-        objRan = 2;
-        damage = 2;
+        objRan = 1;
+        damage = 1;
 
-        maxLife = 10;
+        maxLife = 15;
         life = maxLife;
 
         direction = Direction.RIGHT;
@@ -32,6 +32,8 @@ public class Sinister extends Monster {
         solidArea = new Rectangle(8, 8, 40, 40);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+
+        attackArea = new Rectangle(0, 0, 45, 45);
 
         loadSinisterImage();
         loadSinisterAttackImage();
@@ -74,8 +76,8 @@ public class Sinister extends Monster {
         int pX = (worldX + GamePanel.tileSize) - (gp.player.getWorldX() + GamePanel.tileSize / 2);
         int pY = (worldY + GamePanel.tileSize) - (gp.player.getWorldY() + GamePanel.tileSize / 2);
 
-        double rView = 400;
-        double aView = 100;
+        double rView = 200;
+        double aView = 80;
         double uView = Math.sqrt(pX * pX + pY * pY);
 
         if (uView < rView && uView > aView) {

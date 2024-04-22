@@ -4,4 +4,14 @@
 4 32 Bat
 36 40 Bat
 36 40 Bat
-22 20 Slime
+40 39 Slime
+19 8 Slime
+16 8 Slime
+9 19 Slime
+9 20 Slime
+15 39 Slime
+20 22 Slime
+8 19 Sinister
+15 38 Sinister
+27 35 Sinister
+39 31 Sinister

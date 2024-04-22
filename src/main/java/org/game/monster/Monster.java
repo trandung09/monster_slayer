@@ -3,7 +3,6 @@ package org.game.monster;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -20,8 +19,6 @@ public class Monster extends Entity {
     public Monster(GamePanel gp) {
 
         super(gp);
-
-        attackArea = new Rectangle(0, 0, 40, 40);
     }
 
     @Override
@@ -61,10 +58,12 @@ public class Monster extends Entity {
             direction = Direction.LEFT;
         else direction = Direction.RIGHT;
 
-        if (direction == Direction.DOWN) worldY -= speed * 15;
-        else if (direction == Direction.UP) worldY += speed * 15;
-        else if (direction == Direction.LEFT) worldX += speed * 15;
-        else worldX -= speed * 15;
+        if (!collisionOn) {
+            if (direction == Direction.DOWN) worldY -= speed * 15;
+            else if (direction == Direction.UP) worldY += speed * 15;
+            else if (direction == Direction.LEFT) worldX += speed * 15;
+            else worldX -= speed * 15;
+        }
     }
 
     public void damagePlayer() {
