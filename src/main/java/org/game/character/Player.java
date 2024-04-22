@@ -338,7 +338,6 @@ public class Player extends Entity {
                 gp.monsters[index].life -= damage;
                 gp.monsters[index].invincible = true; // Sau khi nhận sát thương thì quái vật trong trạng thái vô địch
 
-                System.out.println(gp.monsters[index].invincible);
                 gp.monsters[index].resetAction();
                 gp.playMusicSE(5);
 
