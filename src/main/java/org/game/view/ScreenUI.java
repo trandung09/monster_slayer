@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import org.game.enums.Menu;
 import org.game.frame.GamePanel;
 import org.game.helper.Images;
-import org.game.options.Option;
+import org.game.options.StateOption;
 
 public class ScreenUI extends Interaction {
 
@@ -290,7 +290,7 @@ public class ScreenUI extends Interaction {
         screenY = screenY + (GamePanel.tileSize * 7) / 2;
 
         g2D.drawString(text, screenX, screenY);
-        if (Option.waitState == Menu.NEW_GAME) 
+        if (StateOption.waitState == Menu.NEW_GAME) 
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
 
         text = "ABOUT";
@@ -298,7 +298,7 @@ public class ScreenUI extends Interaction {
         screenY = screenY + (GamePanel.tileSize * 4) / 3;
 
         g2D.drawString(text, screenX, screenY);
-        if (Option.waitState == Menu.ABOUT) 
+        if (StateOption.waitState == Menu.ABOUT) 
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
 
         text = "QUIT";
@@ -306,7 +306,7 @@ public class ScreenUI extends Interaction {
         screenY = screenY + (GamePanel.tileSize * 4) / 3;
 
         g2D.drawString(text, screenX, screenY);
-        if (Option.waitState == Menu.QUIT) 
+        if (StateOption.waitState == Menu.QUIT) 
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
     }
 
@@ -356,7 +356,7 @@ public class ScreenUI extends Interaction {
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize * 4;
 
-        if (Option.pauseState == Menu.CONTINUE) {
+        if (StateOption.pauseState == Menu.CONTINUE) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);
@@ -365,7 +365,7 @@ public class ScreenUI extends Interaction {
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize;
 
-        if (Option.pauseState == Menu.QUIT) {
+        if (StateOption.pauseState == Menu.QUIT) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);
@@ -389,7 +389,7 @@ public class ScreenUI extends Interaction {
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize * 4;
 
-        if (Option.endState == Menu.RETRY) {
+        if (StateOption.endState == Menu.RETRY) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);
@@ -398,7 +398,7 @@ public class ScreenUI extends Interaction {
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize;
 
-        if (Option.endState == Menu.QUIT) {
+        if (StateOption.endState == Menu.QUIT) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);
@@ -428,7 +428,7 @@ public class ScreenUI extends Interaction {
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize * 4;
 
-        if (Option.winState == Menu.NEW_GAME) {
+        if (StateOption.winState == Menu.NEW_GAME) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);
@@ -437,7 +437,7 @@ public class ScreenUI extends Interaction {
         screenX = getXForCenterText(text);
         screenY += GamePanel.tileSize;
 
-        if (Option.winState == Menu.QUIT) {
+        if (StateOption.winState == Menu.QUIT) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);

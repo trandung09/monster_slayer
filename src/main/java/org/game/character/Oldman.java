@@ -116,10 +116,10 @@ public class Oldman extends Entity {
                 case LEFT: image = (drawChecker ? left1 : left2); break;
                 case RIGHT: image = (drawChecker ? right1 : right2); break;
                 default:
-                    throw new IllegalStateException("Unexcept value" + direction);
+                    break;
             }
-            // Vẽ hình ảnh của thực thể
-            g2D.setComposite(AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 0.4f));
+            // Vẽ hình ảnh của thực thể 
+            g2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
             g2D.drawImage(image, screenX, screenY, GamePanel.tileSize, GamePanel.tileSize, null);
         }
     }

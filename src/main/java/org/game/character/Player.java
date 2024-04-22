@@ -59,7 +59,7 @@ public class Player extends Entity {
 
         worldX = GamePanel.tileSize * 23;
         worldY = GamePanel.tileSize * 21;
-        speed = 6;
+        speed = 2;
 
         nextLevelExp = 5;
 
@@ -244,7 +244,8 @@ public class Player extends Entity {
         attackImageCounter++;
         if (attackImageCounter <= 5) {
             attackImage = true;
-        } else if (attackImageCounter > 5 && attackImageCounter <= 25) {
+        } 
+        else if (attackImageCounter > 5 && attackImageCounter <= 25) {
             attackImage = false;
 
             // Lưu lại vị trí, vùng va chạm hiện tại của nhân vật
@@ -395,7 +396,7 @@ public class Player extends Entity {
             case "Door":
                 if (useKey == true) {
                     gp.objs[index] = null;
-                    gp.playMusicSE(2);
+                    gp.playMusicSE(11);
                     gp.screenUI.addMessage("Opened the door");
                 }
             default:
@@ -493,6 +494,8 @@ public class Player extends Entity {
         level = 1;
 
         exp = 0;
+
+        projectiles.clear();
 
         direction = Direction.DOWN;
         drawChecker = true;

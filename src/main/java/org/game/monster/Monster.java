@@ -81,12 +81,45 @@ public class Monster extends Entity {
     }
 
     public void attacking() {
-
+        
     }
 
     public void checkVisibility(double uView, double rView, int size) {
 
-        finPathToPlayer(rView, uView, size);
+        int pX = gp.player.getWorldX() + GamePanel.tileSize / 2;
+        int pY = gp.player.getWorldY() + GamePanel.tileSize / 2;
+
+        int mX = worldX + size;
+        int mY = worldY + size;
+
+        if (uView <= rView) {
+            if (mY > pY + GamePanel.tileSize / 12) {
+                direction = Direction.UP;
+                if (!collisionOn) {
+                    worldY -= speed;
+                }
+            }
+            else if (mY < pY) {
+                direction = Direction.DOWN;
+                if (!collisionOn) {
+                    worldY += speed;
+                }
+            }
+            else if (mY == pY) {
+                if (mX < pX) {
+                    direction = Direction.RIGHT;
+                    if (!collisionOn) {
+                        worldX += speed;
+                    }
+                }
+                else if (mX >= pX) {
+                    direction = Direction.LEFT;
+                    if (!collisionOn) {
+                        worldX -= speed;
+                    }
+                }
+            }
+        }
     }
 
     public void checkAttacking(double uView,  double aView) {
@@ -102,35 +135,6 @@ public class Monster extends Entity {
         } else {
             attackCounter = 0;
             attacking = false;
-        }
-    }
-
-    public void finPathToPlayer(double rView, double uView, int size) {
-        int pX = gp.player.getWorldX() + GamePanel.tileSize / 2;
-        int pY = gp.player.getWorldY() + GamePanel.tileSize / 2;
-
-        int mX = worldX + size;
-        int mY = worldY + size;
-
-        if (uView <= rView) {
-            if (mY > pY + GamePanel.tileSize / 12) {
-                direction = Direction.UP;
-                worldY -= speed;
-            }
-            else if (mY < pY) {
-                direction = Direction.DOWN;
-                worldY += speed;
-            }
-            else if (mY == pY) {
-                if (mX < pX) {
-                    direction = Direction.RIGHT;
-                    worldX += speed;
-                }
-                else if (mX >= pX) {
-                    direction = Direction.LEFT;
-                    worldX -= speed;
-                }
-            }
         }
     }
 

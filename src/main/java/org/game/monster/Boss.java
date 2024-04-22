@@ -71,7 +71,9 @@ public class Boss extends Monster {
 
     @Override
     public void setAction() {
+
         super.setAction();
+        
         int pX = (worldX + GamePanel.tileSize) - (gp.player.getWorldX() + GamePanel.tileSize / 2);
         int pY = (worldY + GamePanel.tileSize) - (gp.player.getWorldY() + GamePanel.tileSize / 2);
 

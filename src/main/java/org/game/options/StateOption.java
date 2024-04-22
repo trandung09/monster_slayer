@@ -2,7 +2,7 @@ package org.game.options;
 
 import org.game.enums.Menu;
 
-public class Option {
+public class StateOption {
     
     public static Menu waitState  = Menu.NEW_GAME;
     public static Menu pauseState = Menu.CONTINUE;

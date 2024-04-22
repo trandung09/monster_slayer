@@ -1,7 +1,7 @@
-22 20 Slime
 21 40 Bat
 13 28 Bat
 36 32 Bat
 4 32 Bat
 36 40 Bat
 36 40 Bat
+22 20 Slime

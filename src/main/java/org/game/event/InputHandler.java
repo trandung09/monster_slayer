@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 import org.game.enums.Menu;
 import org.game.enums.GameState;
 import org.game.frame.GamePanel;
-import org.game.options.Option;
+import org.game.options.StateOption;
 
 public class InputHandler implements KeyListener {
 
@@ -111,26 +111,26 @@ public class InputHandler implements KeyListener {
     private void waitState(int kCode) {
         switch (kCode) {
             case KeyEvent.VK_ENTER:
-                if (Option.waitState == Menu.NEW_GAME)
+                if (StateOption.waitState == Menu.NEW_GAME)
                     gp.mainState = GameState.START;
-                else if (Option.waitState == Menu.QUIT)
+                else if (StateOption.waitState == Menu.QUIT)
                     System.exit(1);
                 break;
             case KeyEvent.VK_UP:
-                if (Option.waitState == Menu.NEW_GAME)
-                    Option.waitState = Menu.QUIT;
-                else if (Option.waitState == Menu.ABOUT)
-                    Option.waitState = Menu.NEW_GAME;
-                else if (Option.waitState == Menu.QUIT)
-                    Option.waitState = Menu.ABOUT;
+                if (StateOption.waitState == Menu.NEW_GAME)
+                    StateOption.waitState = Menu.QUIT;
+                else if (StateOption.waitState == Menu.ABOUT)
+                    StateOption.waitState = Menu.NEW_GAME;
+                else if (StateOption.waitState == Menu.QUIT)
+                    StateOption.waitState = Menu.ABOUT;
                 break;
             case KeyEvent.VK_DOWN:
-                if (Option.waitState == Menu.NEW_GAME)
-                    Option.waitState = Menu.ABOUT;
-                else if (Option.waitState == Menu.ABOUT)
-                    Option.waitState = Menu.QUIT;
-                else if (Option.waitState == Menu.QUIT)
-                    Option.waitState = Menu.NEW_GAME;
+                if (StateOption.waitState == Menu.NEW_GAME)
+                    StateOption.waitState = Menu.ABOUT;
+                else if (StateOption.waitState == Menu.ABOUT)
+                    StateOption.waitState = Menu.QUIT;
+                else if (StateOption.waitState == Menu.QUIT)
+                    StateOption.waitState = Menu.NEW_GAME;
                 break;
             default:
                 break;
@@ -179,21 +179,21 @@ public class InputHandler implements KeyListener {
     private void pauseState(int kCode) {
         switch (kCode) {
             case KeyEvent.VK_ENTER:
-                if (Option.pauseState == Menu.CONTINUE)
+                if (StateOption.pauseState == Menu.CONTINUE)
                     gp.mainState = GameState.START;
-                else if (Option.pauseState == Menu.QUIT)
+                else if (StateOption.pauseState == Menu.QUIT)
                     System.exit(1);
                 break;
             case KeyEvent.VK_UP:
-                if (Option.pauseState == Menu.CONTINUE)
-                    Option.pauseState = Menu.QUIT;
-                else if (Option.pauseState == Menu.QUIT)
-                    Option.pauseState = Menu.CONTINUE;
+                if (StateOption.pauseState == Menu.CONTINUE)
+                    StateOption.pauseState = Menu.QUIT;
+                else if (StateOption.pauseState == Menu.QUIT)
+                    StateOption.pauseState = Menu.CONTINUE;
             case KeyEvent.VK_DOWN:
-                if (Option.pauseState == Menu.CONTINUE)
-                    Option.pauseState = Menu.QUIT;
-                else if (Option.pauseState == Menu.QUIT)
-                    Option.pauseState = Menu.CONTINUE;
+                if (StateOption.pauseState == Menu.CONTINUE)
+                    StateOption.pauseState = Menu.QUIT;
+                else if (StateOption.pauseState == Menu.QUIT)
+                    StateOption.pauseState = Menu.CONTINUE;
             default:
                 break;
         }
@@ -202,22 +202,22 @@ public class InputHandler implements KeyListener {
     private void endState(int kCode) {
         switch (kCode) {
             case KeyEvent.VK_ENTER:
-                if (Option.endState == Menu.RETRY) {
+                if (StateOption.endState == Menu.RETRY) {
                     gp.reInitialize();
                     gp.mainState = GameState.START;
-                } else if (Option.endState == Menu.QUIT)
+                } else if (StateOption.endState == Menu.QUIT)
                     System.exit(1);
                 break;
             case KeyEvent.VK_UP:
-                if (Option.endState == Menu.RETRY)
-                    Option.endState = Menu.QUIT;
-                else if (Option.endState == Menu.QUIT)
-                    Option.endState = Menu.RETRY;
+                if (StateOption.endState == Menu.RETRY)
+                    StateOption.endState = Menu.QUIT;
+                else if (StateOption.endState == Menu.QUIT)
+                    StateOption.endState = Menu.RETRY;
             case KeyEvent.VK_DOWN:
-                if (Option.endState == Menu.RETRY)
-                    Option.endState = Menu.QUIT;
-                else if (Option.endState == Menu.QUIT)
-                    Option.endState = Menu.RETRY;
+                if (StateOption.endState == Menu.RETRY)
+                    StateOption.endState = Menu.QUIT;
+                else if (StateOption.endState == Menu.QUIT)
+                    StateOption.endState = Menu.RETRY;
             default:
                 break;
         }
@@ -226,22 +226,22 @@ public class InputHandler implements KeyListener {
     private void winState(int kCode) {
         switch (kCode) {
             case KeyEvent.VK_UP: 
-                if (Option.winState == Menu.NEW_GAME) 
-                    Option.winState = Menu.QUIT;
-                else if (Option.winState == Menu.QUIT)
-                    Option.winState = Menu.NEW_GAME; 
+                if (StateOption.winState == Menu.NEW_GAME) 
+                    StateOption.winState = Menu.QUIT;
+                else if (StateOption.winState == Menu.QUIT)
+                    StateOption.winState = Menu.NEW_GAME; 
                 break;
             case KeyEvent.VK_DOWN:
-                if (Option.winState == Menu.NEW_GAME)
-                    Option.winState = Menu.QUIT;
-                else if (Option.winState == Menu.QUIT)
-                    Option.winState = Menu.NEW_GAME;
+                if (StateOption.winState == Menu.NEW_GAME)
+                    StateOption.winState = Menu.QUIT;
+                else if (StateOption.winState == Menu.QUIT)
+                    StateOption.winState = Menu.NEW_GAME;
                 break;
             case KeyEvent.VK_ENTER:
-                if (Option.winState == Menu.NEW_GAME) {
+                if (StateOption.winState == Menu.NEW_GAME) {
                     gp.reInitialize();
                     gp.mainState = GameState.START;
-                } else if (Option.winState == Menu.QUIT)
+                } else if (StateOption.winState == Menu.QUIT)
                     System.exit(1);
                 break;
             default:

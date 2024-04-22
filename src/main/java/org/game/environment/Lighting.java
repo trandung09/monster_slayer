@@ -29,14 +29,17 @@ public class Lighting {
         darknessFilter = new BufferedImage(GamePanel.screenWidth, GamePanel.screenHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2D = (Graphics2D) darknessFilter.getGraphics();
 
+        // duong kinh
         int circleSize = 400;
 
         Area screenArea = new Area(new Rectangle2D.Double(0, - GamePanel.screenHeight, GamePanel.screenWidth * 2, GamePanel.screenHeight * 2));
-        int centerX = gp.player.screenX + GamePanel.tileSize/2;
-        int centerY = gp.player.screenY + GamePanel.tileSize/2;
+        // 
+        int centerX = gp.player.screenX + GamePanel.tileSize / 2;
+        int centerY = gp.player.screenY + GamePanel.tileSize / 2;
 
-        double x = centerX - circleSize/2;
-        double y = centerY - circleSize/2;
+        // tam vung sang
+        double x = centerX - circleSize / 2;
+        double y = centerY - circleSize / 2;
 
         Shape circleShape = new Ellipse2D.Double(x, y, circleSize, circleSize);
         Area lightArea = new Area(circleShape);
@@ -53,7 +56,7 @@ public class Lighting {
 
     public void setColor() {
 
-       if (gp.keyH.lightingPressed) {
+        if (gp.keyH.lightingPressed) {
             color[0] = new Color(0, 0, 0.1f, 0.1f);
             color[1] = new Color(0, 0, 0.1f, 0.22f);
             color[2] = new Color(0, 0, 0.1f, 0.36f);
@@ -66,11 +69,11 @@ public class Lighting {
             color[9] = new Color(0, 0, 0.1f, 0.84f);
             color[10] = new Color(0, 0, 0.1f, 0.86f);
             color[11] = new Color(0, 0, 0.1f, 0.88f);
-       } else{
+        } else{
             for (int i = 0; i < 12 ; i++) {
                 color[i] = new Color(0, 0, 0.1f, 0.3f);
             }
-       }
+        }
     }
 
     public RadialGradientPaint setLightSource(int centerX, int centerY, int circleSize) {
@@ -90,7 +93,7 @@ public class Lighting {
         fraction[10] = 0.95f;
         fraction[11] = 1f;
 
-        RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, circleSize/2, fraction, color);
+        RadialGradientPaint gPaint = new RadialGradientPaint(centerX, centerY, circleSize / 2, fraction, color);
 
         return gPaint;
     }

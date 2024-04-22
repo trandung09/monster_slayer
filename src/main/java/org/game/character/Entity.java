@@ -145,7 +145,7 @@ public abstract class Entity {
                 case LEFT: image = (drawChecker ? left1 : left2); break;
                 case RIGHT: image = (drawChecker ? right1 : right2); break;
                 default:
-                    throw new IllegalStateException("Unexcept value" + direction);
+                    break;
             }
             // Vẽ hình ảnh của thực thể
             if (invincible) {

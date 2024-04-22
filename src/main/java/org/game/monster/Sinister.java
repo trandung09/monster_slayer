@@ -71,26 +71,18 @@ public class Sinister extends Monster {
 
         super.update();
 
-        int pX = worldX - gp.player.getWorldX();
-        int pY = worldY - gp.player.getWorldY();
+        int pX = (worldX + GamePanel.tileSize) - (gp.player.getWorldX() + GamePanel.tileSize / 2);
+        int pY = (worldY + GamePanel.tileSize) - (gp.player.getWorldY() + GamePanel.tileSize / 2);
 
-        double rView = 300;
-        double aView = 80;
+        double rView = 400;
+        double aView = 100;
         double uView = Math.sqrt(pX * pX + pY * pY);
 
-        if (uView <= aView) {
-            attackCounter++;
-
-            if (worldX > gp.player.getWorldX()) direction = Direction.LEFT;
-            else direction = Direction.RIGHT;
-
-            if (attackCounter > 120) {
-                attacking = true;
-                attackCounter = 0;
-            }
-        } else {
-            attacking = false;
+        if (uView < rView && uView > aView) {
+            checkVisibility(uView, rView, GamePanel.tileSize);
         }
+
+        checkAttacking(uView, aView);
 
         if (attacking == true) {
             attacking();
