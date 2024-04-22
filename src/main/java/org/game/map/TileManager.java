@@ -77,7 +77,7 @@ public class TileManager {
         setUp(33, "033", true);
         setUp(34, "034", true);
         setUp(35, "035", true);
-        setUp(36, "036", true);
+        setUp(36, "036", false);
         setUp(37, "037", true);
     }
 

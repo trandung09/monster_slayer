@@ -23,20 +23,20 @@ public class Player extends Entity {
     private boolean selectedWeapon = true; // true = kiếm, false = rìu
 
     // PLAYER ATTRIBUTES
-    private int level = 1;
+    private int level     = 1;
     private int dexterity = 0; // the more dexterity he has, the less damage he recicives
-    private int exp = 0; // Kinh nghiệm nhân vật
+    private int exp       = 0; // Kinh nghiệm nhân vật
     private int nextLevelExp;
-    private int coin = 0; // Sô tiền nhân vật hiện có
-    private int keys = 0; // Số chìa khóa hiện có
-    private int manas = 0; // Số năng lượng có thể sử dụng hiện tại
-    private int maxManas = 0;
-    private int diamonds = 0; // Số kim cương hiện có
-    private int energy = 0;
+    private int coin      = 0; // Sô tiền nhân vật hiện có
+    private int keys      = 0; // Số chìa khóa hiện có
+    private int manas     = 0; // Số năng lượng có thể sử dụng hiện tại
+    private int maxManas  = 0;
+    private int diamonds  = 0; // Số kim cương hiện có
+    private int energy    = 0;
     private int maxEnergy = 0;
 
     public int currentItemSlected = 0; // Vật phẩm được chọn hiện tại
-    public boolean useKey = false; // Đánh dấu có chọn sử dụng khóa hay không
+    public boolean useKey  = false; // Đánh dấu có chọn sử dụng khóa hay không
     public boolean useMana = false; // Đánh dấu có chọn sử dụng mana hay không
 
     public Player(GamePanel gp) {
@@ -57,8 +57,8 @@ public class Player extends Entity {
         maxEnergy = 10;
         energy = maxEnergy;
 
-        worldX = GamePanel.tileSize * 23;
-        worldY = GamePanel.tileSize * 21;
+        worldX = GamePanel.tileSize * 8;
+        worldY = GamePanel.tileSize * 7;
         speed = 2;
 
         nextLevelExp = 5;
@@ -486,8 +486,8 @@ public class Player extends Entity {
         maxEnergy = 10;
         energy = maxEnergy;
 
-        worldX = GamePanel.tileSize * 23;
-        worldY = GamePanel.tileSize * 21;
+        worldX = GamePanel.tileSize * 8;
+        worldY = GamePanel.tileSize * 7;
         speed = 3;
 
         nextLevelExp = 5;

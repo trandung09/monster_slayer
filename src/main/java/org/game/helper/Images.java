@@ -20,6 +20,9 @@ public class Images {
     public static BufferedImage axe          = getImage("/object/axe", width, height);
     public static BufferedImage boots        = getImage("/object/boots", width, height);
     public static BufferedImage door         = getImage("/object/door_iron", width, height);
+    public static BufferedImage _blank       = getImage("/object/heart_blank", width, height);
+    public static BufferedImage _half        = getImage("/object/heart_half", width, height); 
+    public static BufferedImage _full        = getImage("/object/heart_full", width, height);
     
 
     public static BufferedImage getImage(String imagePath, int width, int height) {
