@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import org.game.frame.GamePanel;
 
-public class SuperObject {
+public abstract class SuperObject {
     
     protected GamePanel gp;
 

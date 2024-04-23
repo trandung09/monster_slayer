@@ -61,6 +61,8 @@ public class Player extends Entity {
         worldY = GamePanel.tileSize * 7;
         speed = 2;
 
+        damage = 1;
+
         nextLevelExp = 5;
 
         direction = Direction.DOWN;
@@ -497,6 +499,8 @@ public class Player extends Entity {
 
         nextLevelExp = 5;
         level = 1;
+
+        damage = 1;
 
         exp = 0;
 

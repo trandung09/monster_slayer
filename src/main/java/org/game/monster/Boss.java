@@ -204,11 +204,11 @@ public class Boss extends Monster {
             }
 
             if (hpBarOn) {
-                double oneScale = (double) GamePanel.tileSize / maxLife;
+                double oneScale = (double) GamePanel.tileSize * 2 / maxLife;
                 double hpBar = oneScale * life;
 
                 g2D.setColor(new Color(35, 35, 35));
-                g2D.fillRect(screenX - 1, screenY - 16, GamePanel.tileSize + 2, 12);
+                g2D.fillRect(screenX - 1, screenY - 16, GamePanel.tileSize * 2 + 2, 12);
 
                 g2D.setColor(new Color(255, 35, 35));
                 g2D.fillRect(screenX, screenY - 15, (int) hpBar, 10);

@@ -26,6 +26,8 @@ public class GreenSlime extends Monster {
         maxLife = 5;
         life = maxLife;
 
+        damage = 1;
+
         direction = Direction.RIGHT;
 
         solidArea = new Rectangle(8, 8, 40, 40);
