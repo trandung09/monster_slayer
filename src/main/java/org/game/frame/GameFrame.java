@@ -4,9 +4,12 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import org.game.enums.GameState;
+import org.game.form.Login;
+
 public class GameFrame extends JFrame {
 
-    private final GamePanel gamePanel = new GamePanel();
+    public final GamePanel gamePanel = new GamePanel();
     
     public GameFrame() {
 
@@ -23,6 +26,6 @@ public class GameFrame extends JFrame {
 
     public static void main(String[] args) {
         
-        new GameFrame();
+        GameFrame gf = new GameFrame();
     }
 }

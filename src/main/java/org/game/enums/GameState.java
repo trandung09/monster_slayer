@@ -7,7 +7,7 @@ package org.game.enums;
  */
 public enum GameState {
     
-    WAIT(0), START(1), PAUSE(2), END(3), DIALOGUE(4), CHARACRTER(5), WIN(7);
+    WAIT(0), START(1), PAUSE(2), END(3), DIALOGUE(4), CHARACRTER(5), WIN(7), LOGIN(8);
 
     private int value;
 

@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import org.game.enums.Menu;
+import org.game.form.Login;
 import org.game.enums.GameState;
 import org.game.frame.GamePanel;
 import org.game.options.StateOption;
@@ -111,8 +112,13 @@ public class InputHandler implements KeyListener {
     private void waitState(int kCode) {
         switch (kCode) {
             case KeyEvent.VK_ENTER:
-                if (StateOption.waitState == Menu.NEW_GAME)
-                    gp.mainState = GameState.START;
+                if (StateOption.waitState == Menu.NEW_GAME) {
+                    gp.mainState = GameState.LOGIN;
+
+                    Login log = new Login(gp);
+                    log.setVisible(true);
+                    log.setLocationRelativeTo(null);
+                }
                 else if (StateOption.waitState == Menu.QUIT)
                     System.exit(1);
                 break;

@@ -33,6 +33,7 @@ public class ScreenUI extends Interaction {
 
         switch (gp.mainState) {
             case WAIT: drawWaitScreen(); break;
+            case LOGIN: drawWaitScreen(); break;
             case START: drawPlayScreen(); drawPlayerLife(); break;
             case PAUSE: drawPauseScreen(); break;
             case END: drawEndScreen(); break;
@@ -107,30 +108,13 @@ public class ScreenUI extends Interaction {
         g2D.setColor(new Color(255, 255, 153));
         g2D.fillRect(screenX, screenY - 15, (int)manaBar * 3, 20);
 
-        // int posX = GamePanel.tileSize / 2;
-        // int posY = GamePanel.tileSize / 2;
-        // int i = 0;
+        screenX = GamePanel.screenWidth - GamePanel.tileSize * 3;
+        screenY = GamePanel.tileSize;
 
-        // // Draw blank heart
-        // while(i < gp.player.getMaxLife() / 2) {
-        //     g2D.drawImage(Heart._blank, posX, posY, null);
-        //     posX += GamePanel.tileSize;
-        //     i++;
-        // }
-        // // Reset X and Y
-        // posX = GamePanel.tileSize / 2;
-        // posY = GamePanel.tileSize / 2;
-        // i = 0;
-        // // Draw current life
-        // while(i < gp.player.getLife()) {
-        //     g2D.drawImage(Heart._half, posX, posY, null);
-        //     i++;
-        //     if (i < gp.player.getLife()) {
-        //         g2D.drawImage(Heart._full, posX, posY, null);
-        //     }
-        //     i++;
-        //     posX += GamePanel.tileSize;
-        // }
+        g2D.setColor(Color.WHITE);
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 30f));
+
+        g2D.drawString("user: " + gp.player.getName(), screenX, screenY);
     }
 
     private void drawCharacterScreen() {

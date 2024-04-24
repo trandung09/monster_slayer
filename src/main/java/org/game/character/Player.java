@@ -19,6 +19,7 @@ public class Player extends Entity {
     public final int screenY = GamePanel.screenHeight / 2 - GamePanel.tileSize;
 
     private InputHandler keyH; // KeyEvent
+    private String userName = "root";
 
     private boolean selectedWeapon = true; // true = kiếm, false = rìu
 
@@ -127,6 +128,8 @@ public class Player extends Entity {
      */
     @Override
     public void update() {
+
+        System.out.println(speed);
 
         if (life <= 0) {
             gp.mainState = GameState.END;
@@ -375,6 +378,7 @@ public class Player extends Entity {
                 gp.objs[index] = null;
                 gp.playMusicSE(1);
                 gp.screenUI.addMessage("Gold coin +1!");
+                break;
             case "Boots":
                 speed += 1;
                 gp.objs[index] = null;
@@ -404,6 +408,7 @@ public class Player extends Entity {
                     gp.playMusicSE(10);
                     gp.screenUI.addMessage("Opened the door");
                 }
+                break;
             default:
                 break;
         }
@@ -584,6 +589,14 @@ public class Player extends Entity {
         return diamonds;
     }
 
+    public String getName() {
+        return userName;
+    }
+
+    public void setName(String name) {
+        this.userName = name;
+    }
+
     public void setDiamonds(int diamonds) {
         this.diamonds = diamonds;
     }
@@ -604,4 +617,4 @@ public class Player extends Entity {
         this.selectedWeapon = selectedWeapon;
     }
 
-}
+}   
