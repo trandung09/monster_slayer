@@ -58,6 +58,28 @@ public final class ConnectMySQL {
         return list;
     }
 
+    public static double query(String name) {
+        String query = "SELECT * FROM player WHERE name = ?";
+        Connection conn = connect();
+        
+        double times = 1e9 + 5;
+
+        try {
+            PreparedStatement stm = conn.prepareStatement(query);
+            stm.setString(1, name);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                return rs.getDouble("times");
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return times;
+    }
+
     public static void insert(String name, double times) {
         String query = "INSERT INTO player (name, times) VALUES (?, ?)";
         Connection conn = connect();
@@ -76,7 +98,22 @@ public final class ConnectMySQL {
         }
     }
 
-    public static void update(String name, double time) {
+    public static void update(String name, double times) {
+        String query  = "UPDATE player SET times = ? WHERE name = ?";
+        Connection conn = connect();
 
+        try {
+            
+            PreparedStatement stm = conn.prepareStatement(query);
+            stm.setDouble(1, times);
+            stm.setString(2, name);
+
+            if (stm.executeUpdate() <= 0) {
+                throw new UnableToConnectException();
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

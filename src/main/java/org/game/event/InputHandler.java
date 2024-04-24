@@ -43,6 +43,8 @@ public class InputHandler implements KeyListener {
             endState(kCode);
         } else if (gp.mainState == GameState.WIN) {
             winState(kCode);
+        } else if (gp.mainState == GameState.TOP) {
+            topState(kCode);
         }
     }
 
@@ -118,6 +120,9 @@ public class InputHandler implements KeyListener {
                     Login log = new Login(gp);
                     log.setVisible(true);
                     log.setLocationRelativeTo(null);
+                }
+                else if (StateOption.waitState == Menu.ABOUT) {
+                    gp.mainState = GameState.TOP;
                 }
                 else if (StateOption.waitState == Menu.QUIT)
                     System.exit(1);
@@ -202,6 +207,12 @@ public class InputHandler implements KeyListener {
                     StateOption.pauseState = Menu.CONTINUE;
             default:
                 break;
+        }
+    }
+
+    private void topState(int kCode) {
+        if (kCode == KeyEvent.VK_ENTER) {
+            gp.mainState = GameState.WAIT;
         }
     }
 

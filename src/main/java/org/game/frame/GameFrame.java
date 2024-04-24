@@ -4,9 +4,6 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-import org.game.enums.GameState;
-import org.game.form.Login;
-
 public class GameFrame extends JFrame {
 
     public final GamePanel gamePanel = new GamePanel();

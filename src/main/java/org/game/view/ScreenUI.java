@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
+import org.game.database.ConnectMySQL;
 import org.game.enums.Menu;
 import org.game.frame.GamePanel;
 import org.game.helper.Images;
@@ -16,6 +18,8 @@ public class ScreenUI extends Interaction {
     public ArrayList<String> message = new ArrayList<>();
     public ArrayList<Integer> messageCounter = new ArrayList<>();
     public String currentText;
+
+    public LinkedList<String[]> list = ConnectMySQL.query();
 
     private boolean drawChecker = false;
     private int drawCounter = 0;
@@ -32,6 +36,7 @@ public class ScreenUI extends Interaction {
         g2D.setFont(maruMonica.deriveFont(Font.BOLD, 54f));
 
         switch (gp.mainState) {
+            case TOP: drawTopState(); break;
             case WAIT: drawWaitScreen(); break;
             case LOGIN: drawWaitScreen(); break;
             case START: drawPlayScreen(); drawPlayerLife(); break;
@@ -89,6 +94,7 @@ public class ScreenUI extends Interaction {
         int screenX = GamePanel.tileSize;
         int screenY = GamePanel.tileSize;
 
+        // draw player life and energy
         double lifeOnScale = (double) GamePanel.tileSize / gp.player.getMaxLife();
         double hpBar = lifeOnScale * gp.player.getLife();
 
@@ -114,7 +120,12 @@ public class ScreenUI extends Interaction {
         g2D.setColor(Color.WHITE);
         g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 30f));
 
+        // draw user name
         g2D.drawString("user: " + gp.player.getName(), screenX, screenY);
+
+        // draw player times 
+        double times = gp.player.getTimes();
+        g2D.drawString(String.format("%.2f s", times), screenX, screenY + GamePanel .tileSize);
     }
 
     private void drawCharacterScreen() {
@@ -267,9 +278,9 @@ public class ScreenUI extends Interaction {
         g2D.drawLine(GamePanel.screenWidth / 6, screenY + 72, (GamePanel.screenWidth * 5 ) / 6, screenY + 72);
 
         // Draw menu choose (new game : load_game : quit)
-        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 48f));
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 45f));
 
-        text = "NEW GAME";
+        text = "PLAY";
         screenX = getXForCenterText(text);
         screenY = screenY + (GamePanel.tileSize * 7) / 2;
 
@@ -277,7 +288,7 @@ public class ScreenUI extends Interaction {
         if (StateOption.waitState == Menu.NEW_GAME) 
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
 
-        text = "ABOUT";
+        text = "ACCOUNT";
         screenX = getXForCenterText(text);
         screenY = screenY + (GamePanel.tileSize * 4) / 3;
 
@@ -371,7 +382,7 @@ public class ScreenUI extends Interaction {
 
         text = "Retry";
         screenX = getXForCenterText(text);
-        screenY += GamePanel.tileSize * 4;
+        screenY += GamePanel.tileSize * 3;
 
         if (StateOption.endState == Menu.RETRY) {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
@@ -386,6 +397,38 @@ public class ScreenUI extends Interaction {
             g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
         }
         g2D.drawString(text, screenX, screenY);
+    }
+
+    public void drawTopState() {
+
+        g2D.setColor(Color.WHITE);
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 50f));
+
+        String string = "Top account";        
+        int screenX = getXForCenterText(string);
+        int screenY = GamePanel.tileSize * 2 + GamePanel.tileSize / 2;
+
+        g2D.drawString(string, screenX, screenY);
+
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 35f));
+        screenY += GamePanel.tileSize * 2;
+
+        for (String[] s : list) {
+            if (list.indexOf(s) == 3) {
+                break;
+            }
+            string = String.format("%s  %s s", s[0], s[1]);
+            screenX = getXForCenterText(string);
+            g2D.drawString(string, screenX, screenY);
+            screenY += GamePanel.tileSize;
+        }
+
+        g2D.setFont(g2D.getFont().deriveFont(Font.BOLD, 45));
+        string = "Back";
+        screenX = getXForCenterText(string);
+        screenY += GamePanel.tileSize;
+        g2D.drawString(string, screenX, screenY);
+        g2D.drawString(">", screenX - GamePanel.tileSize, screenY);
     }
 
     private void drawWinScreen() {

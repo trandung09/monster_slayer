@@ -209,7 +209,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (mainState == GameState.WAIT){
 
         }
-        else if (mainState != GameState.LOGIN) {
+        else if (mainState != GameState.LOGIN && mainState != GameState.TOP) {
             tileM.draw(g2D);
 
             for (Entity ent : npcs) if (ent != null) ent.draw(g2D);

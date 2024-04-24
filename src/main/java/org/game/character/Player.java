@@ -2,9 +2,12 @@ package org.game.character;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
+import java.awt.List;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
+import org.game.database.ConnectMySQL;
 import org.game.enums.Direction;
 import org.game.enums.GameState;
 import org.game.event.InputHandler;
@@ -19,7 +22,6 @@ public class Player extends Entity {
     public final int screenY = GamePanel.screenHeight / 2 - GamePanel.tileSize;
 
     private InputHandler keyH; // KeyEvent
-    private String userName = "root";
 
     private boolean selectedWeapon = true; // true = kiếm, false = rìu
 
@@ -35,6 +37,8 @@ public class Player extends Entity {
     private int diamonds  = 0; // Số kim cương hiện có
     private int energy    = 0;
     private int maxEnergy = 0;
+
+    private double times  = 0;
 
     public int currentItemSlected = 0; // Vật phẩm được chọn hiện tại
     public boolean useKey  = false; // Đánh dấu có chọn sử dụng khóa hay không
@@ -129,7 +133,7 @@ public class Player extends Entity {
     @Override
     public void update() {
 
-        System.out.println(speed);
+        times += 1.0 / gp.FPS;
 
         if (life <= 0) {
             gp.mainState = GameState.END;
@@ -489,6 +493,14 @@ public class Player extends Entity {
 
     }
 
+    public void updateTimesScore() {
+
+        double oldtimes = ConnectMySQL.query(name);
+        if (oldtimes <= times) return;
+
+        ConnectMySQL.update(name, times);
+    }
+
     public void reInitialize() {
 
         maxLife = 12;
@@ -590,15 +602,19 @@ public class Player extends Entity {
     }
 
     public String getName() {
-        return userName;
+        return name;
     }
 
     public void setName(String name) {
-        this.userName = name;
+        this.name = name;
     }
 
     public void setDiamonds(int diamonds) {
         this.diamonds = diamonds;
+    }
+
+    public double getTimes() {
+        return times;
     }
 
     public boolean isAttacking() {

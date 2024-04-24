@@ -95,6 +95,8 @@ public class Boss extends Monster {
             gp.stopMusic();
             gp.playMusicSE(4);
             gp.mainState = GameState.WIN;
+
+            gp.player.updateTimesScore();
         }
 
         if (attacking == true) {

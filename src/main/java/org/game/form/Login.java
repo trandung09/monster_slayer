@@ -139,7 +139,8 @@ public class Login extends javax.swing.JFrame {
         }
 
         if (check == false) {
-            ConnectMySQL.insert(name, 0);
+            ConnectMySQL.insert(name, 1e9);
+            gp.screenUI.list = ConnectMySQL.query();
             JOptionPane.showMessageDialog(null,
                                 "Account created successfully");
         }
