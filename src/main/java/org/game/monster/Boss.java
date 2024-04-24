@@ -104,54 +104,6 @@ public class Boss extends Monster {
         }
     }
 
-    public void attacking() {
-        attackImageCounter++;
-        if (attackImageCounter <= 5) {
-            attackImage = true;
-        } else if (attackImageCounter > 5 && attackImageCounter <= 25) {
-            attackImage = false;
-
-            // Lưu lại vị trí, vùng va chạm hiện tại của nhân vật
-            int currentWorldX = worldX;
-            int currentWorldY = worldY;
-            int solidAreaWidth = solidArea.width;
-            int solidAreaHeight = solidArea.height;
-
-            // Cập nhật vị trí của nhân vật khi trong trạng thái tấn công
-            // để kiểm tra va chạm của nhân vật có chạm vào quái vật khi
-            // đang tấn công không.
-            switch (direction) {
-                case UP: worldY -= attackArea.height; break;
-                case DOWN: worldY += attackArea.height; break;
-                case LEFT: worldX -= attackArea.width; break;
-                case RIGHT: worldX += attackArea.width; break;
-                default:
-                    break;
-            }
-
-            solidArea.height = attackArea.height;
-            solidArea.width = attackArea.width;
-
-            collisionOn = false;
-            coChecker.checkCoWithPlayer(gp.player);
-
-            if (collisionOn = true) {
-                damagePlayer();
-            }
-
-            // Cập nhật lại vị trí của nhân vật sau khi ở trạng thái tấn công.
-            worldX = currentWorldX;
-            worldY = currentWorldY;
-            solidArea.width = solidAreaWidth;
-            solidArea.height = solidAreaHeight;
-
-        } else {
-            attackImage = false;
-            attackImageCounter = 0;
-            attacking = false; // Gán nhân vật không ở trong trạng thái tấn công
-        }
-    }
-
     public void draw(Graphics2D g2D) {
         int screenX = worldX - gp.player.getWorldX() + gp.player.screenX;
         int screenY = worldY - gp.player.getWorldY() + gp.player.screenY;
