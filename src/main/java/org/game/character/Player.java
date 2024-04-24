@@ -183,8 +183,6 @@ public class Player extends Entity {
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
             int bossIndex = coChecker.checkCoWithEntity(this, gp.boss);
 
-            System.out.println(monsterIndex + " " + bossIndex);
-
             // Các phương thức xử lý khi va chạm với một đối tượng khác cụ thể
             pickObject(objIndex);
 
