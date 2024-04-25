@@ -10,7 +10,6 @@ import org.game.database.ConnectMySQL;
 import org.game.enums.GameState;
 
 public class Login extends javax.swing.JFrame {
-
     /**
      * Creates new form NewJFrame
      */
