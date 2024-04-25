@@ -183,6 +183,8 @@ public class Player extends Entity {
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
             int bossIndex = coChecker.checkCoWithEntity(this, gp.boss);
 
+            System.out.println(bossIndex + " " + monsterIndex);
+
             pickObject(objIndex);
 
             for (Projectiles e : projectiles) {
