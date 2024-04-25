@@ -17,13 +17,13 @@ public abstract class Entity {
 
     protected GamePanel gp;
 
-    public boolean hpBarOn = false; // Biến để cập nhật thời gian vẽ thanh máu của quái vật
-    public int hpBarCounter = 0;    // Biến đếm để cập nhật hpBarOn
+    public boolean hpBarOn  = false;
+    public int hpBarCounter = 0;  
 
     // CHARECTER STAGE (Draw)
-    protected boolean drawChecker = true; // Biến sử dụng cập nhật hình ảnh nhân vật khi không trong trạng thái tấn công
-    protected int drawCounter = 0;        // Biến đếm cập nhật drawChecker
-    protected int actionCounter = 0;      // Biến đếm sử dụng để cập nhật hành động của các thực thể
+    protected boolean drawChecker = true; 
+    protected int drawCounter     = 0;       
+    protected int actionCounter   = 0;     
 
     // CHARACTER IMAGE
     protected BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
@@ -31,34 +31,34 @@ public abstract class Entity {
     protected BufferedImage cutUp1, cutUp2, cutDown1, cutDown2, cutLeft1, cutLeft2, cutRight1, cutRight2;
 
     // FOR COLLISION CHECK
-    protected CollisionChecker coChecker; // Đối tượng kiêm tra va chạm cho thực thể
+    protected CollisionChecker coChecker; 
     
     // FOR EVENT CHECK
     protected EventHandler eventH;
 
-    protected int speed;          // Tốc độ của thực thể
-    protected int worldX, worldY; // Vị trí của thực thể
-    public Rectangle solidArea;// Vùng đặc để kiểm tra va chạm
-    public Rectangle attackArea; // Vùng đặc kiểm tra va chạm khi tấn công
-    public int solidAreaDefaultX; // Giá trị X mặc định ban đầu của vùng đặc va chạm
-    public int solidAreaDefaultY; // Giá trị Y mặc định ban đầu của vùng đặc va chạm
-    protected Direction direction = Direction.DOWN; // Enum Direction (class)
+    protected int speed;          
+    protected int worldX, worldY; 
+    public Rectangle solidArea;
+    public Rectangle attackArea; 
+    public int solidAreaDefaultX; 
+    public int solidAreaDefaultY; 
+    protected Direction direction = Direction.DOWN; 
     public boolean collisionOn = false;
 
     // CHARECTER STATUS
-    protected boolean invincible = false; // Trạng thái vô địch của thực thể
+    protected boolean invincible = false; 
 
-    protected int invincibleCounter = 0;  // Biến đếm cập nhật trạng thái vô địch của thực thể
-    protected int maxLife = 0;                // Giá trị lớn nhất máu thực thể
-    protected int life = 0;     
+    protected int invincibleCounter = 0;  
+    protected int maxLife           = 0;                
+    protected int life   = 0;     
     protected int damage = 1;
-    public boolean alive = true;    // Kiểm tra sự tồn tại của thực thể
+    public boolean alive = true;    
     public boolean dying = false;
-    protected int dyingCounter = 0 ; // Giá trị sự sống hiện tại của thực thể
+    protected int dyingCounter = 0 ; 
 
-    protected boolean attacking = false;   // enter -> attacking = true
-    protected int attackImageCounter = 0;      // Biến đếm để cập nhật biến playerNum
-    protected boolean attackImage = false;  // Biến kiểm tra chọn hình ảnh của nhân vật khi trong trạng thái tấn công
+    protected boolean attacking = false;   
+    protected int attackImageCounter = 0;     
+    protected boolean attackImage = false;  
     
     public int projectilesCounter = 0;
     public ArrayList<Projectiles> projectiles = new ArrayList<>();
@@ -118,12 +118,6 @@ public abstract class Entity {
         
     }
 
-    /**
-     * Phương thức thực hiện chức năng vẽ hình ảnh thực thể ở mỗi trạng thái của 
-     * thực thể lên panel chính tại vị trí tempX, tempY.
-     * 
-     * @param g2D là một đối tượng Graphics với các phương thức vẽ hình ảnh..
-     */
     public void draw(Graphics2D g2D) {
 
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
