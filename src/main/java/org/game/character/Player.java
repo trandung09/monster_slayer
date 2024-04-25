@@ -2,10 +2,8 @@ package org.game.character;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
-import java.awt.List;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.LinkedList;
 
 import org.game.database.ConnectMySQL;
 import org.game.enums.Direction;
@@ -27,22 +25,22 @@ public class Player extends Entity {
 
     // PLAYER ATTRIBUTES
     private int level     = 1;
-    private int dexterity = 0; // the more dexterity he has, the less damage he recicives
-    private int exp       = 0; // Kinh nghiệm nhân vật
+    private int dexterity = 0; 
+    private int exp       = 0;
     private int nextLevelExp;
-    private int coin      = 0; // Sô tiền nhân vật hiện có
-    private int keys      = 0; // Số chìa khóa hiện có
-    private int manas     = 0; // Số năng lượng có thể sử dụng hiện tại
+    private int coin      = 0; 
+    private int keys      = 0; 
+    private int manas     = 0; 
     private int maxManas  = 0;
-    private int diamonds  = 0; // Số kim cương hiện có
+    private int diamonds  = 0; 
     private int energy    = 0;
     private int maxEnergy = 0;
 
     private double times  = 0;
 
-    public int currentItemSlected = 0; // Vật phẩm được chọn hiện tại
-    public boolean useKey  = false; // Đánh dấu có chọn sử dụng khóa hay không
-    public boolean useMana = false; // Đánh dấu có chọn sử dụng mana hay không
+    public int currentItemSlected = 0;
+    public boolean useKey  = false; 
+    public boolean useMana = false; 
 
     public Player(GamePanel gp) {
 
@@ -125,11 +123,6 @@ public class Player extends Entity {
         cutRight2 = Images.getImage("/player/boy_axe_right_2", width, height / 2);
     }
 
-    /*
-     * Cập nhật hoạt động của nhân vật sau khi nhận các sự kiện từ bàn phím,
-     * sự kiện từ hoạt động trong game. Cập nhật hướng di chuyển, vị trí và va
-     * chạm hiện tại của player với các thực thể trong game.
-     */
     @Override
     public void update() {
 
@@ -140,11 +133,13 @@ public class Player extends Entity {
             gp.stopMusic();
             gp.playMusicSE(9);
         }
-        // Sát thương nhân vật gây ra tăng lên khi giết được quái vật
+
         if (useMana) {
             useMana = false;
             if (life < maxLife) {
                 life += 2;
+
+                if (life > maxLife) life = maxLife;
                 manas--;
             }
         }
@@ -164,15 +159,14 @@ public class Player extends Entity {
 
             gp.mainState = GameState.DIALOGUE;
             gp.playMusicSE(7);
-        } // tăng cấp độ người chơi lên 1
+        } 
 
         if (attacking) {
-            // Trạng thái khi tấn công của nhân vật
             attacking();
         }
 
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-            // Xử lý cập nhật hướng di chuyển của player khi nhận input từ bàn phím
+            
             if (keyH.upPressed)
                 direction = Direction.UP;
             else if (keyH.downPressed)
@@ -182,7 +176,6 @@ public class Player extends Entity {
             else if (keyH.rightPressed)
                 direction = Direction.RIGHT;
 
-            // Kiểm tra va chạm với các thực thể, đối tượng khác
             collisionOn = false;
             coChecker.checkCoWithTile(this);
 
@@ -190,7 +183,6 @@ public class Player extends Entity {
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
             int bossIndex = coChecker.checkCoWithEntity(this, gp.boss);
 
-            // Các phương thức xử lý khi va chạm với một đối tượng khác cụ thể
             pickObject(objIndex);
 
             for (Projectiles e : projectiles) {
@@ -203,7 +195,6 @@ public class Player extends Entity {
             // Kiểm tra sự kiện va chạm với một số điểm trên bản đồ
             eventH.checkEvent();
 
-            // Cập nhật vị trí của nhân vật theo hướng di chuyển của nhân vật
             if (collisionOn == false) {
                 switch (direction) {
                     case UP:
@@ -216,13 +207,13 @@ public class Player extends Entity {
                         break;
                 }
             }
-            // Cập nhật hoạt ảnh chuyển động của nhân vật
+            
             drawCounter++;
             if (drawCounter > 10) {
                 drawChecker = !drawChecker;
                 drawCounter = 0;
             }
-            // Cập nhật trạng thái vô địch của nhân vật
+            
             if (invincible) {
                 invincibleCounter++;
                 if (invincibleCounter > 60) {
@@ -233,9 +224,9 @@ public class Player extends Entity {
         }
 
         if (keyH.shootPressed) {
-            // chưa có quả nào,
+            
             if (projectiles.size() == 0 || projectiles.getLast().life < 72) {
-                // tạo độ trễ giữ 2 quả đạn
+                
                 if (energy > 0) {
                     Projectiles pr = new Fireball(gp);
                     pr.set(worldX, worldY, direction, true, this);
@@ -248,9 +239,9 @@ public class Player extends Entity {
         }
     }
 
-    /* Xử lý hình ảnh, hoạt động của nhân vật khi ở trong trạng thái tấn công. */
+    
     public void attacking() {
-        // Biến đếm để cập nhật hình ảnh tạo hoạt ảnh nhân vật
+        
         attackImageCounter++;
         if (attackImageCounter <= 5) {
             attackImage = true;
@@ -258,15 +249,11 @@ public class Player extends Entity {
         else if (attackImageCounter > 5 && attackImageCounter <= 25) {
             attackImage = false;
 
-            // Lưu lại vị trí, vùng va chạm hiện tại của nhân vật
             int currentWorldX = worldX;
             int currentWorldY = worldY;
             int solidAreaWidth = solidArea.width;
             int solidAreaHeight = solidArea.height;
 
-            // Cập nhật vị trí của nhân vật khi trong trạng thái tấn công
-            // để kiểm tra va chạm của nhân vật có chạm vào quái vật khi
-            // đang tấn công không.
             switch (direction) {
                 case UP:
                     worldY -= attackArea.height;
@@ -287,14 +274,11 @@ public class Player extends Entity {
             solidArea.height = attackArea.height;
             solidArea.width = attackArea.width;
 
-            // Kiểm tra và lấy ra chỉ số của quái vật bị nhân vật đánh trúng khi đang trong
-            // trạng thái tấn công.
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
             int bossIndex = coChecker.checkCoWithEntity(this, gp.boss);
             damageMonster(monsterIndex);
             damageBoss(bossIndex);
 
-            // Cập nhật lại vị trí của nhân vật sau khi ở trạng thái tấn công.
             worldX = currentWorldX;
             worldY = currentWorldY;
             solidArea.width = solidAreaWidth;
@@ -302,19 +286,18 @@ public class Player extends Entity {
         } else {
             attackImage = false;
             attackImageCounter = 0;
-            attacking = false; // Gán nhân vật không ở trong trạng thái tấn công
+            attacking = false; 
         }
     }
 
     private void damageBoss(int index) {
         if (index == -1)
             return;
-        // Nếu quái vật không ở trong trạng thái vô địch và life > 0
-        // thì life -= 1 và gán quái vật ở trong trạng thái vô địch
+   
         if (gp.boss[index].life > 0 && gp.boss[index] != null) {
             if (!gp.boss[index].invincible) {
                 gp.boss[index].life -= damage;
-                gp.boss[index].invincible = true; // Sau khi nhận sát thương thì quái vật trong trạng thái vô địch
+                gp.boss[index].invincible = true;
 
                 gp.boss[index].resetAction();
                 gp.playMusicSE(5);
@@ -322,7 +305,7 @@ public class Player extends Entity {
                 gp.screenUI.addMessage("1 damage!");
             }
         } else {
-            // Nếu như máu quái vật = 0 thì xóa quái vật đi
+            
             gp.boss[index].dying = true;
             gp.boss[index].alive = false;
 
@@ -333,17 +316,15 @@ public class Player extends Entity {
         }
     }
 
-    /* Xử lý các sự kiện của ra khi quái vật bị tấn công bởi nhân vật */
     private void damageMonster(int index) {
 
         if (index == -1)
             return;
-        // Nếu quái vật không ở trong trạng thái vô địch và life > 0
-        // thì life -= 1 và gán quái vật ở trong trạng thái vô địch
+  
         if (gp.monsters[index].life > 0 && gp.monsters[index] != null) {
             if (!gp.monsters[index].invincible) {
                 gp.monsters[index].life -= damage;
-                gp.monsters[index].invincible = true; // Sau khi nhận sát thương thì quái vật trong trạng thái vô địch
+                gp.monsters[index].invincible = true;
 
                 gp.monsters[index].resetAction();
                 gp.playMusicSE(5);
@@ -351,7 +332,7 @@ public class Player extends Entity {
                 gp.screenUI.addMessage("1 damage!");
             }
         } else {
-            // Nếu như máu quái vật = 0 thì xóa quái vật đi
+
             gp.monsters[index].dying = true;
             gp.monsters[index].alive = false;
 
@@ -362,14 +343,6 @@ public class Player extends Entity {
         }
     }
 
-    /**
-     * Xử lý các sự kiện xảy ra khi nhân vật va chạm với các object,
-     * mỗi object riêng sẽ có các cách xử lý khác nhau tùy và chức năng
-     * của object đó.
-     * 
-     * @param index: chỉ số của object đang được nhân vât chạm , nếu
-     *               index = -1 thì không có object nào hiện tại cần xử lý
-     */
     private void pickObject(int index) {
 
         if (index == -1)
@@ -418,36 +391,23 @@ public class Player extends Entity {
         }
     }
 
-    /**
-     * Phương thức thực hiện chức năng vẽ hình ảnh nhân vật ở mỗi trạng thái của
-     * nhân vật lên panel chính tại vị trí tempX, tempY.
-     * 
-     * @param g2D là một đối tượng Graphics với các phương thức vẽ hình ảnh..
-     */
     @Override
     public void draw(Graphics2D g2D) {
 
         BufferedImage image = null;
-        int tempX = screenX; // Tọa độ X để vẽ ảnh
-        int tempY = screenY; // Tọa độ Y để vẽ ảnh
+        int tempX = screenX; 
+        int tempY = screenY; 
 
-        /**
-         * Xác định hình ảnh cần vẽ, cập nhật tọa độ vẽ ảnh của nhân vật ở các trạng
-         * thái.
-         * Xử lý dựa theo hướng nhân vật và trạng thái nhân vật
-         */
         switch (direction) {
             case UP:
-                // Lấy hình ảnh nhân vật khi không trong trạng thái tấn công
                 if (!attacking)
                     image = (drawChecker ? up1 : up2);
-                else { // Lấy hình ảnh nhân vật khi ở trong trạng thái tấn công
+                else { 
                     if (selectedWeapon)
                         image = (attackImage ? attackUp1 : attackUp2);
                     else
                         image = (attackImage ? cutUp1 : cutUp2);
                     tempY -= GamePanel.tileSize;
-                    // Cập nhật tọa độ Y của vị trí vẽ hình ảnh
                 }
                 break;
             case DOWN:

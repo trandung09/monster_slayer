@@ -89,6 +89,7 @@ public class InputHandler implements KeyListener {
             case KeyEvent.VK_BACK_SLASH:
                 shootPressed = true; break;
             case KeyEvent.VK_P:
+                gp.stopMusic();
                 if (gp.mainState == GameState.START)
                     gp.mainState = GameState.PAUSE;
                 break;
@@ -98,6 +99,7 @@ public class InputHandler implements KeyListener {
                 gp.player.setAttacking(true);
                 break;
             case KeyEvent.VK_QUOTE:
+                gp.stopMusic();
                 gp.mainState = GameState.CHARACRTER;
                 break;
             case KeyEvent.VK_SPACE:
@@ -154,6 +156,7 @@ public class InputHandler implements KeyListener {
                 gp.mainState = GameState.START;
                 break;
             case KeyEvent.VK_ENTER:
+                gp.playMusic(0);
                 if (gp.player.currentItemSlected == 0 && gp.player.getKeys() > 0)
                     gp.player.useKey = true;
                 else if (gp.player.currentItemSlected == 2 && gp.player.getManas() > 0)
@@ -190,6 +193,7 @@ public class InputHandler implements KeyListener {
     private void pauseState(int kCode) {
         switch (kCode) {
             case KeyEvent.VK_ENTER:
+                gp.playMusic(0);
                 if (StateOption.pauseState == Menu.CONTINUE)
                     gp.mainState = GameState.START;
                 else if (StateOption.pauseState == Menu.QUIT)
@@ -220,6 +224,7 @@ public class InputHandler implements KeyListener {
         switch (kCode) {
             case KeyEvent.VK_ENTER:
                 if (StateOption.endState == Menu.RETRY) {
+                    gp.playMusic(0);
                     gp.reInitialize();
                     gp.mainState = GameState.START;
                 } else if (StateOption.endState == Menu.QUIT)

@@ -73,7 +73,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         setEntityAndObject();
         startGameThread();
-        playMusic(0);
     }
 
     // Khởi tạo gameThread của game 

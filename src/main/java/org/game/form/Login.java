@@ -110,6 +110,7 @@ public class Login extends javax.swing.JFrame {
                 check = true;
                 gp.player.setName(name);
                 gp.mainState = GameState.START;
+                gp.playMusic(0);
                 setVisible(false);
                 break;
             }
