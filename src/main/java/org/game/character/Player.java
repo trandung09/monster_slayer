@@ -183,6 +183,7 @@ public class Player extends Entity {
             int monsterIndex = coChecker.checkCoWithEntity(this, gp.monsters);
             int bossIndex = coChecker.checkCoWithEntity(this, gp.boss);
 
+            tempFunctions(monsterIndex, bossIndex);
             pickObject(objIndex);
 
             for (Projectiles e : projectiles) {
@@ -459,6 +460,10 @@ public class Player extends Entity {
         if (oldtimes <= times) return;
 
         ConnectMySQL.update(name, times);
+    }
+
+    public void tempFunctions(int first, int second) {
+
     }
 
     public void reInitialize() {
