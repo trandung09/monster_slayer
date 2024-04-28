@@ -18,7 +18,7 @@ public class Player extends Entity {
     // CAMERA SETTINGS
     public final int screenX = GamePanel.screenWidth / 2 - GamePanel.tileSize / 2;
     public final int screenY = GamePanel.screenHeight / 2 - GamePanel.tileSize;
-
+    
     private InputHandler keyH; // KeyEvent
 
     private boolean selectedWeapon = true; // true = kiếm, false = rìu
@@ -55,7 +55,7 @@ public class Player extends Entity {
 
     private void setPlayerInfo() {
 
-        maxLife = 12;
+        maxLife = 2;
         life = maxLife;
         maxEnergy = 10;
         energy = maxEnergy;
