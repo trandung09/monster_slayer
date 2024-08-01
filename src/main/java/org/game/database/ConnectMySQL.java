@@ -22,6 +22,7 @@ public final class ConnectMySQL {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(connectionURL, username, password);
+            return conn;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,8 +30,7 @@ public final class ConnectMySQL {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-        return conn;
+        return null;
     }
 
     public static LinkedList<String[]> query() {
@@ -38,6 +38,7 @@ public final class ConnectMySQL {
         Connection conn = connect();
         
         LinkedList<String[]> list = new LinkedList<>();
+
 
         try {
             Statement stm = conn.createStatement();

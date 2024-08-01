@@ -18,9 +18,6 @@ public class CollisionChecker {
      * Dựa vào vị trí của nhân vật hiện tại để xác định vị trí của các thành phần đang
      * được xác đinh để kiểm tra va chạm với nhân vật đó, xác định hàng và cột để lấy ra 
      * thành phần đó. Nếu có xáy ra va chạm thì cập nhật collisionOn của nhân vật là true.
-     * 
-     * @param entity là thực thể được chọn để kiểm tra va chạm với các thành phần bản đồ
-     * @throws  IllegalStateException
      */
     public void checkCoWithTile(Entity entity) {
 

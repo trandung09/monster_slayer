@@ -69,7 +69,7 @@ public class Monster extends Entity {
     public void damagePlayer() {
         if (gp.player.getLife() > 0 && !gp.player.isInvincible()) {
             gp.player.setLife(gp.player.getLife() - damage);
-            gp.playMusicSE(6);
+            gp.playMusicSE(5);
             if (gp.player.getLife() <= 0) {
                 gp.player.alive = false;
                 gp.player.dying = true;
