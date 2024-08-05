@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Objects;
 
 import javax.swing.JPanel;
 
@@ -123,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (mainState == GameState.START) {
             for (Boss b : boss) {
-                if (b != null && b.alive == true && b.dying == false) {
+                if (b != null && b.alive && !b.dying) {
                     b.update();
                 }
             }
@@ -136,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
         
             // cập nhật vị trí mảng các đnạ được bắn ra từ nhân vật
             for (int i = 0; i < player.projectiles.size(); i++) {
-                if (player.projectiles.get(i).alive == true) {
+                if (player.projectiles.get(i).alive) {
                     player.projectiles.get(i).update();
                 }
                 else {
@@ -146,9 +147,9 @@ public class GamePanel extends JPanel implements Runnable {
 
             for (Entity e : monsters) {
                 if (e == null) continue;
-                if (e.getName() == "Green Slime") {
+                if (Objects.equals(e.getName(), "Green Slime")) {
                     for (int i = 0; i < e.projectiles.size(); i++) {
-                        if (e.projectiles.get(i).alive == true) {
+                        if (e.projectiles.get(i).alive) {
                             e.projectiles.get(i).update();
                         }
                         else {
@@ -161,23 +162,24 @@ public class GamePanel extends JPanel implements Runnable {
             for (int i = 0; i < monsters.length; i++) {
                 // && !monsters[i].getName().equals("Sinister")
                 if (monsters[i] != null) {
-                    if (monsters[i].alive == true && monsters[i].dying == false) {
+                    if (monsters[i].alive && !monsters[i].dying) {
                         monsters[i].update();
                     }
-                    else if (monsters[i].alive == false && monsters[i].dying == true){
+                    else if (!monsters[i].alive && monsters[i].dying){
                         int wX = monsters[i].getWorldX();
                         int wY = monsters[i].getWorldY();
                         String name = monsters[i].getName();
                         int objRan = monsters[i].objRan;
                         monsters[i] = null;
 
-                        if (name != "Bat") {
+                        if (!Objects.equals(name, "Bat")) {
                             for (int k = 0; k < objs.length; k++) {
                                 if (objs[k] != null) continue;
     
                                 if (objRan == 1) objs[k] = new GoldCoin(this);
                                 else if (objRan == 2) objs[k] = new Mana(this);
-    
+
+                                assert objs[k] != null;
                                 objs[k].setWorldX(wX);
                                 objs[k].setWorldY(wY);
                                 break;
@@ -188,7 +190,7 @@ public class GamePanel extends JPanel implements Runnable {
                 
                                 mainState = GameState.DIALOGUE;
                                 screenUI.currentText = "Warning,\nyou will fight the boss now";
-                
+
                                 bossWarning = true;
                             }
                         }
