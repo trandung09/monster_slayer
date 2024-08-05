@@ -12,10 +12,10 @@ import com.mysql.cj.exceptions.UnableToConnectException;
 
 public final class ConnectMySQL {
     
-    private static String connectionURL = "jdbc:mysql://localhost:3306/pixel_hunter";
+    private static final String connectionURL = "jdbc:mysql://localhost:3306/pixel_hunter";
 
-    private static String username = "root";
-    private static String password = "";
+    private static final String username = "root";
+    private static final String password = "";
 
     public static Connection connect() {
         Connection conn = null;
@@ -24,11 +24,9 @@ public final class ConnectMySQL {
             conn = DriverManager.getConnection(connectionURL, username, password);
             return conn;
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
 
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return null;
     }
