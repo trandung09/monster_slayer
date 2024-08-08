@@ -114,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
                 nextDrawTime += drawInterval;
 
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.err.println("Game thread interrupted");
             }
         }
     }
@@ -186,8 +186,7 @@ public class GamePanel extends JPanel implements Runnable {
                             }
 
                             if (checkBossWarning()) {
-                                bossWarning = true;
-                
+
                                 mainState = GameState.DIALOGUE;
                                 screenUI.currentText = "Warning,\nyou will fight the boss now";
 
@@ -230,7 +229,7 @@ public class GamePanel extends JPanel implements Runnable {
             // vez hình ảnh đạn bắn ra của quái vật
             for (Entity e : monsters) {
                 if (e == null) continue;
-                if (e.getName() == "Green Slime") {
+                if (Objects.equals(e.getName(), "Green Slime")) {
                     for (Projectiles pr : e.projectiles)
                         pr.draw(g2D);
                 }
@@ -279,7 +278,7 @@ public class GamePanel extends JPanel implements Runnable {
     public boolean checkBossWarning() {
 
         for (Monster mon : monsters) {
-            if (mon != null && mon.getName() != "Bat") {
+            if (mon != null && !Objects.equals(mon.getName(), "Bat")) {
                 return false;
             }
         }
