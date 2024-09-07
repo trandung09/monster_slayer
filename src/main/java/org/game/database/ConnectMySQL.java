@@ -18,7 +18,7 @@ public final class ConnectMySQL {
     private static final String password = "";
 
     public static Connection connect() {
-        Connection conn = null;
+        Connection conn;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(connectionURL, username, password);
@@ -39,6 +39,7 @@ public final class ConnectMySQL {
 
 
         try {
+            assert conn != null;
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(query);
 
